@@ -1,0 +1,1209 @@
+/**
+ * FMHY Tracker - Application JavaScript
+ */
+
+function readPreference(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+function writePreference(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* Optional preference. */
+  }
+}
+const itemCache = new WeakMap();
+let commitCache = null;
+let searchTimer;
+let filterCache = null;
+const expandedChanges = new Set();
+const changeIds = new Map();
+
+function changeIdentity(item, commit) {
+  const prepared = prepareItem(item, commit);
+  if (!prepared.changeId) {
+    const key = JSON.stringify([commit.sha, item.source, item.type, item.link, item.relatedLink]);
+    if (!changeIds.has(key)) changeIds.set(key, String(changeIds.size + 1));
+    prepared.changeId = changeIds.get(key);
+  }
+  return prepared.changeId;
+}
+
+function renderPreviousLink(item, commit) {
+  const prepared = prepareItem(item, commit);
+  if (!('previousHtml' in prepared)) {
+    prepared.previousHtml = renderLinkContent(String(item.relatedLink).replace(/^\*\s*/, ''));
+  }
+  return prepared.previousHtml;
+}
+
+// Cache the complete facet result independently of pagination. A page change
+// only slices the matching rows; changes to the data or filters recompute once.
+function getFilterView() {
+  const allRows = getRows();
+  const query = state.searchQuery.trim().toLowerCase();
+  const key = JSON.stringify([query, state.currentFilter, state.categoryFilter, state.showOnlyStarred]);
+  if (filterCache?.source === allRows && filterCache.key === key) return filterCache;
+  const rows = [];
+  const typeCounts = { new: 0, updated: 0, removed: 0 };
+  const categoryCounts = Object.create(null);
+  const categories = new Set();
+  for (const row of allRows) {
+    const prepared = prepareItem(row.item, row.commit);
+    categories.add(prepared.source);
+    if ((state.showOnlyStarred && !prepared.starred) || (query && !prepared.text.includes(query))) continue;
+    const typeMatches = state.currentFilter === 'all' || row.type === state.currentFilter;
+    const categoryMatches = state.categoryFilter === 'all' || prepared.source === state.categoryFilter;
+    if (categoryMatches && row.type in typeCounts) typeCounts[row.type]++;
+    if (typeMatches) categoryCounts[prepared.source] = (categoryCounts[prepared.source] || 0) + 1;
+    if (typeMatches && categoryMatches) rows.push(row);
+  }
+  filterCache = { source: allRows, key, rows, typeCounts, categoryCounts, categories: [...categories].sort() };
+  return filterCache;
+}
+function prepareItem(item, commit) {
+  let prepared = itemCache.get(item);
+  if (!prepared) {
+    prepared = {
+      text: `${item.link ?? ""} ${item.source ?? ""} ${commit.message ?? ""}`.toLowerCase(),
+      source: String(item.source ?? "").toLowerCase(),
+      starred: String(item.link ?? "").includes("⭐"),
+    };
+    itemCache.set(item, prepared);
+  }
+  return prepared;
+}
+function renderCachedLink(item, commit, removed = false) {
+  const prepared = prepareItem(item, commit);
+  const key = removed ? "removedHtml" : "html";
+  if (!(key in prepared)) {
+    prepared[key] = renderLinkContent(
+      String(item.link ?? "").replace(/^\*\s*/, ""),
+      { strikeMain: removed },
+    );
+  }
+  return prepared[key];
+}
+function getRows() {
+  const commits = getAllCommits();
+  if (commitCache.rows) return commitCache.rows;
+  commitCache.rows = commits.flatMap((commit) => [
+    ...dedupeLinks(commit.added).map((item) => ({
+      item,
+      commit,
+      type: item.type || "new",
+    })),
+    ...dedupeLinks(commit.removed).map((item) => ({
+      item,
+      commit,
+      type: "removed",
+    })),
+  ]);
+  return commitCache.rows;
+}
+function matchingRows({ ignoreType = false, ignoreCategory = false } = {}) {
+  if (!ignoreType && !ignoreCategory) return getFilterView().rows;
+  const query = state.searchQuery.trim().toLowerCase();
+  return getRows().filter(({ item, commit, type }) => {
+    const prepared = prepareItem(item, commit);
+    return (
+      (!state.showOnlyStarred || prepared.starred) &&
+      (ignoreType ||
+        state.currentFilter === "all" ||
+        type === state.currentFilter) &&
+      (ignoreCategory ||
+        state.categoryFilter === "all" ||
+        prepared.source === state.categoryFilter) &&
+      (!query || prepared.text.includes(query))
+    );
+  });
+}
+
+// State management
+const state = {
+  currentFilter: "all",
+  showOnlyStarred: readPreference("fmhy-show-starred") === "true",
+  currentPage: 1,
+  itemsPerPage: 50,
+  searchQuery: "",
+  categoryFilter: "all",
+  theme: readPreference("fmhy-theme") || "auto",
+  categoryFiltersExpanded: false,
+  // Monthly view state
+  showMonthly: false,
+  monthlyData: null,
+  monthlyLoading: false,
+};
+
+// Reflect the active filters in the URL query string so a filtered view can
+// be shared or reloaded. Uses replaceState to avoid flooding the history.
+function updateUrl() {
+  const params = new URLSearchParams();
+  if (state.searchQuery) params.set("q", state.searchQuery);
+  if (state.currentFilter !== "all") params.set("filter", state.currentFilter);
+  if (state.categoryFilter !== "all") params.set("cat", state.categoryFilter);
+  params.set("starred", state.showOnlyStarred ? "1" : "0");
+  if (state.showMonthly) params.set("history", "1");
+  if (state.currentPage > 1) params.set("page", String(state.currentPage));
+  const query = params.toString();
+  const newUrl = query
+    ? `${window.location.pathname}?${query}`
+    : window.location.pathname;
+  window.history.replaceState(null, "", newUrl);
+}
+
+// Restore filters from the URL query string on initial load.
+function restoreStateFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q");
+  if (q) state.searchQuery = q;
+  const filter = params.get("filter");
+  if (["new", "updated", "removed"].includes(filter)) {
+    state.currentFilter = filter;
+  }
+  const cat = params.get("cat");
+  if (cat) state.categoryFilter = cat.toLowerCase();
+  if (params.has("starred"))
+    state.showOnlyStarred = params.get("starred") === "1";
+  const page = Number(params.get("page"));
+  if (Number.isSafeInteger(page) && page > 0) state.currentPage = page;
+}
+
+// Keep the starred filter pill's visual + a11y state in sync with the model.
+function syncStarToggleUI() {
+  const starBtn = document.getElementById("star-toggle");
+  if (starBtn) {
+    starBtn.classList.toggle("active", state.showOnlyStarred);
+    starBtn.setAttribute("aria-pressed", String(state.showOnlyStarred));
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[char];
+  });
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/`/g, "&#96;");
+}
+
+function sanitizeUrl(url) {
+  const rawUrl = String(url ?? "").trim();
+  try {
+    const parsed = new URL(rawUrl, window.location.href);
+    if (["http:", "https:", "mailto:"].includes(parsed.protocol)) {
+      return parsed.href;
+    }
+  } catch (e) {
+    // Invalid or unsupported URLs are rendered as plain text below.
+  }
+  return "";
+}
+
+function renderBoldText(text) {
+  return escapeHtml(text).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+
+// Escape a run of plain text while converting "**" delimiters into <strong>
+// tags. The open/closed state is carried in `state` so a bold span can span
+// across markdown links (e.g. "**Comics: [A](x) | [B](y)**").
+function renderTextWithBold(text, state) {
+  const chunks = String(text ?? "").split("**");
+  let out = "";
+  for (let i = 0; i < chunks.length; i++) {
+    out += escapeHtml(chunks[i]);
+    // A "**" delimiter sits between every pair of chunks.
+    if (i < chunks.length - 1) {
+      out += state.boldOpen ? "</strong>" : "<strong>";
+      state.boldOpen = !state.boldOpen;
+    }
+  }
+  return out;
+}
+
+function renderLink(label, url) {
+  const safeUrl = sanitizeUrl(url);
+  const safeLabel = renderBoldText(label);
+  if (!safeUrl) {
+    return safeLabel;
+  }
+  return `<a href="${escapeAttribute(safeUrl)}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
+}
+
+// Get all commits including monthly data if enabled
+function getAllCommits() {
+  if (!window.fmhyData) return [];
+  const monthly = state.showMonthly ? state.monthlyData : null;
+  if (
+    commitCache?.recent === window.fmhyData &&
+    commitCache.monthly === monthly
+  ) {
+    return commitCache.commits;
+  }
+  const bySha = new Map(window.fmhyData.commits.map((c) => [c.sha, c]));
+  for (const commit of monthly?.commits || []) {
+    if (!bySha.has(commit.sha)) bySha.set(commit.sha, commit);
+  }
+  const commits = [...bySha.values()].sort(
+    (a, b) => Date.parse(b.date) - Date.parse(a.date),
+  );
+  commitCache = { recent: window.fmhyData, monthly, commits };
+  return commits;
+}
+
+// Get the effective theme (resolves "auto" to actual theme based on system preference)
+function getEffectiveTheme() {
+  if (state.theme === "auto") {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+  return state.theme;
+}
+
+// Initialize theme
+function initTheme() {
+  document.documentElement.setAttribute("data-theme", getEffectiveTheme());
+  updateThemeLabel();
+
+  // Set dropdown to current value
+  const themeSelect = document.getElementById("theme-select");
+  if (themeSelect) {
+    themeSelect.value = state.theme;
+  }
+
+  // Listen for system preference changes (applies only in "auto" mode)
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (state.theme === "auto") {
+        document.documentElement.setAttribute(
+          "data-theme",
+          getEffectiveTheme(),
+        );
+      }
+    });
+}
+
+// Set theme
+function setTheme(value) {
+  state.theme = value;
+  document.documentElement.setAttribute("data-theme", getEffectiveTheme());
+  writePreference("fmhy-theme", state.theme);
+  updateThemeLabel();
+}
+
+// Update theme label
+function updateThemeLabel() {
+  const themeLabel = document.getElementById("theme-label");
+  if (themeLabel) {
+    if (state.theme === "auto") {
+      themeLabel.textContent = "Theme";
+    } else {
+      themeLabel.textContent =
+        state.theme.charAt(0).toUpperCase() + state.theme.slice(1);
+    }
+  }
+}
+
+// Toggle category filters
+function toggleCategoryFilters() {
+  state.categoryFiltersExpanded = !state.categoryFiltersExpanded;
+  const container = document.getElementById("category-filters");
+  const wrapper = document.getElementById("category-filters-wrapper");
+  const header = document.querySelector(".category-filter-header");
+  const icon = document.getElementById("category-toggle-icon");
+  const text = document.getElementById("category-toggle-text");
+
+  if (container) {
+    container.classList.toggle("collapsed", !state.categoryFiltersExpanded);
+    if (!state.categoryFiltersExpanded) {
+      container.style.maxHeight = "";
+    } else {
+      container.style.maxHeight = container.scrollHeight + "px";
+    }
+  }
+
+  if (wrapper) {
+    wrapper.classList.toggle("expanded", state.categoryFiltersExpanded);
+  }
+
+  if (header) {
+    header.classList.toggle("expanded", state.categoryFiltersExpanded);
+  }
+
+  if (icon) {
+    icon.classList.toggle("expanded", state.categoryFiltersExpanded);
+  }
+
+  document
+    .getElementById("category-toggle-btn")
+    ?.setAttribute("aria-expanded", String(state.categoryFiltersExpanded));
+  if (text) {
+    text.textContent = state.categoryFiltersExpanded
+      ? "Show Less"
+      : "Show More";
+  }
+}
+
+// Parse markdown links to HTML
+function parseMarkdownLinks(text) {
+  const rawText = String(text ?? "");
+  const hasStar = rawText.includes("⭐");
+
+  let processedText = rawText.replace(/^⭐\s*/, "");
+  processedText = processedText.replace(/ \//g, " |");
+
+  const parts = [];
+  const boldState = { boldOpen: false };
+  const linkPattern = /(\*\*)?\[([^\]]+)\]\(([^)]+)\)(\*\*)?/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkPattern.exec(processedText)) !== null) {
+    parts.push(
+      renderTextWithBold(
+        processedText.slice(lastIndex, match.index),
+        boldState,
+      ),
+    );
+    const label = match[1] && match[4] ? `**${match[2]}**` : match[2];
+    parts.push(renderLink(label, match[3]));
+    lastIndex = match.index + match[0].length;
+  }
+
+  parts.push(renderTextWithBold(processedText.slice(lastIndex), boldState));
+  // Close any bold span left open by unbalanced "**" markers.
+  if (boldState.boldOpen) {
+    parts.push("</strong>");
+  }
+  processedText = parts.join("");
+
+  if (hasStar) {
+    return "⭐ " + processedText;
+  }
+  return processedText;
+}
+
+// Render a link's content, splitting the trailing slash/pipe-separated
+// metadata (e.g. "Discord / GitHub / Subreddit") into compact chips while
+// keeping the title + description inline for readability.
+//
+// Separators are only split at the "top level": a "/" or "|" inside a
+// markdown link (e.g. "[Easy Install / Updates](url)") or inside a bold
+// "**...**" span must NOT break the link/bold apart.
+function renderLinkContent(text, { strikeMain = false } = {}) {
+  const raw = String(text ?? "");
+
+  // Record the character ranges occupied by markdown links so we never split
+  // inside a [label](url).
+  const linkPattern = /\[[^\]]+\]\([^)]+\)/g;
+  const linkRanges = [];
+  let match;
+  while ((match = linkPattern.exec(raw)) !== null) {
+    linkRanges.push([match.index, match.index + match[0].length]);
+  }
+  const insideLink = (index) =>
+    linkRanges.some(([start, end]) => index >= start && index < end);
+
+  const segments = [];
+  let current = "";
+  let boldOpen = false;
+
+  for (let i = 0; i < raw.length; i++) {
+    // Track bold spans so separators inside "**...**" are not split.
+    if (raw[i] === "*" && raw[i + 1] === "*") {
+      boldOpen = !boldOpen;
+      current += "**";
+      i++;
+      continue;
+    }
+
+    const ch = raw[i];
+    const isSeparator =
+      (ch === "/" || ch === "|") &&
+      raw[i - 1] === " " &&
+      !boldOpen &&
+      !insideLink(i);
+
+    if (isSeparator) {
+      segments.push(current);
+      current = "";
+      // Consume the space following the separator, if present.
+      if (raw[i + 1] === " ") i++;
+      continue;
+    }
+
+    current += ch;
+  }
+  segments.push(current);
+
+  const cleaned = segments
+    .map((segment) => segment.trim())
+    .filter((segment) => segment.length > 0);
+
+  const main = cleaned.shift() ?? "";
+  let html = parseMarkdownLinks(main);
+  if (strikeMain) {
+    html = `<span class="removed-text">${html}</span>`;
+  }
+
+  const chips = cleaned
+    .map(
+      (segment) =>
+        `<span class="link-tag">${parseMarkdownLinks(segment)}</span>`,
+    )
+    .join("");
+
+  if (chips) {
+    html += ` <span class="link-tags">${chips}</span>`;
+  }
+
+  return html;
+}
+
+// Format relative time
+function formatRelativeTime(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diffHours = Math.floor(
+    (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  );
+  const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (diffDays > 0) {
+    return `${diffDays}d ${diffHours}h ago`;
+  } else if (diffHours > 0) {
+    return `${diffHours}h ${diffMinutes}m ago`;
+  } else {
+    return `${diffMinutes}m ago`;
+  }
+}
+
+// Reuse formatters: creating an Intl formatter for every visible commit is costly.
+const fullDateFormatter = new Intl.DateTimeFormat('en-US', {
+  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  hour: '2-digit', minute: '2-digit',
+});
+const commitDateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'short', day: 'numeric',
+});
+const monthFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'long', year: 'numeric', timeZone: 'UTC',
+});
+function formatFullDate(dateString) {
+  return fullDateFormatter.format(new Date(dateString));
+}
+function formatCommitDate(dateString) {
+  return commitDateFormatter.format(new Date(dateString));
+}
+
+// Get current month in YYYY-MM format
+// Load monthly commits with caching
+async function loadMonthlyCommits() {
+  if (state.monthlyData) return state.monthlyData;
+  // Revalidate through the HTTP cache; avoid synchronous, growing localStorage archives.
+  const response = await fetch("monthly_commits.json", {
+    cache: "no-cache",
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!response.ok) throw new Error("History could not be loaded");
+  const data = await response.json();
+  if (
+    !/^\d{4}-\d{2}$/.test(data.month) ||
+    !Array.isArray(data.commits) ||
+    data.commits.some(
+      (c) => !c.sha || !Array.isArray(c.added) || !Array.isArray(c.removed),
+    )
+  ) {
+    throw new Error("History data is invalid");
+  }
+  return data;
+}
+
+// Update monthly toggle UI state
+function updateMonthlyToggleUI() {
+  const wrapper = document.getElementById("monthly-toggle-wrapper");
+  const spinner = document.getElementById("monthly-loading-spinner");
+  const count = document.getElementById("monthly-count");
+  if (wrapper) {
+    wrapper.classList.toggle("loading", state.monthlyLoading);
+    wrapper.setAttribute("aria-busy", String(state.monthlyLoading));
+  }
+  const toggle = document.getElementById("monthly-toggle");
+  if (toggle) toggle.disabled = state.monthlyLoading;
+  const retry = document.getElementById("monthly-retry");
+  if (retry) retry.disabled = state.monthlyLoading;
+  const label = document.querySelector(".monthly-toggle-text");
+  const month = state.monthlyData?.month || window.fmhyData?.archiveMonth;
+  if (label) label.textContent = month ? `Include ${formatMonth(month)} history` : 'Include month history';
+  if (toggle) toggle.setAttribute('aria-label', label?.textContent || 'Include month history');
+
+  if (spinner) {
+    spinner.style.display = state.monthlyLoading ? "inline-block" : "none";
+  }
+
+  if (count && state.monthlyData) {
+    count.textContent = `(${state.monthlyData.totalCommits})`;
+    count.style.display = "inline";
+  } else if (count) {
+    count.style.display = "none";
+  }
+}
+
+// Show monthly message
+function showMonthlyMessage(text) {
+  const message = document.getElementById("monthly-message");
+  if (message) {
+    message.textContent = text;
+    message.classList.remove("hidden");
+  }
+}
+
+// Toggle monthly view
+function formatMonth(month) {
+  return monthFormatter.format(new Date(`${month}-01T12:00:00Z`));
+}
+async function toggleMonthlyView({ restorePage = null } = {}) {
+  const toggle = document.getElementById("monthly-toggle");
+  if (state.monthlyLoading) return;
+  const startingFilters = getFilterView().key;
+  const startingPage = state.currentPage;
+  const message = document.getElementById("monthly-message");
+  const retry = document.getElementById("monthly-retry");
+  message?.classList.add("hidden");
+  if (retry) retry.hidden = true;
+  if (toggle?.checked) {
+    state.monthlyLoading = true;
+    showMonthlyMessage('Loading history… Recent changes are still available.');
+    updateMonthlyToggleUI();
+    try {
+      state.monthlyData = await loadMonthlyCommits();
+      state.showMonthly = true;
+      showMonthlyMessage(
+        `Showing ${formatMonth(state.monthlyData.month)} history plus recent changes.`,
+      );
+    } catch {
+      toggle.checked = false;
+      state.showMonthly = false;
+      showMonthlyMessage("Could not load month history. Please try again.");
+      if (retry) retry.hidden = false;
+    } finally {
+      state.monthlyLoading = false;
+      updateMonthlyToggleUI();
+    }
+  } else {
+    state.showMonthly = false;
+    updateMonthlyToggleUI();
+  }
+  state.currentPage = state.showMonthly && restorePage &&
+    startingFilters === getFilterView().key && startingPage === state.currentPage
+    ? restorePage : 1;
+  renderCommits();
+}
+
+// Get unique categories from commits
+// Remove duplicate link rows (same source + link text) within a commit
+function dedupeLinks(links) {
+  const seen = new Set();
+  return links.filter((item) => {
+    const key = `${item.source ?? ""}\u0000${item.link ?? ""}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+// Render a single commit
+function renderCommit(commit) {
+  const filteredAdded = commit.added;
+  const filteredRemoved = commit.removed;
+
+  if (filteredAdded.length === 0 && filteredRemoved.length === 0) {
+    return "";
+  }
+
+  let commitMessage = String(commit.message ?? "");
+  if (commitMessage.indexOf("\n") !== -1) {
+    commitMessage = commitMessage.split("\n")[0];
+  }
+
+  // Historical badge and class
+  const isHistorical = commit.isHistorical === true;
+  const isMonthlyHistorical = commit.isMonthlyHistorical === true;
+  const historicalClass = isHistorical ? "historical-commit" : "";
+  const monthlyHistoricalClass = isMonthlyHistorical
+    ? "monthly-historical"
+    : "";
+  const commitSha = String(commit.sha ?? "");
+  const commitUrl = commitSha
+    ? `https://github.com/fmhy/edit/commit/${encodeURIComponent(commitSha)}`
+    : "";
+
+  const addedHtml =
+    filteredAdded.length > 0
+      ? `
+    <div class="links">
+      <ul class="link-list">
+        ${filteredAdded
+          .map((item) => {
+            const linkType = item.type || "new";
+            const typeClass =
+              linkType === "new"
+                ? "new-link"
+                : linkType === "updated"
+                  ? "updated-link"
+                  : "";
+            const badge =
+              linkType === "new"
+                ? '<span class="link-badge new-badge">NEW</span>'
+                : linkType === "updated"
+                  ? '<span class="link-badge updated-badge">UPDATED</span>'
+                  : "";
+            return `<li class="link added-link ${typeClass}">
+            <div class="resource-meta"><span class="source-badge">${escapeHtml(
+              item.source,
+            )}</span> ${badge}</div><div class="resource-content">${renderCachedLink(item, commit)}</div>
+            ${item.type === "updated" && item.relatedLink ? `<details class="change-details" data-change-id="${escapeAttribute(changeIdentity(item, commit))}" ${expandedChanges.has(changeIdentity(item, commit)) ? 'open' : ''}><summary>What changed?</summary><div class="change-before"><strong>Before</strong> ${renderPreviousLink(item, commit)}</div><div><strong>After</strong> ${renderCachedLink(item, commit)}</div></details>` : ""}
+          </li>`;
+          })
+          .join("")}
+      </ul>
+    </div>
+  `
+      : "";
+
+  const removedHtml =
+    filteredRemoved.length > 0
+      ? `
+    <div class="links">
+      <ul class="link-list">
+        ${filteredRemoved
+          .map((item) => {
+            return `<li class="link removed-link">
+            <div class="resource-meta"><span class="source-badge">${escapeHtml(
+              item.source,
+            )}</span> <span class="link-badge removed-badge">REMOVED</span></div><div class="resource-content">${renderCachedLink(item, commit, true)}</div>
+          </li>`;
+          })
+          .join("")}
+      </ul>
+    </div>
+  `
+      : "";
+
+  const shaLink = commitUrl
+    ? `<a class="commit-sha-text" href="${escapeAttribute(commitUrl)}" target="_blank" rel="noopener noreferrer" aria-label="View commit ${escapeAttribute(commitSha.substring(0, 8))} on GitHub">${escapeHtml(commitSha.substring(0, 8))} ↗</a>`
+    : '';
+  return `
+    <section class="commit ${historicalClass} ${monthlyHistoricalClass}">
+      <div class="commit-header">
+        <h3 class="commit-date"><time datetime="${escapeAttribute(commit.date)}" title="${escapeAttribute(formatFullDate(commit.date))}">${escapeHtml(formatCommitDate(commit.date))}</time></h3>
+        <span class="commit-sha">${shaLink}</span>
+        <span class="commit-message">${escapeHtml(commitMessage)}</span>
+      </div>
+      ${addedHtml}
+      ${removedHtml}
+    </section>`;
+}
+
+function renderPagination(totalItems, position = 'bottom') {
+  const totalPages = Math.ceil(totalItems / state.itemsPerPage);
+  if (totalPages <= 1) return '';
+  const pages = [...new Set([1, state.currentPage - 1, state.currentPage, state.currentPage + 1, totalPages])]
+    .filter(page => page >= 1 && page <= totalPages).sort((a, b) => a - b);
+  let previous = 0;
+  const numbers = pages.map(page => {
+    const gap = previous && page - previous > 1 ? '<span class="page-gap" aria-hidden="true">…</span>' : '';
+    previous = page;
+    return `${gap}<button type="button" class="page-btn page-number" data-page="${page}" aria-label="Page ${page}" ${page === state.currentPage ? 'aria-current="page"' : ''}>${page}</button>`;
+  }).join('');
+  return `<nav class="pagination" aria-label="Results pages (${position})">
+    <div class="page-navigation">
+      <button type="button" class="page-btn" data-page="${state.currentPage - 1}" ${state.currentPage === 1 ? 'disabled' : ''}>← Previous</button>
+      <div class="page-numbers">${numbers}</div>
+      <button type="button" class="page-btn" data-page="${state.currentPage + 1}" ${state.currentPage === totalPages ? 'disabled' : ''}>Next →</button>
+    </div>
+    <form class="page-jump">
+      <span class="page-info">Page ${state.currentPage} of ${totalPages}</span>
+      <label for="page-${position}">Go to</label>
+      <input id="page-${position}" name="page" type="number" inputmode="numeric" min="1" max="${totalPages}" value="${state.currentPage}" required aria-label="Page number (${position})">
+      <button class="page-btn" type="submit">Go</button>
+    </form>
+  </nav>`;
+}
+
+function goToPage(page) {
+  const totalPages = Math.max(1, Math.ceil(matchingRows().length / state.itemsPerPage));
+  if (!Number.isSafeInteger(page)) return;
+  state.currentPage = Math.max(1, Math.min(totalPages, page));
+  renderCommits();
+  const container = document.getElementById('commits-container');
+  if (container) {
+    container.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    container.focus({ preventScroll: true });
+  }
+}
+
+function changePage(delta) {
+  goToPage(state.currentPage + delta);
+}
+
+// Get categories that have items matching the current star filter
+// Render category filters
+function renderCategoryFilters() {
+  const { categoryCounts: counts, categories } = getFilterView();
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const container = document.getElementById("category-filters");
+  if (container) {
+    const markup = ["all", ...categories]
+      .map(
+        (cat) => `<button type="button"
+      class="category-btn ${state.categoryFilter === cat ? "active" : ""}"
+      data-category="${escapeAttribute(cat)}" aria-pressed="${state.categoryFilter === cat}">
+      ${cat === "all" ? "All Categories" : escapeHtml(cat.replaceAll("-", " "))}
+      <span class="category-count">${cat === "all" ? total : counts[cat] || 0}</span></button>`,
+      )
+      .join("");
+    if (container.dataset.markup !== markup) {
+      container.innerHTML = markup;
+      container.dataset.markup = markup;
+    }
+  }
+  const select = document.getElementById("category-select");
+  if (select) {
+    const markup = ["all", ...categories]
+      .map(
+        (cat) =>
+          `<option value="${escapeAttribute(cat)}">${cat === "all" ? "All categories" : escapeHtml(cat.replaceAll("-", " "))} (${cat === "all" ? total : counts[cat] || 0})</option>`,
+      )
+      .join("");
+    if (select.dataset.markup !== markup) {
+      select.innerHTML = markup;
+      select.dataset.markup = markup;
+    }
+    select.value = state.categoryFilter;
+  }
+  if (state.categoryFiltersExpanded && container)
+    container.style.maxHeight = `${container.scrollHeight}px`;
+}
+
+// Set category filter
+function setCategoryFilter(category) {
+  state.categoryFilter = category;
+  state.currentPage = 1;
+
+  document.querySelectorAll(".category-btn").forEach((btn) => {
+    const active = btn.dataset.category === category;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+
+  renderCommits();
+}
+
+// Set type filter (all/new/updated/removed)
+function setFilter(filter) {
+  // Clicking the already-active type filter clears it back to "all"
+  if (filter !== "all" && state.currentFilter === filter) {
+    filter = "all";
+  }
+
+  state.currentFilter = filter;
+  state.currentPage = 1;
+
+  document.querySelectorAll(".stat-filter[data-filter]").forEach((btn) => {
+    const active = btn.dataset.filter === filter;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+
+  renderCommits();
+}
+
+// Update the clear (✕) button visibility based on the search query
+function updateSearchClear() {
+  const clearBtn = document.getElementById("search-clear");
+  if (clearBtn) {
+    clearBtn.hidden = state.searchQuery.length === 0;
+  }
+}
+
+// Handle search
+function handleSearch(event) {
+  state.searchQuery = event.target.value;
+  state.currentPage = 1;
+  updateSearchClear();
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    renderCommits();
+  }, 120);
+}
+
+// Clear the search box
+function clearSearch() {
+  const input = document.getElementById("search-input");
+  if (input) {
+    input.value = "";
+    input.focus();
+  }
+  state.searchQuery = "";
+  state.currentPage = 1;
+  updateSearchClear();
+  renderCommits();
+}
+
+// Toggle star filter (now a pill button alongside the type filters)
+function toggleStarFilter() {
+  state.showOnlyStarred = !state.showOnlyStarred;
+  state.currentPage = 1;
+  writePreference("fmhy-show-starred", state.showOnlyStarred);
+  syncStarToggleUI();
+  renderCommits();
+}
+
+// Update summary statistics based on current filters
+function updateSummaryStats() {
+  const counts = getFilterView().typeCounts;
+  for (const type of ["all", "new", "updated", "removed"]) {
+    const el = document.getElementById(`total-${type}`);
+    if (el)
+      el.textContent =
+        type === "all"
+          ? counts.new + counts.updated + counts.removed
+          : counts[type];
+  }
+}
+function renderActiveFilters() {
+  const filters = [];
+  if (state.searchQuery.trim())
+    filters.push(["search", `Search: ${state.searchQuery.trim()}`]);
+  if (state.currentFilter !== "all")
+    filters.push(["type", state.currentFilter]);
+  if (state.categoryFilter !== "all")
+    filters.push(["category", state.categoryFilter.replaceAll("-", " ")]);
+  if (state.showOnlyStarred) filters.push(["starred", "Starred"]);
+  const container = document.getElementById("active-filters");
+  if (container) {
+    const markup = filters
+      .map(
+        ([key, label]) =>
+          `<button type="button" class="active-filter" data-remove-filter="${key}" aria-label="Remove ${escapeAttribute(label)} filter">${escapeHtml(label)} ×</button>`,
+      )
+      .join("");
+    if (container.dataset.markup !== markup) {
+      container.innerHTML = markup;
+      container.dataset.markup = markup;
+    }
+  }
+  const reset = document.getElementById("clear-all");
+  if (reset) reset.disabled = !filters.length;
+}
+
+// Render all commits
+function renderCommits({ syncUrl = true } = {}) {
+  clearTimeout(searchTimer);
+  const container = document.getElementById("commits-container");
+  if (!container || !window.fmhyData) return;
+  const focusedCategory = document.activeElement?.dataset?.category;
+  updateSummaryStats();
+  renderCategoryFilters();
+  renderActiveFilters();
+  if (focusedCategory) {
+    [...document.querySelectorAll(".category-btn")]
+      .find((button) => button.dataset.category === focusedCategory)
+      ?.focus({ preventScroll: true });
+  }
+  const rows = matchingRows();
+  const totalPages = Math.max(1, Math.ceil(rows.length / state.itemsPerPage));
+  state.currentPage = Math.min(Math.max(1, state.currentPage), totalPages);
+  const start = (state.currentPage - 1) * state.itemsPerPage;
+  const pageRows = rows.slice(start, start + state.itemsPerPage);
+  const commits = new Map();
+  for (const { item, commit, type } of pageRows) {
+    if (!commits.has(commit.sha))
+      commits.set(commit.sha, { ...commit, added: [], removed: [] });
+    commits
+      .get(commit.sha)
+      [type === "removed" ? "removed" : "added"].push(item);
+  }
+  // Capture synchronously as toggle events may still be queued when filtering.
+  container.querySelectorAll?.('details[data-change-id]').forEach(details => {
+    if (details.open) expandedChanges.add(details.dataset.changeId);
+    else expandedChanges.delete(details.dataset.changeId);
+  });
+  let html = "";
+  let currentGroup = null;
+  for (const commit of commits.values()) {
+    // Date grouping follows actual timestamps, never stale generated labels.
+    const group = state.showMonthly
+      ? formatMonth(commit.date.slice(0, 7))
+      : null;
+    if (group && group !== currentGroup) {
+      html += `<div class="date-group-divider"><span class="divider-line"></span><span class="divider-text">${escapeHtml(group)}</span><span class="divider-line"></span></div>`;
+      currentGroup = group;
+    }
+    html += renderCommit(commit);
+  }
+  container.innerHTML = html
+    ? renderPagination(rows.length, 'top') + html + renderPagination(rows.length)
+    : '<div class="no-changes">No matching changes found. Try removing a filter or changing your search.</div>';
+  highlightSearchMatches(container);
+  if (syncUrl) updateUrl();
+  const count = document.getElementById("result-count");
+  if (count)
+    count.textContent = rows.length
+      ? `${start + 1}–${start + pageRows.length} of ${rows.length} changes`
+      : "0 changes";
+}
+
+// True when any search box / filter / toggle is narrowing the results
+// Reset every filter/search control back to its default and re-render
+function clearAllFilters() {
+  state.searchQuery = "";
+  state.currentFilter = "all";
+  state.categoryFilter = "all";
+  state.showOnlyStarred = false;
+  state.currentPage = 1;
+  writePreference("fmhy-show-starred", "false");
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) searchInput.value = "";
+  updateSearchClear();
+  syncStarToggleUI();
+
+  document.querySelectorAll(".stat-filter[data-filter]").forEach((btn) => {
+    const isAll = btn.dataset.filter === "all";
+    btn.classList.toggle("active", isAll);
+    btn.setAttribute("aria-pressed", String(isAll));
+  });
+
+  renderCommits();
+}
+
+// Wrap occurrences of the search query in <mark> across visible text nodes.
+// Operates on the DOM (not the HTML string) so links and markup stay intact.
+function highlightSearchMatches(container) {
+  const query = state.searchQuery.trim();
+  if (!query) return;
+
+  const needle = query.toLowerCase();
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !node.nodeValue.toLowerCase().includes(needle)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      // Skip text already inside a <mark> or a badge/chip label.
+      const parent = node.parentNode;
+      if (parent && parent.nodeName === "MARK") return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  const targets = [];
+  let current;
+  while ((current = walker.nextNode())) {
+    targets.push(current);
+  }
+
+  for (const node of targets) {
+    const text = node.nodeValue;
+    const lower = text.toLowerCase();
+    const frag = document.createDocumentFragment();
+    let index = 0;
+    let found;
+    while ((found = lower.indexOf(needle, index)) !== -1) {
+      if (found > index) {
+        frag.appendChild(document.createTextNode(text.slice(index, found)));
+      }
+      const mark = document.createElement("mark");
+      mark.textContent = text.slice(found, found + needle.length);
+      frag.appendChild(mark);
+      index = found + needle.length;
+    }
+    if (index < text.length) {
+      frag.appendChild(document.createTextNode(text.slice(index)));
+    }
+    node.parentNode.replaceChild(frag, node);
+  }
+}
+
+// Update the relative "... ago" timestamps in the header and footer
+function refreshRelativeTimes() {
+  const data = window.fmhyData;
+  if (!data) return;
+  const lastUpdatedEl = document.getElementById("last-updated");
+  if (lastUpdatedEl && data.lastUpdated) {
+    lastUpdatedEl.textContent = `${formatCommitDate(data.lastUpdated)} · ${formatRelativeTime(data.lastUpdated)}`;
+    lastUpdatedEl.title = formatFullDate(data.lastUpdated);
+  }
+  const buildTimeEl = document.getElementById("build-time");
+  if (buildTimeEl && data.buildTime) {
+    buildTimeEl.textContent = `${formatCommitDate(data.buildTime)} · ${formatRelativeTime(data.buildTime)}`;
+    buildTimeEl.title = formatFullDate(data.buildTime);
+  }
+}
+
+// Initialize the application
+function init(data) {
+  window.fmhyData = data;
+
+  // Restore history and its page together, after the archive has loaded.
+  const restoreHistory = new URLSearchParams(window.location.search).get('history') === '1';
+  restoreStateFromUrl();
+  const restoredPage = state.currentPage;
+
+  // Initialize theme
+  initTheme();
+
+  // Header + footer relative times, refreshed every minute so they don't stale
+  refreshRelativeTimes();
+  setInterval(refreshRelativeTimes, 60000);
+
+  updateMonthlyToggleUI();
+  const results = document.getElementById('commits-container');
+  results?.addEventListener('click', event => {
+    const button = event.target.closest('[data-page]');
+    if (button) goToPage(Number(button.dataset.page));
+  });
+  results?.addEventListener('submit', event => {
+    if (!event.target.matches('.page-jump')) return;
+    event.preventDefault();
+    goToPage(Number(new FormData(event.target).get('page')));
+  });
+  document
+    .getElementById("category-filters")
+    ?.addEventListener("click", (e) => {
+      const button = e.target.closest("[data-category]");
+      if (button) setCategoryFilter(button.dataset.category);
+    });
+  document
+    .getElementById("category-select")
+    ?.addEventListener("change", (e) => setCategoryFilter(e.target.value));
+  document
+    .getElementById("clear-all")
+    ?.addEventListener("click", clearAllFilters);
+  document.getElementById("active-filters")?.addEventListener("click", (e) => {
+    const key = e.target.closest("[data-remove-filter]")?.dataset.removeFilter;
+    if (key === "search") clearSearch();
+    if (key === "type") setFilter("all");
+    if (key === "category") setCategoryFilter("all");
+    if (key === "starred") toggleStarFilter();
+    if (key) document.getElementById("search-input")?.focus({ preventScroll: true });
+  });
+  document.getElementById("monthly-retry")?.addEventListener("click", () => {
+    document.getElementById("monthly-toggle").checked = true;
+    toggleMonthlyView();
+  });
+
+  // Setup event listeners
+  const starToggle = document.getElementById("star-toggle");
+  if (starToggle) {
+    starToggle.addEventListener("click", toggleStarFilter);
+  }
+  syncStarToggleUI();
+
+  const themeSelect = document.getElementById("theme-select");
+  if (themeSelect) {
+    themeSelect.addEventListener("change", (e) => setTheme(e.target.value));
+  }
+
+  document.querySelectorAll(".stat-filter[data-filter]").forEach((btn) => {
+    btn.addEventListener("click", () => setFilter(btn.dataset.filter));
+    // Reflect any filter restored from the URL
+    const active = btn.dataset.filter === state.currentFilter;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.value = state.searchQuery;
+    searchInput.addEventListener("input", handleSearch);
+  }
+  updateSearchClear();
+
+  const searchClear = document.getElementById("search-clear");
+  if (searchClear) {
+    searchClear.addEventListener("click", clearSearch);
+  }
+
+  // Press "/" anywhere (outside a field) to jump to the search box
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const tag = (e.target.tagName || "").toLowerCase();
+    if (
+      tag === "input" ||
+      tag === "textarea" ||
+      tag === "select" ||
+      e.target.isContentEditable
+    )
+      return;
+    if (searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+
+  // Toggle the back-to-top button based on scroll depth.
+  const backToTop = document.getElementById("back-to-top");
+  const onScroll = () => {
+    if (backToTop) {
+      backToTop.classList.toggle("visible", window.scrollY > 600);
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  if (backToTop) {
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
+  }
+
+  const categoryToggleBtn = document.getElementById("category-toggle-btn");
+  if (categoryToggleBtn) {
+    categoryToggleBtn.addEventListener("click", toggleCategoryFilters);
+  }
+
+  // Monthly toggle event listener
+  const monthlyToggle = document.getElementById("monthly-toggle");
+  if (monthlyToggle) {
+    monthlyToggle.addEventListener("change", toggleMonthlyView);
+  }
+
+  // Initial render
+  renderCommits({ syncUrl: !restoreHistory });
+  if (restoreHistory) {
+    document.getElementById('monthly-toggle').checked = true;
+    toggleMonthlyView({ restorePage: restoredPage });
+  }
+}
+
+// Export for module usage
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    init,
+    parseMarkdownLinks,
+    formatRelativeTime,
+  };
+}

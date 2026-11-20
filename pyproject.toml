@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fmhy-tracker"
+version = "1.0.0"
+description = "Track FMHY repository changes and publish dashboard/RSS updates."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "FMHY Tracker Contributors" }]
+dependencies = ["requests>=2.25.1", "rjsmin>=1.2.3", "rcssmin>=1.1.2"]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "pytest-mock>=3.10.0",
+  "ruff>=0.4.0",
+]
+
+[project.scripts]
+fmhy-tracker = "fmhy_tracker.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fmhy_tracker*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
