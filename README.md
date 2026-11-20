@@ -101,7 +101,7 @@ The tracker automatically generates an RSS 2.0 feed at `feed.xml`.
 **Subscribing to the feed:**
 
 - Feed URL: `https://nuson999.github.io/fmhy-tracker/feed.xml`
-- The feed is updated every 12 hours automatically
+- The feed is updated every 6 hours automatically
 - Each RSS item represents one commit with all its changes
 
 **Using the feed:**
@@ -118,7 +118,7 @@ python main.py --no-rss
 
 ## GitHub Actions
 
-This repository includes a GitHub Actions workflow that runs twice daily to monitor for changes. To use it:
+This repository includes a GitHub Actions workflow that runs every 6 hours to monitor for changes. To use it:
 
 1. Fork this repository
 2. Enable GitHub Actions in your fork

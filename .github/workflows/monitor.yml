@@ -2,8 +2,9 @@ name: Monitor fmhy/edit Commits
 
 on:
   schedule:
-    - cron: "0 3 * * *" # Runs every day at 12:00pm KST (03:00 UTC)
-    - cron: "0 15 * * *" # Runs every day at 00:00am KST (15:00 UTC)
+    # Every 6 hours at :17 (off the busy top of the hour)
+    # 00:17, 06:17, 12:17, 18:17 UTC = 09:17, 15:17, 21:17, 03:17 KST
+    - cron: "17 */6 * * *"
   push:
     branches:
       - main

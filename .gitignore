@@ -118,3 +118,8 @@ tracker_output.txt
 
 # Local editor/agent config
 .claude/
+
+# Agent docs and self-improvement loop (local only)
+AGENTS.md
+CLAUDE.md
+rsi/
