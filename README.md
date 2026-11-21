@@ -198,6 +198,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The generator embeds the available archive month before download. Filters reset through their own controls (the All chip, All categories, the search clear button); there is no separate clear-all button or result count.
 - Search is debounced by 120 ms; normalized text, rendered link markup, sorted commits, and row collections are cached in memory.
 - Facet counts and matching rows are computed together and reused during pagination. Unchanged category controls retain their DOM; off-screen resource layout is deferred by the browser.
+- The page is a centered column at most 1120px wide, so wide screens get side margins instead of stretched rows.
 - System fonts avoid external font requests. Search and filters scroll naturally with the page. Above 600px the search is a 150px field in the header, before the theme switcher; on phones it takes the header's second row. The phone category select has no visible label (its accessible name is "Filter by category"). When `FMHY_TELEGRAM_URL` is set, a Telegram button follows the RSS icon on the title row at every width. The header holds at most three icons (theme, RSS, Telegram) so they fit beside the title at 320px; the fmhy/edit GitHub link is in the footer.
 - The HTML generator writes minified, content-hashed CSS/JS under `static/dist/`. Both Pages workflows include these assets. Rebuild after changing template/source assets using the Python environment where you installed the project dependencies:
 

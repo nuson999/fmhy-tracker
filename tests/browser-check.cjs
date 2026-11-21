@@ -130,7 +130,7 @@ async function verify(page, output) {
   assert.equal(await page.evaluate(() => state.searchQuery), '');
   await resetFilters(page);
 
-  for (const width of [1280, 768, 390, 320]) {
+  for (const width of [1920, 1280, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.evaluate(() => window.scrollTo(0, 0));
     const layout = await page.evaluate(() => ({
@@ -141,6 +141,10 @@ async function verify(page, output) {
     }));
     assert.ok(layout.scrollWidth <= layout.width, `horizontal overflow at ${width}: ${JSON.stringify(layout)}`);
     assert.ok(!['fixed', 'sticky'].includes(layout.toolbar));
+    // Wide screens: the page is a centered column of at most 1120px with equal side margins.
+    const column = await page.evaluate(() => document.body.getBoundingClientRect());
+    assert.ok(column.width <= 1120, `page column too wide at ${width}: ${column.width}`);
+    assert.ok(Math.abs(column.left - (layout.width - column.right)) < 2, `page column not centered at ${width}`);
     // Header is one row (title + actions); the update time sits unwrapped opposite the Historical toggle.
     // A hairline separates the filters from the list heading row at every width.
     const header = await page.evaluate(() => {
