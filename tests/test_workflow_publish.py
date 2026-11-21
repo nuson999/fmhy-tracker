@@ -27,6 +27,21 @@ def test_monitor_stops_on_git_publish_failure_and_checks_dispatch_response():
     assert '"sha": "${{ steps.publish.outputs.sha }}"' in dispatch_script
 
 
+def test_monitor_runs_queue_and_start_from_the_branch_tip():
+    """A push run and a manual run once overlapped; the second push was rejected."""
+    workflow = (ROOT / ".github" / "workflows" / "monitor.yml").read_text(
+        encoding="utf-8"
+    )
+    monitor = workflow[workflow.index("  monitor:") :]
+    concurrency = monitor[monitor.index("concurrency:") : monitor.index("steps:")]
+    assert "group: monitor-publish-" in concurrency
+    assert "cancel-in-progress: false" in concurrency
+    checkout = monitor[
+        monitor.index("uses: actions/checkout") : monitor.index("- name: Set up")
+    ]
+    assert "ref: ${{ github.ref_name }}" in checkout
+
+
 def test_pages_checks_out_records_and_rejects_stale_requested_revision():
     workflow = (ROOT / ".github" / "workflows" / "static.yml").read_text(
         encoding="utf-8"

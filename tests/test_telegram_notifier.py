@@ -284,7 +284,10 @@ def test_workflow_offers_test_message_checkbox_that_can_fail_the_run():
         encoding="utf-8"
     )
     assert "      telegram_test:\n" in workflow
-    step = workflow[workflow.index("- name: Send Telegram test message") :]
+    start = workflow.index("- name: Send Telegram test message")
+    step = workflow[start : workflow.index("- name:", start + 1)]
     assert "if: ${{ github.event.inputs.telegram_test == 'true' }}" in step
     assert "python -m fmhy_tracker.telegram_notifier --test" in step
     assert "continue-on-error" not in step
+    # Runs before the tracker, so a failed publish can't skip the test.
+    assert start < workflow.index("- name: Run script")

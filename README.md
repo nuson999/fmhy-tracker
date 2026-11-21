@@ -150,8 +150,9 @@ and update the secret. To test locally: set both variables and run
 `python -m fmhy_tracker.telegram_notifier`.
 
 To check the setup, open Actions → "Monitor fmhy/edit Commits" → Run workflow and tick **Send
-Telegram test message**. The run posts a short test message to the chat and fails if the secrets are
-missing or Telegram rejects the request (`python -m fmhy_tracker.telegram_notifier --test` locally).
+Telegram test message**. Before any tracker work, the run posts a short test message to the chat and
+fails if the secrets are missing or Telegram rejects the request
+(`python -m fmhy_tracker.telegram_notifier --test` locally).
 
 ## GitHub Actions
 
@@ -160,6 +161,10 @@ This repository includes a GitHub Actions workflow that runs every 6 hours to mo
 1. Fork this repository
 2. Enable GitHub Actions in your fork
 3. The workflow will automatically run tests/lint checks, update generated tracker files, and deploy the static dashboard
+
+Publishing runs never overlap: a run triggered while another is publishing waits for it, then starts
+from the branch tip the earlier run pushed. (GitHub keeps one waiting run per branch; a newer one
+replaces it.)
 
 To summarize recent monitor and Pages runs locally (requires the GitHub CLI to be authenticated):
 
