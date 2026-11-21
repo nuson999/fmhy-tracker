@@ -140,6 +140,26 @@ test("search trims whitespace and finds categories and commit messages", () => {
   );
 });
 
+test("search finds and reveals the previous link for an updated row", () => {
+  const updated = {
+    ...link("new-site", "updated"),
+    relatedLink: "* [old-site](https://old.example.test/resource)",
+  };
+  const a = app({ commits: [commit("a", [updated])] });
+
+  a.run('state.searchQuery = "old.example.test"; renderCommits()');
+
+  assert.equal(a.run("matchingRows().length"), 1);
+  assert.match(
+    a.element("commits-container").innerHTML,
+    /<details class="change-details"[^>]* open>/,
+  );
+  assert.match(
+    a.element("commits-container").innerHTML,
+    /href="https:\/\/old\.example\.test\/resource"/,
+  );
+});
+
 test("history failure remains visible and retry succeeds with the actual archive month", async () => {
   const a = app({ commits: [] });
   a.element("monthly-toggle").checked = true;
@@ -176,6 +196,25 @@ test("unsafe before/after markup is escaped and script URLs are not clickable", 
   assert.match(html, /<summary>What changed\?<\/summary>/);
   assert.doesNotMatch(html, /href="javascript:|<img|<script>/);
   assert.match(html, /&lt;script&gt;/);
+});
+
+test("starred links keep their filter signal and render an accessible icon", () => {
+  const a = app({
+    commits: [
+      commit("a", [
+        { ...link("alpha"), link: "* ⭐ **[alpha](https://example.com/alpha)**" },
+      ]),
+    ],
+  });
+  a.run("renderCommits()");
+  const html = a.element("commits-container").innerHTML;
+  assert.match(html, /class="resource-marker" role="img" aria-label="Starred source"/);
+  assert.doesNotMatch(html, /⭐/);
+  const featured = a.run('parseMarkdownLinks("🌟 **[featured](https://example.com/featured)**")');
+  assert.match(featured, /aria-label="Featured source"/);
+  assert.doesNotMatch(featured, /🌟/);
+  assert.equal(a.run('getFilterView().rows.length'), 1);
+  assert.equal(a.run('prepareItem(getRows()[0].item, getRows()[0].commit).starred'), true);
 });
 
 test("storage failures do not prevent application startup or preferences", () => {
@@ -268,4 +307,13 @@ test("history restores a requested page only after the archive is available", as
   await a.run('toggleMonthlyView({ restorePage: 3 })');
   assert.equal(a.run('state.currentPage'), 3);
   assert.equal(a.element('result-count').textContent, '101–150 of 160 changes');
+});
+
+test("header timestamp shows only the relative time; the full date is the tooltip", () => {
+  const updated = new Date(Date.now() - (15 * 60 + 40) * 60 * 1000).toISOString();
+  const a = app({ commits: [], lastUpdated: updated });
+  a.run("refreshRelativeTimes()");
+  const element = a.element("last-updated");
+  assert.equal(element.textContent, "15h 40m ago");
+  assert.notEqual(element.title, "");
 });

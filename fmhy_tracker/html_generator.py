@@ -3,11 +3,14 @@
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
 from rcssmin import cssmin
 from rjsmin import jsmin
+
+from .storage import atomic_write_text
 
 logger = logging.getLogger(__name__)
 
@@ -112,7 +115,7 @@ class HTMLGenerator:
                 ):
                     digest = hashlib.sha256(content.encode("utf-8")).hexdigest()[:16]
                     filename = f"{name}.{digest}.{extension}"
-                    (asset_dir / filename).write_text(content, encoding="utf-8")
+                    atomic_write_text(asset_dir / filename, content)
                     asset_urls[extension] = f"static/dist/{filename}"
 
             # Embed only archive metadata so the label is useful before download.
@@ -148,8 +151,19 @@ class HTMLGenerator:
                 html_content = html_content.replace("{{ " + extension + "_url }}", url)
 
             # Write output file
-            with open(output_file, "w", encoding="utf-8") as f:
-                f.write(html_content)
+            atomic_write_text(output_path, html_content)
+
+            if asset_urls:
+                current_assets = {Path(url).name for url in asset_urls.values()}
+                generated_asset = re.compile(
+                    r"(?:styles|app)\.[a-f0-9]{16}\.(?:css|js)\Z"
+                )
+                for asset_path in asset_dir.iterdir():
+                    if (
+                        generated_asset.fullmatch(asset_path.name)
+                        and asset_path.name not in current_assets
+                    ):
+                        asset_path.unlink()
 
             logger.info("HTML file generated successfully: %s", output_file)
 

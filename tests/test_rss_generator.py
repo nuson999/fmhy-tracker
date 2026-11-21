@@ -3,6 +3,7 @@
 import pytest
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from unittest.mock import patch
 
 from fmhy_tracker.rss_generator import RSSGenerator
 
@@ -128,12 +129,30 @@ class TestRSSGenerator:
         assert "Jan" in rfc822_date
 
     def test_format_rfc822_date_invalid(self, rss_generator):
-        """Test RFC 822 date conversion with invalid input."""
-        # Should return current time on invalid input
-        rfc822_date = rss_generator._format_rfc822_date("invalid-date")
+        """Invalid commit dates do not become the current time."""
+        assert rss_generator._format_rfc822_date("invalid-date") is None
 
-        # Should still be a valid RFC 822 format
-        assert "GMT" in rfc822_date
+    def test_invalid_commit_date_does_not_emit_pubdate(
+        self, rss_generator, temp_directory
+    ):
+        output = temp_directory / "feed.xml"
+        rss_generator.generate(
+            {
+                "commits": [
+                    {
+                        "sha": "invalid-date-commit",
+                        "date": "not-a-date",
+                        "message": "Unparseable upstream timestamp",
+                    }
+                ]
+            },
+            str(output),
+        )
+
+        item = ET.parse(output).find("channel/item")
+        assert item is not None
+        assert item.find("pubDate") is None
+        assert "GMT" in ET.parse(output).findtext("channel/lastBuildDate")
 
     def test_extract_link_text_basic(self, rss_generator):
         """Test extracting text from basic markdown link."""
@@ -280,6 +299,25 @@ class TestRSSGenerator:
 
         assert root.tag == "rss"
         assert root.get("version") == "2.0"
+
+    def test_failed_replace_preserves_previous_feed(
+        self, rss_generator, sample_data_with_commits, temp_directory
+    ):
+        output_file = temp_directory / "test_feed.xml"
+        previous_feed = "<rss>previous feed</rss>\n"
+        output_file.write_text(previous_feed, encoding="utf-8")
+
+        with (
+            patch(
+                "fmhy_tracker.storage.os.replace",
+                side_effect=PermissionError("replace failed"),
+            ),
+            pytest.raises(PermissionError, match="replace failed"),
+        ):
+            rss_generator.generate(sample_data_with_commits, str(output_file))
+
+        assert output_file.read_text(encoding="utf-8") == previous_feed
+        assert list(temp_directory.glob(".test_feed.xml.*.tmp")) == []
 
     def test_rss_channel_metadata(
         self, rss_generator, sample_data_with_commits, temp_directory
@@ -537,6 +575,27 @@ def test_serialization_preserves_html_escaping_and_cdata_terminators(
     parser = Anchors()
     parser.feed(actual)
     assert all(set(attributes) == {"href"} for attributes in parser.attributes)
+
+
+def test_serialization_removes_characters_forbidden_by_xml_10(
+    rss_generator, temp_directory
+):
+    commit = {
+        "sha": "abc123",
+        "date": "2026-09-29T00:00:00Z",
+        "message": "Valid ☀ text\x00\x01 remains",
+        "added": [],
+        "removed": [],
+    }
+    output = temp_directory / "feed.xml"
+
+    rss_generator.generate({"commits": [commit]}, str(output))
+
+    description = ET.parse(output).findtext("channel/item/description")
+    assert "Valid ☀ text remains" in description
+    assert "abc123" in description
+    assert "\x00" not in description
+    assert "\x01" not in description
 
 
 def test_naive_feed_dates_are_utc(rss_generator):

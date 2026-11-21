@@ -69,7 +69,7 @@ function prepareItem(item, commit) {
   let prepared = itemCache.get(item);
   if (!prepared) {
     prepared = {
-      text: `${item.link ?? ""} ${item.source ?? ""} ${commit.message ?? ""}`.toLowerCase(),
+      text: `${item.link ?? ""} ${item.relatedLink ?? ""} ${item.source ?? ""} ${commit.message ?? ""}`.toLowerCase(),
       source: String(item.source ?? "").toLowerCase(),
       starred: String(item.link ?? "").includes("⭐"),
     };
@@ -310,7 +310,7 @@ function updateThemeLabel() {
   const themeLabel = document.getElementById("theme-label");
   if (themeLabel) {
     if (state.theme === "auto") {
-      themeLabel.textContent = "Theme";
+      themeLabel.textContent = "Auto";
     } else {
       themeLabel.textContent =
         state.theme.charAt(0).toUpperCase() + state.theme.slice(1);
@@ -361,9 +361,9 @@ function toggleCategoryFilters() {
 // Parse markdown links to HTML
 function parseMarkdownLinks(text) {
   const rawText = String(text ?? "");
-  const hasStar = rawText.includes("⭐");
+  const marker = rawText.match(/^(⭐|🌟)\s*/u);
 
-  let processedText = rawText.replace(/^⭐\s*/, "");
+  let processedText = rawText.replace(/^(?:⭐|🌟)\s*/u, "");
   processedText = processedText.replace(/ \//g, " |");
 
   const parts = [];
@@ -391,8 +391,10 @@ function parseMarkdownLinks(text) {
   }
   processedText = parts.join("");
 
-  if (hasStar) {
-    return "⭐ " + processedText;
+  if (marker) {
+    const label = marker[1] === "⭐" ? "Starred source" : "Featured source";
+    const markerIcon = `<svg class="resource-marker" role="img" aria-label="${label}" viewBox="0 0 24 24" focusable="false"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`;
+    return `${markerIcon} ${processedText}`;
   }
   return processedText;
 }
@@ -670,15 +672,18 @@ function renderCommit(commit) {
                   : "";
             const badge =
               linkType === "new"
-                ? '<span class="link-badge new-badge">NEW</span>'
+                ? '<span class="link-badge new-badge">New</span>'
                 : linkType === "updated"
-                  ? '<span class="link-badge updated-badge">UPDATED</span>'
+                  ? '<span class="link-badge updated-badge">Updated</span>'
                   : "";
+            const query = state.searchQuery.trim().toLowerCase();
+            const previousLinkMatches =
+              query && String(item.relatedLink ?? "").toLowerCase().includes(query);
             return `<li class="link added-link ${typeClass}">
             <div class="resource-meta"><span class="source-badge">${escapeHtml(
               item.source,
             )}</span> ${badge}</div><div class="resource-content">${renderCachedLink(item, commit)}</div>
-            ${item.type === "updated" && item.relatedLink ? `<details class="change-details" data-change-id="${escapeAttribute(changeIdentity(item, commit))}" ${expandedChanges.has(changeIdentity(item, commit)) ? 'open' : ''}><summary>What changed?</summary><div class="change-before"><strong>Before</strong> ${renderPreviousLink(item, commit)}</div><div><strong>After</strong> ${renderCachedLink(item, commit)}</div></details>` : ""}
+            ${item.type === "updated" && item.relatedLink ? `<details class="change-details" data-change-id="${escapeAttribute(changeIdentity(item, commit))}" ${expandedChanges.has(changeIdentity(item, commit)) || previousLinkMatches ? 'open' : ''}><summary>What changed?</summary><div class="change-before"><strong>Before</strong> ${renderPreviousLink(item, commit)}</div><div><strong>After</strong> ${renderCachedLink(item, commit)}</div></details>` : ""}
           </li>`;
           })
           .join("")}
@@ -697,7 +702,7 @@ function renderCommit(commit) {
             return `<li class="link removed-link">
             <div class="resource-meta"><span class="source-badge">${escapeHtml(
               item.source,
-            )}</span> <span class="link-badge removed-badge">REMOVED</span></div><div class="resource-content">${renderCachedLink(item, commit, true)}</div>
+            )}</span> <span class="link-badge removed-badge">Removed</span></div><div class="resource-content">${renderCachedLink(item, commit, true)}</div>
           </li>`;
           })
           .join("")}
@@ -1048,7 +1053,7 @@ function refreshRelativeTimes() {
   if (!data) return;
   const lastUpdatedEl = document.getElementById("last-updated");
   if (lastUpdatedEl && data.lastUpdated) {
-    lastUpdatedEl.textContent = `${formatCommitDate(data.lastUpdated)} · ${formatRelativeTime(data.lastUpdated)}`;
+    lastUpdatedEl.textContent = formatRelativeTime(data.lastUpdated);
     lastUpdatedEl.title = formatFullDate(data.lastUpdated);
   }
   const buildTimeEl = document.getElementById("build-time");

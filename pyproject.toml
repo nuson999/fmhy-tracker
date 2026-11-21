@@ -21,6 +21,7 @@ dev = [
 
 [project.scripts]
 fmhy-tracker = "fmhy_tracker.cli:main"
+fmhy-run-health = "fmhy_tracker.run_health:main"
 
 [tool.setuptools.packages.find]
 include = ["fmhy_tracker*"]

@@ -6,7 +6,7 @@ function renderPreviousLink(item,commit){const prepared=prepareItem(item,commit)
 return prepared.previousHtml;}
 function getFilterView(){const allRows=getRows();const query=state.searchQuery.trim().toLowerCase();const key=JSON.stringify([query,state.currentFilter,state.categoryFilter,state.showOnlyStarred]);if(filterCache?.source===allRows&&filterCache.key===key)return filterCache;const rows=[];const typeCounts={new:0,updated:0,removed:0};const categoryCounts=Object.create(null);const categories=new Set();for(const row of allRows){const prepared=prepareItem(row.item,row.commit);categories.add(prepared.source);if((state.showOnlyStarred&&!prepared.starred)||(query&&!prepared.text.includes(query)))continue;const typeMatches=state.currentFilter==='all'||row.type===state.currentFilter;const categoryMatches=state.categoryFilter==='all'||prepared.source===state.categoryFilter;if(categoryMatches&&row.type in typeCounts)typeCounts[row.type]++;if(typeMatches)categoryCounts[prepared.source]=(categoryCounts[prepared.source]||0)+1;if(typeMatches&&categoryMatches)rows.push(row);}
 filterCache={source:allRows,key,rows,typeCounts,categoryCounts,categories:[...categories].sort()};return filterCache;}
-function prepareItem(item,commit){let prepared=itemCache.get(item);if(!prepared){prepared={text:`${item.link ?? ""} ${item.source ?? ""} ${commit.message ?? ""}`.toLowerCase(),source:String(item.source??"").toLowerCase(),starred:String(item.link??"").includes("⭐"),};itemCache.set(item,prepared);}
+function prepareItem(item,commit){let prepared=itemCache.get(item);if(!prepared){prepared={text:`${item.link ?? ""} ${item.relatedLink ?? ""} ${item.source ?? ""} ${commit.message ?? ""}`.toLowerCase(),source:String(item.source??"").toLowerCase(),starred:String(item.link??"").includes("⭐"),};itemCache.set(item,prepared);}
 return prepared;}
 function renderCachedLink(item,commit,removed=false){const prepared=prepareItem(item,commit);const key=removed?"removedHtml":"html";if(!(key in prepared)){prepared[key]=renderLinkContent(String(item.link??"").replace(/^\*\s*/,""),{strikeMain:removed},);}
 return prepared[key];}
@@ -34,15 +34,15 @@ return state.theme;}
 function initTheme(){document.documentElement.setAttribute("data-theme",getEffectiveTheme());updateThemeLabel();const themeSelect=document.getElementById("theme-select");if(themeSelect){themeSelect.value=state.theme;}
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(state.theme==="auto"){document.documentElement.setAttribute("data-theme",getEffectiveTheme(),);}});}
 function setTheme(value){state.theme=value;document.documentElement.setAttribute("data-theme",getEffectiveTheme());writePreference("fmhy-theme",state.theme);updateThemeLabel();}
-function updateThemeLabel(){const themeLabel=document.getElementById("theme-label");if(themeLabel){if(state.theme==="auto"){themeLabel.textContent="Theme";}else{themeLabel.textContent=state.theme.charAt(0).toUpperCase()+state.theme.slice(1);}}}
+function updateThemeLabel(){const themeLabel=document.getElementById("theme-label");if(themeLabel){if(state.theme==="auto"){themeLabel.textContent="Auto";}else{themeLabel.textContent=state.theme.charAt(0).toUpperCase()+state.theme.slice(1);}}}
 function toggleCategoryFilters(){state.categoryFiltersExpanded=!state.categoryFiltersExpanded;const container=document.getElementById("category-filters");const wrapper=document.getElementById("category-filters-wrapper");const header=document.querySelector(".category-filter-header");const icon=document.getElementById("category-toggle-icon");const text=document.getElementById("category-toggle-text");if(container){container.classList.toggle("collapsed",!state.categoryFiltersExpanded);if(!state.categoryFiltersExpanded){container.style.maxHeight="";}else{container.style.maxHeight=container.scrollHeight+"px";}}
 if(wrapper){wrapper.classList.toggle("expanded",state.categoryFiltersExpanded);}
 if(header){header.classList.toggle("expanded",state.categoryFiltersExpanded);}
 if(icon){icon.classList.toggle("expanded",state.categoryFiltersExpanded);}
 document.getElementById("category-toggle-btn")?.setAttribute("aria-expanded",String(state.categoryFiltersExpanded));if(text){text.textContent=state.categoryFiltersExpanded?"Show Less":"Show More";}}
-function parseMarkdownLinks(text){const rawText=String(text??"");const hasStar=rawText.includes("⭐");let processedText=rawText.replace(/^⭐\s*/,"");processedText=processedText.replace(/ \//g," |");const parts=[];const boldState={boldOpen:false};const linkPattern=/(\*\*)?\[([^\]]+)\]\(([^)]+)\)(\*\*)?/g;let lastIndex=0;let match;while((match=linkPattern.exec(processedText))!==null){parts.push(renderTextWithBold(processedText.slice(lastIndex,match.index),boldState,),);const label=match[1]&&match[4]?`**${match[2]}**`:match[2];parts.push(renderLink(label,match[3]));lastIndex=match.index+match[0].length;}
+function parseMarkdownLinks(text){const rawText=String(text??"");const marker=rawText.match(/^(⭐|🌟)\s*/u);let processedText=rawText.replace(/^(?:⭐|🌟)\s*/u,"");processedText=processedText.replace(/ \//g," |");const parts=[];const boldState={boldOpen:false};const linkPattern=/(\*\*)?\[([^\]]+)\]\(([^)]+)\)(\*\*)?/g;let lastIndex=0;let match;while((match=linkPattern.exec(processedText))!==null){parts.push(renderTextWithBold(processedText.slice(lastIndex,match.index),boldState,),);const label=match[1]&&match[4]?`**${match[2]}**`:match[2];parts.push(renderLink(label,match[3]));lastIndex=match.index+match[0].length;}
 parts.push(renderTextWithBold(processedText.slice(lastIndex),boldState));if(boldState.boldOpen){parts.push("</strong>");}
-processedText=parts.join("");if(hasStar){return"⭐ "+processedText;}
+processedText=parts.join("");if(marker){const label=marker[1]==="⭐"?"Starred source":"Featured source";const markerIcon=`<svg class="resource-marker" role="img" aria-label="${label}" viewBox="0 0 24 24" focusable="false"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`;return`${markerIcon} ${processedText}`;}
 return processedText;}
 function renderLinkContent(text,{strikeMain=false}={}){const raw=String(text??"");const linkPattern=/\[[^\]]+\]\([^)]+\)/g;const linkRanges=[];let match;while((match=linkPattern.exec(raw))!==null){linkRanges.push([match.index,match.index+match[0].length]);}
 const insideLink=(index)=>linkRanges.some(([start,end])=>index>=start&&index<end);const segments=[];let current="";let boldOpen=false;for(let i=0;i<raw.length;i++){if(raw[i]==="*"&&raw[i+1]==="*"){boldOpen=!boldOpen;current+="**";i++;continue;}
@@ -80,11 +80,14 @@ const isHistorical=commit.isHistorical===true;const isMonthlyHistorical=commit.i
                   : "";
             const badge =
               linkType === "new"
-                ? '<span class="link-badge new-badge">NEW</span>'
+                ? '<span class="link-badge new-badge">New</span>'
                 : linkType === "updated"
-                  ? '<span class="link-badge updated-badge">UPDATED</span>'
+                  ? '<span class="link-badge updated-badge">Updated</span>'
                   : "";
-            return `<li class="link added-link ${typeClass}"><div class="resource-meta"><span class="source-badge">${escapeHtml(item.source,)}</span>${badge}</div><div class="resource-content">${renderCachedLink(item,commit)}</div>${item.type==="updated"&&item.relatedLink?`<details class="change-details" data-change-id="${escapeAttribute(changeIdentity(item, commit))}" ${expandedChanges.has(changeIdentity(item, commit)) ? 'open' : ''}><summary>What changed?</summary><div class="change-before"><strong>Before</strong> ${renderPreviousLink(item, commit)}</div><div><strong>After</strong> ${renderCachedLink(item, commit)}</div></details>`:""}</li>`;
+            const query = state.searchQuery.trim().toLowerCase();
+            const previousLinkMatches =
+              query && String(item.relatedLink ?? "").toLowerCase().includes(query);
+            return `<li class="link added-link ${typeClass}"><div class="resource-meta"><span class="source-badge">${escapeHtml(item.source,)}</span>${badge}</div><div class="resource-content">${renderCachedLink(item,commit)}</div>${item.type==="updated"&&item.relatedLink?`<details class="change-details" data-change-id="${escapeAttribute(changeIdentity(item, commit))}" ${expandedChanges.has(changeIdentity(item, commit)) || previousLinkMatches ? 'open' : ''}><summary>What changed?</summary><div class="change-before"><strong>Before</strong> ${renderPreviousLink(item, commit)}</div><div><strong>After</strong> ${renderCachedLink(item, commit)}</div></details>`:""}</li>`;
           })
           .join("")}
       </ul>
@@ -94,7 +97,7 @@ const isHistorical=commit.isHistorical===true;const isMonthlyHistorical=commit.i
       <ul class="link-list">
         ${filteredRemoved
           .map((item) => {
-            return `<li class="link removed-link"><div class="resource-meta"><span class="source-badge">${escapeHtml(item.source,)}</span><span class="link-badge removed-badge">REMOVED</span></div><div class="resource-content">${renderCachedLink(item,commit,true)}</div></li>`;
+            return `<li class="link removed-link"><div class="resource-meta"><span class="source-badge">${escapeHtml(item.source,)}</span><span class="link-badge removed-badge">Removed</span></div><div class="resource-content">${renderCachedLink(item,commit,true)}</div></li>`;
           })
           .join("")}
       </ul>
@@ -163,7 +166,7 @@ for(const node of targets){const text=node.nodeValue;const lower=text.toLowerCas
 const mark=document.createElement("mark");mark.textContent=text.slice(found,found+needle.length);frag.appendChild(mark);index=found+needle.length;}
 if(index<text.length){frag.appendChild(document.createTextNode(text.slice(index)));}
 node.parentNode.replaceChild(frag,node);}}
-function refreshRelativeTimes(){const data=window.fmhyData;if(!data)return;const lastUpdatedEl=document.getElementById("last-updated");if(lastUpdatedEl&&data.lastUpdated){lastUpdatedEl.textContent=`${formatCommitDate(data.lastUpdated)} · ${formatRelativeTime(data.lastUpdated)}`;lastUpdatedEl.title=formatFullDate(data.lastUpdated);}
+function refreshRelativeTimes(){const data=window.fmhyData;if(!data)return;const lastUpdatedEl=document.getElementById("last-updated");if(lastUpdatedEl&&data.lastUpdated){lastUpdatedEl.textContent=formatRelativeTime(data.lastUpdated);lastUpdatedEl.title=formatFullDate(data.lastUpdated);}
 const buildTimeEl=document.getElementById("build-time");if(buildTimeEl&&data.buildTime){buildTimeEl.textContent=`${formatCommitDate(data.buildTime)} · ${formatRelativeTime(data.buildTime)}`;buildTimeEl.title=formatFullDate(data.buildTime);}}
 function init(data){window.fmhyData=data;const restoreHistory=new URLSearchParams(window.location.search).get('history')==='1';restoreStateFromUrl();const restoredPage=state.currentPage;initTheme();refreshRelativeTimes();setInterval(refreshRelativeTimes,60000);updateMonthlyToggleUI();const results=document.getElementById('commits-container');results?.addEventListener('click',event=>{const button=event.target.closest('[data-page]');if(button)goToPage(Number(button.dataset.page));});results?.addEventListener('submit',event=>{if(!event.target.matches('.page-jump'))return;event.preventDefault();goToPage(Number(new FormData(event.target).get('page')));});document.getElementById("category-filters")?.addEventListener("click",(e)=>{const button=e.target.closest("[data-category]");if(button)setCategoryFilter(button.dataset.category);});document.getElementById("category-select")?.addEventListener("change",(e)=>setCategoryFilter(e.target.value));document.getElementById("clear-all")?.addEventListener("click",clearAllFilters);document.getElementById("active-filters")?.addEventListener("click",(e)=>{const key=e.target.closest("[data-remove-filter]")?.dataset.removeFilter;if(key==="search")clearSearch();if(key==="type")setFilter("all");if(key==="category")setCategoryFilter("all");if(key==="starred")toggleStarFilter();if(key)document.getElementById("search-input")?.focus({preventScroll:true});});document.getElementById("monthly-retry")?.addEventListener("click",()=>{document.getElementById("monthly-toggle").checked=true;toggleMonthlyView();});const starToggle=document.getElementById("star-toggle");if(starToggle){starToggle.addEventListener("click",toggleStarFilter);}
 syncStarToggleUI();const themeSelect=document.getElementById("theme-select");if(themeSelect){themeSelect.addEventListener("change",(e)=>setTheme(e.target.value));}

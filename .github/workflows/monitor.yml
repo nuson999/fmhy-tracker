@@ -90,16 +90,21 @@ jobs:
         run: python main.py --backfill-monthly
 
       - name: Commit and push last commit SHA and generated files
+        id: publish
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add last_commit_sha.txt fmhy_data.json index.html feed.xml monthly_commits.json data/ static/dist/
-          git diff --staged --quiet || (git commit -m "Update tracker data and webpage" && git push) || echo "No changes to commit or push failed"
+          if ! git diff --staged --quiet; then
+            git commit -m "Update tracker data and webpage"
+            git push
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Trigger GitHub Pages deployment
         run: |
-          curl -X POST \
+          curl --fail-with-body --silent --show-error -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.everest-preview+json" \
-          -d '{"event_type": "deploy-static"}' \
+          -d '{"event_type": "deploy-static", "client_payload": {"sha": "${{ steps.publish.outputs.sha }}"}}' \
           https://api.github.com/repos/${{ github.repository }}/dispatches

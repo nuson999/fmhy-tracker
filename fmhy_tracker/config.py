@@ -47,22 +47,26 @@ class Config:
         self.github_timeout_seconds = self._get_int_env(
             "FMHY_GITHUB_TIMEOUT_SECONDS",
             self.DEFAULT_GITHUB_TIMEOUT_SECONDS,
+            minimum=1,
         )
         self.github_retries = self._get_int_env(
             "FMHY_GITHUB_RETRIES",
             self.DEFAULT_GITHUB_RETRIES,
+            minimum=0,
         )
 
         # Minimum commits to display
         self.min_commits = self._get_int_env(
             "FMHY_MIN_COMMITS",
             self.DEFAULT_MIN_COMMITS,
+            minimum=0,
         )
 
         # History settings
         self.max_history_files = self._get_int_env(
             "FMHY_MAX_HISTORY",
             self.DEFAULT_MAX_HISTORY_FILES,
+            minimum=0,
         )
         self.monthly_output_file = os.getenv(
             "FMHY_MONTHLY_OUTPUT", self.DEFAULT_MONTHLY_OUTPUT_FILE
@@ -86,16 +90,26 @@ class Config:
         """Get the path for history files."""
         return self.base_path / self.history_dir
 
-    def _get_int_env(self, name: str, default: int) -> int:
-        """Read an integer environment variable with a safe fallback."""
+    def _get_int_env(self, name: str, default: int, minimum: int = None) -> int:
+        """Read a bounded integer environment variable with a safe fallback."""
         raw_value = os.getenv(name)
         if raw_value is None:
             return default
         try:
-            return int(raw_value)
+            value = int(raw_value)
         except ValueError:
             logger.warning("Invalid %s=%r; using default %s.", name, raw_value, default)
             return default
+        if minimum is not None and value < minimum:
+            logger.warning(
+                "Invalid %s=%r; minimum is %s, using default %s.",
+                name,
+                raw_value,
+                minimum,
+                default,
+            )
+            return default
+        return value
 
     def ensure_history_dir(self) -> None:
         """Ensure the history directory exists."""

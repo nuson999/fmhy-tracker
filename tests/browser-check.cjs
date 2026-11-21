@@ -9,6 +9,12 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, '.cache', 'browser-check');
 const baseline = process.argv.includes('--baseline');
 const baselineHtml = baseline ? execFileSync('git', ['show', 'HEAD:index.html'], { cwd: root }) : null;
+const baselineAssets = new Map();
+if (baselineHtml) {
+  for (const [file] of baselineHtml.toString().matchAll(/static\/dist\/(?:styles\.[a-f0-9]{16}\.css|app\.[a-f0-9]{16}\.js)/g)) {
+    baselineAssets.set('/' + file, execFileSync('git', ['show', `HEAD:${file}`], { cwd: root }));
+  }
+}
 const launch = { headless: true };
 if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
 
@@ -23,6 +29,10 @@ if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
       const url = new URL(route.request().url());
       if (url.hostname !== 'fmhy.test') return route.abort();
       if (baselineHtml && url.pathname === '/') return route.fulfill({ contentType: 'text/html', body: baselineHtml });
+      if (baselineAssets.has(url.pathname)) return route.fulfill({
+        contentType: url.pathname.endsWith('.css') ? 'text/css' : 'text/javascript',
+        body: baselineAssets.get(url.pathname),
+      });
       const file = path.resolve(root, '.' + (url.pathname === '/' ? '/index.html' : decodeURIComponent(url.pathname)));
       if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) return route.fulfill({ status: 404 });
       await route.fulfill({ path: file });
@@ -30,6 +40,9 @@ if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
     await page.goto('http://fmhy.test/?starred=0');
     await page.locator('.link').first().waitFor();
     await page.screenshot({ path: path.join(output, baseline ? 'before-desktop.png' : 'after-desktop.png') });
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.screenshot({ path: path.join(output, baseline ? 'before-390.png' : 'after-390-recent.png') });
+    await page.setViewportSize({ width: 1280, height: 900 });
     await page.locator('.monthly-toggle-label').click();
     await page.waitForFunction(() => state.showMonthly && !state.monthlyLoading);
     const metrics = await page.evaluate(() => {
@@ -63,6 +76,7 @@ if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
 })().catch(error => { console.error(error); process.exitCode = 1; });
 
 async function verify(page, output) {
+  await verifyAccessibility(page);
   assert.equal(await page.locator('.pagination').count(), 2);
   const top = page.getByRole('navigation', { name: 'Results pages (top)' });
   await top.getByRole('button', { name: 'Page 2', exact: true }).click();
@@ -118,6 +132,20 @@ async function verify(page, output) {
     }));
     assert.ok(layout.scrollWidth <= layout.width, `horizontal overflow at ${width}: ${JSON.stringify(layout)}`);
     assert.ok(!['fixed', 'sticky'].includes(layout.toolbar));
+    // Header stays two lines: title + actions on one row, the timestamp unwrapped below.
+    const header = await page.evaluate(() => {
+      const box = (selector) => document.querySelector(selector).getBoundingClientRect();
+      const updated = document.querySelector('.last-updated');
+      return {
+        titleTop: box('header h1').top,
+        actionsTop: box('.header-actions').top,
+        actionsBottom: box('.header-actions').bottom,
+        titleBottom: box('header h1').bottom,
+        updatedLines: Math.round(updated.getBoundingClientRect().height / parseFloat(getComputedStyle(updated).lineHeight)),
+      };
+    });
+    assert.ok(header.actionsTop < header.titleBottom && header.actionsBottom > header.titleTop, `header actions left the title row at ${width}: ${JSON.stringify(header)}`);
+    assert.equal(header.updatedLines, 1, `header timestamp wraps at ${width}`);
     if (width < 600) {
       assert.notEqual(layout.mobileCategory, 'none');
       await page.locator('#category-select').focus();
@@ -169,4 +197,131 @@ async function verify(page, output) {
   await page.waitForFunction(() => state.showMonthly && !state.monthlyLoading);
   assert.equal(await page.evaluate(() => state.currentPage), 1);
   assert.equal(await page.evaluate(() => state.currentFilter), 'new');
+}
+
+async function verifyAccessibility(page) {
+  const unnamed = await page.locator('a[href], button, input:not([type="hidden"]), select, textarea, [role="button"], [role="link"]').evaluateAll(elements => elements
+    .filter(el => {
+      const style = getComputedStyle(el);
+      return style.display !== 'none' && style.visibility !== 'hidden' && el.getClientRects().length > 0 && !el.closest('[hidden], [aria-hidden="true"]') && !el.disabled;
+    })
+    .filter(el => {
+      const labelledBy = el.getAttribute('aria-labelledby');
+      const references = labelledBy && labelledBy.split(/\s+/).map(id => document.getElementById(id)?.textContent.trim()).filter(Boolean);
+      return !(el.getAttribute('aria-label')?.trim() || references?.length || [...(el.labels || [])].some(label => label.textContent.trim()) || el.textContent.trim() || el.value?.trim() || el.alt?.trim() || el.title?.trim());
+    })
+    .map(el => `${el.tagName.toLowerCase()}#${el.id || el.className || ''}`));
+  assert.deepEqual(unnamed, [], `controls without accessible names: ${unnamed.join(', ')}`);
+
+  const currentUrl = page.url();
+  await page.goto('http://fmhy.test/?starred=0');
+  await page.locator('.link').first().waitFor();
+  const tabStops = await page.evaluate(() => {
+    const controls = [...document.querySelectorAll('a[href], button, input:not([type="hidden"]), select, textarea, details > summary:first-of-type, [tabindex]')]
+      .filter(el => {
+        const style = getComputedStyle(el);
+        const closed = el.closest('details:not([open])');
+        if (closed && !closed.querySelector(':scope > summary')?.contains(el)) return false;
+        return el.tabIndex >= 0 && !el.disabled && style.display !== 'none' && style.visibility !== 'hidden' && el.getClientRects().length > 0 && !el.closest('[hidden], [aria-hidden="true"]');
+      });
+    controls.forEach((el, index) => { el.dataset.a11yTabIndex = String(index); });
+    return { count: controls.length, positive: controls.filter(el => el.tabIndex > 0).map(el => el.id || el.tagName) };
+  });
+  assert.deepEqual(tabStops.positive, [], 'positive tabindex values can scramble focus order');
+  for (let index = 0; index < tabStops.count; index++) {
+    await page.keyboard.press('Tab');
+    const focused = await page.evaluate(() => {
+      const el = document.activeElement;
+      let visibleIndicator = false;
+      for (let node = el; node && node !== document.body; node = node.parentElement) {
+        const style = getComputedStyle(node);
+        if ((style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) > 0) || style.boxShadow !== 'none') {
+          visibleIndicator = true;
+          break;
+        }
+      }
+      return { index: Number(el.dataset.a11yTabIndex), keyboardVisible: el.matches(':focus-visible'), visibleIndicator };
+    });
+    assert.equal(focused.index, index, `Tab order differs from document order at stop ${index}`);
+    assert.ok(focused.keyboardVisible && focused.visibleIndicator, `focus indicator missing at stop ${index}`);
+  }
+
+  await page.goto(currentUrl);
+  await page.waitForFunction(() => !state.monthlyLoading);
+  for (const theme of ['light', 'dark']) {
+    await page.selectOption('#theme-select', { label: theme === 'dark' ? 'Dark' : 'Light' });
+    await page.waitForFunction(value => document.documentElement.dataset.theme === value, theme);
+    assert.equal(await page.locator('#theme-label').innerText(), theme === 'dark' ? 'Dark' : 'Light');
+    await page.waitForTimeout(350);
+    await assertTextContrast(page, `${theme} theme settled`);
+
+    await page.locator('[data-filter="updated"]').click();
+    await assertTextContrast(page, `${theme} theme selected change filter`);
+    await page.locator('[data-category="gaming"]').click();
+    await assertTextContrast(page, `${theme} theme selected category`);
+    await page.locator('[data-category="mobile"]').hover();
+    await assertTextContrast(page, `${theme} theme category hover`);
+
+    await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+    const currentPage = page.locator('.pagination[aria-label="Results pages (top)"] .page-btn[aria-current="page"]');
+    await currentPage.hover();
+    await assertTextContrast(page, `${theme} theme current page hover`);
+    const otherPage = page.locator('.pagination[aria-label="Results pages (top)"] .page-btn:not([aria-current="page"]):not(:disabled)').first();
+    await otherPage.hover();
+    await assertTextContrast(page, `${theme} theme other page hover`);
+  }
+}
+
+async function assertTextContrast(page, label) {
+  const failures = await page.evaluate(() => {
+    const parse = value => {
+      const match = value.match(/rgba?\(([^)]+)\)/);
+      if (!match) return null;
+      const parts = match[1].split(',').map(part => Number.parseFloat(part.trim()));
+      return [parts[0], parts[1], parts[2], parts.length > 3 ? parts[3] : 1];
+    };
+    const blend = (top, bottom) => [0, 1, 2].map(index => top[index] * top[3] + bottom[index] * (1 - top[3])).concat(1);
+    const luminance = color => {
+      const channels = color.slice(0, 3).map(value => {
+        value /= 255;
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    };
+    const bodyBackground = parse(getComputedStyle(document.body).backgroundColor);
+    return [...document.body.querySelectorAll('*')].flatMap(el => {
+      if (![...el.childNodes].some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()) || !el.getClientRects().length || el.closest('[hidden], [aria-hidden="true"], :disabled')) return [];
+      const chain = [];
+      for (let node = el; node && node !== document.body; node = node.parentElement) chain.push(node);
+      let background = bodyBackground;
+      let hasImage = false;
+      for (const node of chain.reverse()) {
+        const style = getComputedStyle(node);
+        if (style.backgroundImage !== 'none') { hasImage = true; break; }
+        const color = parse(style.backgroundColor);
+        if (color) background = color[3] >= 1 ? color : blend(color, background);
+      }
+      if (hasImage) return [];
+      const style = getComputedStyle(el);
+      let foreground = parse(style.color);
+      if (!foreground || !background) return [];
+      let opacity = 1;
+      for (let node = el; node && node !== document.body; node = node.parentElement) {
+        const nodeStyle = getComputedStyle(node);
+        if (nodeStyle.visibility === 'hidden') return [];
+        opacity *= Number.parseFloat(nodeStyle.opacity);
+      }
+      if (opacity === 0) return [];
+      foreground[3] *= opacity;
+      foreground = foreground[3] >= 1 ? foreground : blend(foreground, background);
+      const fontSize = Number.parseFloat(style.fontSize);
+      const fontWeight = Number.parseInt(style.fontWeight, 10) || 400;
+      const minimum = fontSize >= 24 || fontSize >= 18.66 && fontWeight >= 700 ? 3 : 4.5;
+      const foregroundLuminance = luminance(foreground);
+      const backgroundLuminance = luminance(background);
+      const ratio = (Math.max(foregroundLuminance, backgroundLuminance) + 0.05) / (Math.min(foregroundLuminance, backgroundLuminance) + 0.05);
+      return ratio + 0.01 < minimum ? [{ text: el.textContent.trim().slice(0, 40), className: el.className?.toString().slice(0, 40), ratio: Number(ratio.toFixed(2)), minimum }] : [];
+    });
+  });
+  assert.deepEqual(failures, [], `${label} text contrast failures: ${JSON.stringify(failures.slice(0, 12))}`);
 }

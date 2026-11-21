@@ -2,20 +2,22 @@
 
 import json
 import logging
-import os
 import re
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional, List, Tuple, Dict, Any
+from uuid import uuid4
 
 import requests
 
 from .html_generator import HTMLGenerator
 from .rss_generator import RSSGenerator
 from .config import config
+from .storage import atomic_write_text
 
 logger = logging.getLogger(__name__)
+ZERO_CHANGE_WARNING_THRESHOLD = 10
 
 
 class GitHubRateLimitError(requests.RequestException):
@@ -122,14 +124,31 @@ class FMHYTracker:
         Returns:
             The last commit SHA or None if not found
         """
-        if os.path.exists(self.last_commit_sha_file):
-            try:
-                with open(self.last_commit_sha_file, "r") as f:
-                    return f.read().strip()
-            except Exception as e:
-                logger.error("Error reading commit SHA file: %s", e)
-                return None
-        return None
+        try:
+            with open(self.last_commit_sha_file, "r", encoding="utf-8") as f:
+                sha = f.read().strip()
+        except FileNotFoundError:
+            return None
+        except Exception as e:
+            logger.error("Error reading commit SHA file: %s", e)
+            raise
+
+        if not sha:
+            raise ValueError(f"Commit SHA file is empty: {self.last_commit_sha_file}")
+        return sha
+
+    def _get_zero_change_streak(self, last_commit_sha: Optional[str]) -> int:
+        """Read a streak only when it was saved through the processed SHA."""
+        if not last_commit_sha:
+            return 0
+        try:
+            with open(self.output_file, "r", encoding="utf-8") as file:
+                data = json.load(file)
+            if data.get("zeroChangeStreakThroughSha") != last_commit_sha:
+                return 0
+            return max(0, int(data.get("zeroChangeStreak", 0)))
+        except (OSError, TypeError, ValueError):
+            return 0
 
     def set_last_commit_sha(self, sha: str) -> None:
         """Save the last processed commit SHA to file.
@@ -137,11 +156,12 @@ class FMHYTracker:
         Args:
             sha: The commit SHA to save
         """
+        destination = Path(self.last_commit_sha_file)
         try:
-            with open(self.last_commit_sha_file, "w") as f:
-                f.write(sha)
+            atomic_write_text(destination, sha)
         except Exception as e:
             logger.error("Error writing commit SHA file: %s", e)
+            raise
 
     def get_new_commits(self, last_commit_sha: Optional[str]) -> List[Dict]:
         """Fetch new commits from the repository.
@@ -181,10 +201,10 @@ class FMHYTracker:
             return list(reversed(new_commits))
         except requests.RequestException as e:
             logger.error("Error fetching commits: %s", e)
-            return []
+            raise
         except Exception as e:
             logger.exception("Unexpected error fetching commits: %s", e)
-            return []
+            raise
 
     def get_historical_commits(
         self, count: int = 5, exclude_shas: List[str] = None
@@ -198,25 +218,38 @@ class FMHYTracker:
         Returns:
             List of historical commits
         """
+        if count < 0:
+            raise ValueError("count must be non-negative")
+        if count == 0:
+            return []
+
         try:
-            exclude_shas = exclude_shas or []
-            # Fetch more commits than needed to account for exclusions
-            fetch_count = count + len(exclude_shas)
-            url = f"https://api.github.com/repos/{self.repo}/commits?per_page={fetch_count}"
-            response = self._github_get(url)
-            commits = response.json()
+            excluded = set(exclude_shas or [])
+            url = f"https://api.github.com/repos/{self.repo}/commits"
+            params = {"per_page": 100}
+            historical_commits = []
 
-            # Filter out excluded commits
-            if exclude_shas:
-                commits = [c for c in commits if c["sha"] not in exclude_shas]
+            while url and len(historical_commits) < count:
+                response = self._github_get(url, params=params)
+                page_commits = response.json()
+                if not page_commits:
+                    break
 
-            return commits[:count]
+                historical_commits.extend(
+                    commit
+                    for commit in page_commits
+                    if commit.get("sha") not in excluded
+                )
+                url = response.links.get("next", {}).get("url")
+                params = None
+
+            return historical_commits[:count]
         except requests.RequestException as e:
             logger.error("Error fetching historical commits: %s", e)
-            return []
+            raise
         except Exception as e:
             logger.exception("Unexpected error fetching historical commits: %s", e)
-            return []
+            raise
 
     def extract_link_identifier(self, markdown_link: str) -> str:
         """Extract link title from a markdown link for comparison.
@@ -395,8 +428,8 @@ class FMHYTracker:
             True when the data was written successfully.
         """
         try:
-            with open(self.output_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+            content = json.dumps(data, indent=2, ensure_ascii=False)
+            atomic_write_text(Path(self.output_file), content)
             logger.info("Data saved to %s", self.output_file)
             return True
         except Exception as e:
@@ -410,32 +443,37 @@ class FMHYTracker:
             data: Data dictionary to archive
         """
         try:
+            max_files = self.config.max_history_files
+            if max_files < 0:
+                raise ValueError("FMHY_MAX_HISTORY must be non-negative")
+            if max_files == 0:
+                return
             self.config.ensure_history_dir()
-            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-            history_file = self.config.history_path / f"fmhy_data_{timestamp}.json"
+            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S_%f")
+            history_file = (
+                self.config.history_path / f"fmhy_data_{timestamp}_{uuid4().hex}.json"
+            )
 
-            with open(history_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+            content = json.dumps(data, indent=2, ensure_ascii=False)
+            atomic_write_text(history_file, content)
             logger.info("History saved to %s", history_file)
 
-            self._cleanup_history()
+            self._cleanup_history(max_files)
         except Exception as e:
             logger.error("Error saving history: %s", e)
+            raise
 
-    def _cleanup_history(self, max_files: int = None) -> None:
-        """Clean up old history files.
+    def _cleanup_history(self, max_files: int) -> None:
+        """Clean up old history files after saving with a positive limit.
 
         Args:
-            max_files: Maximum number of history files to keep (default from config)
+            max_files: Maximum number of history files to keep
         """
-        if max_files is None:
-            max_files = self.config.max_history_files
         try:
             history_files = sorted(self.config.history_path.glob("fmhy_data_*.json"))
-            if len(history_files) > max_files:
-                for old_file in history_files[:-max_files]:
-                    old_file.unlink()
-                    logger.info("Cleaned up old history file: %s", old_file)
+            for old_file in history_files[:-max_files]:
+                old_file.unlink()
+                logger.info("Cleaned up old history file: %s", old_file)
         except Exception as e:
             logger.error("Error cleaning up history: %s", e)
 
@@ -448,25 +486,22 @@ class FMHYTracker:
         Returns:
             List of historical data dictionaries
         """
+        if limit < 0:
+            raise ValueError("limit must be non-negative")
+        if limit == 0:
+            return []
+        if not self.config.history_path.exists():
+            return []
+
+        history_files = sorted(
+            self.config.history_path.glob("fmhy_data_*.json"), reverse=True
+        )[:limit]
         history = []
-        try:
-            if not self.config.history_path.exists():
-                return []
-
-            history_files = sorted(
-                self.config.history_path.glob("fmhy_data_*.json"), reverse=True
-            )[:limit]
-
-            for history_file in history_files:
-                try:
-                    with open(history_file, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        data["_filename"] = history_file.name
-                        history.append(data)
-                except Exception as e:
-                    logger.error("Error reading history file %s: %s", history_file, e)
-        except Exception as e:
-            logger.error("Error getting history: %s", e)
+        for history_file in history_files:
+            with open(history_file, "r", encoding="utf-8") as file:
+                data = json.load(file)
+            data["_filename"] = history_file.name
+            history.append(data)
 
         return history
 
@@ -503,13 +538,13 @@ class FMHYTracker:
             output_file = self.config.monthly_output_file
 
         try:
-            if Path(output_file).exists():
-                with open(output_file, "r", encoding="utf-8") as f:
-                    return json.load(f)
+            with open(output_file, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {"month": "", "commits": [], "totalCommits": 0}
         except Exception as e:
             logger.error("Error loading existing monthly data: %s", e)
-
-        return {"month": "", "commits": [], "totalCommits": 0}
+            raise
 
     def get_current_month_commits_from_data(self) -> List[Dict]:
         """Get commits from fmhy_data.json that are from the current month.
@@ -522,20 +557,20 @@ class FMHYTracker:
         month = now.month
         month_prefix = f"{year}-{month:02d}"
 
-        commits = []
         try:
-            if Path(self.output_file).exists():
-                with open(self.output_file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-
-                for commit in data.get("commits", []):
-                    commit_date = commit.get("date", "")
-                    if commit_date.startswith(month_prefix):
-                        commits.append(commit)
+            with open(self.output_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            return []
         except Exception as e:
             logger.error("Error reading current data: %s", e)
+            raise
 
-        return commits
+        return [
+            commit
+            for commit in data.get("commits", [])
+            if commit.get("date", "").startswith(month_prefix)
+        ]
 
     def _get_date_group(self, date_string: str) -> str:
         """Determine the date group for a commit.
@@ -647,13 +682,12 @@ class FMHYTracker:
 
         # Fetch all commits from the start of the month
         all_commits = []
+        url = f"https://api.github.com/repos/{self.repo}/commits"
+        params = {"since": month_start, "per_page": 100}
         page = 1
-        per_page = 100
 
-        while True:
+        while url:
             try:
-                url = f"https://api.github.com/repos/{self.repo}/commits"
-                params = {"since": month_start, "per_page": per_page, "page": page}
                 response = self._github_get(url, params=params)
                 commits = response.json()
 
@@ -663,13 +697,12 @@ class FMHYTracker:
                 all_commits.extend(commits)
                 logger.info("  Fetched page %s: %s commits", page, len(commits))
 
-                if len(commits) < per_page:
-                    break
-
+                url = response.links.get("next", {}).get("url")
+                params = None
                 page += 1
             except requests.RequestException as e:
                 logger.error("Error fetching commits page %s: %s", page, e)
-                break
+                raise
 
         logger.info("Total commits fetched: %s", len(all_commits))
 
@@ -692,25 +725,21 @@ class FMHYTracker:
                 commit.get("commit", {}).get("message", "")[:50],
             )
 
-            try:
-                added, removed = self.process_commit(commit)
+            added, removed = self.process_commit(commit, raise_on_error=True)
 
-                commit_data = {
-                    "sha": sha,
-                    "date": commit_date,
-                    "message": commit.get("commit", {}).get("message", ""),
-                    "added": added,
-                    "removed": removed,
-                    "isMonthlyHistorical": True,
-                    "dateGroup": self._get_date_group(commit_date),
-                }
+            commit_data = {
+                "sha": sha,
+                "date": commit_date,
+                "message": commit.get("commit", {}).get("message", ""),
+                "added": added,
+                "removed": removed,
+                "isMonthlyHistorical": True,
+                "dateGroup": self._get_date_group(commit_date),
+            }
 
-                existing_commits.append(commit_data)
-                existing_shas.add(sha)
-                new_count += 1
-            except Exception as e:
-                logger.error("  Error processing commit %s: %s", sha[:8], e)
-                continue
+            existing_commits.append(commit_data)
+            existing_shas.add(sha)
+            new_count += 1
 
         self._write_monthly_data(
             output_file, current_month, existing_commits, now, new_count
@@ -752,8 +781,8 @@ class FMHYTracker:
         }
 
         try:
-            with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+            content = json.dumps(data, indent=2, ensure_ascii=False)
+            atomic_write_text(Path(output_file), content)
             logger.info(
                 "Monthly data saved to %s (%s total commits, %s new)",
                 output_file,
@@ -762,6 +791,7 @@ class FMHYTracker:
             )
         except Exception as e:
             logger.error("Error saving monthly data: %s", e)
+            raise
 
     def _build_commit_data(
         self,
@@ -795,7 +825,7 @@ class FMHYTracker:
                 commit["sha"][:8],
                 commit["commit"]["message"],
             )
-            added, removed = self.process_commit(commit)
+            added, removed = self.process_commit(commit, raise_on_error=True)
             commits_data.append(
                 self._build_commit_data(commit, added, removed, is_historical=True)
             )
@@ -847,10 +877,11 @@ class FMHYTracker:
             logger.info("Found %s new commits.", len(new_commits))
         except Exception as e:
             logger.error("Error getting new commits: %s", e)
-            return
+            raise
 
         if not new_commits:
             logger.info("No new commits found.")
+            zero_change_streak = self._get_zero_change_streak(last_commit_sha)
 
             # Even with no new commits, we should display historical commits
             min_commits = self.config.min_commits
@@ -870,13 +901,18 @@ class FMHYTracker:
                 "totalUpdated": 0,
                 "totalCommits": len(commits_data),
                 "commits": commits_data,
+                "zeroChangeStreak": zero_change_streak,
+                "zeroChangeStreakThroughSha": last_commit_sha
+                or (commits_data[0]["sha"] if commits_data else None),
             }
 
             if not self.save_data(data):
-                return
+                raise RuntimeError("Failed to save tracker data")
 
             html_generated = self.generate_html() if generate_html else True
             rss_generated = self.generate_rss() if generate_rss else True
+            if not html_generated or not rss_generated:
+                raise RuntimeError("Failed to generate tracker outputs")
 
             # Initialize last commit SHA if not set
             if (
@@ -904,6 +940,8 @@ class FMHYTracker:
             "commits": [],
         }
 
+        previous_zero_change_streak = self._get_zero_change_streak(last_commit_sha)
+        zero_change_streak = previous_zero_change_streak
         latest_sha = None
         total_added = 0
         total_removed = 0
@@ -924,11 +962,16 @@ class FMHYTracker:
                     "Stopping before updating %s so the failed commit can be retried.",
                     self.last_commit_sha_file,
                 )
-                return
+                raise
 
             commits_data.append(
                 self._build_commit_data(commit, added, removed, is_historical=False)
             )
+
+            if added or removed:
+                zero_change_streak = 0
+            else:
+                zero_change_streak += 1
 
             added_count, new_count, updated_count, removed_count = (
                 self._log_commit_changes(added, removed)
@@ -976,9 +1019,11 @@ class FMHYTracker:
         data["totalUpdated"] = total_updated
         data["totalCommits"] = len(commits_data)
         data["commits"] = commits_data
+        data["zeroChangeStreak"] = zero_change_streak
+        data["zeroChangeStreakThroughSha"] = latest_sha
 
         if not self.save_data(data):
-            return
+            raise RuntimeError("Failed to save tracker data")
 
         # Save to history
         if total_added > 0 or total_removed > 0:
@@ -986,15 +1031,24 @@ class FMHYTracker:
 
         html_generated = self.generate_html() if generate_html else True
         rss_generated = self.generate_rss() if generate_rss else True
+        if not html_generated or not rss_generated:
+            raise RuntimeError(
+                f"Generated outputs failed; {self.last_commit_sha_file} was not advanced."
+            )
 
-        if latest_sha and html_generated and rss_generated:
+        if latest_sha:
             self.set_last_commit_sha(latest_sha)
             logger.info("Updated last commit SHA to: %s", latest_sha[:8])
-        elif latest_sha:
-            logger.error(
-                "Generated outputs failed, so %s was not advanced.",
-                self.last_commit_sha_file,
-            )
+            if (
+                previous_zero_change_streak
+                < ZERO_CHANGE_WARNING_THRESHOLD
+                <= zero_change_streak
+            ):
+                logger.warning(
+                    "%s consecutive upstream commits had no classified link changes; "
+                    "verify the upstream diff/patch format.",
+                    zero_change_streak,
+                )
 
     def generate_html(self, output_file: str = "index.html") -> bool:
         """Generate HTML report from the latest data.

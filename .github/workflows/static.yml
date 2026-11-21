@@ -31,21 +31,44 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.sha || github.sha }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Prepare Pages artifact
+        env:
+          EXPECTED_SHA: ${{ github.event.client_payload.sha || github.sha }}
         run: |
+          DEPLOYED_SHA="$(git rev-parse HEAD)"
+          if [ "$EXPECTED_SHA" != "$DEPLOYED_SHA" ]; then
+            echo "Requested revision $EXPECTED_SHA but checked out $DEPLOYED_SHA" >&2
+            exit 1
+          fi
           mkdir -p public
           cp index.html feed.xml fmhy_data.json monthly_commits.json public/
           cp -r favicon_io public/favicon_io
           cp -r static public/static
+          printf '{"requested_sha":"%s","deployed_sha":"%s"}\n' \
+            "$EXPECTED_SHA" "$DEPLOYED_SHA" > public/deployment-revision.json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "public"
+
+      - name: Confirm revision is current
+        env:
+          EXPECTED_SHA: ${{ github.event.client_payload.sha || github.sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch || github.ref_name }}
+        run: |
+          git fetch --no-tags origin "$DEFAULT_BRANCH"
+          CURRENT_SHA="$(git rev-parse FETCH_HEAD)"
+          if [ "$EXPECTED_SHA" != "$CURRENT_SHA" ]; then
+            echo "Refusing stale deployment $EXPECTED_SHA; default branch is $CURRENT_SHA" >&2
+            exit 1
+          fi
 
       - name: Deploy to GitHub Pages
         id: deployment

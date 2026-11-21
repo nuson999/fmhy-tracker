@@ -23,6 +23,7 @@ It's particularly useful for staying up-to-date with new resources added to the 
 - RSS feed includes all commits with detailed link changes
 - Autodiscovery support for RSS readers
 - Avoids advancing the stored commit SHA when new commit processing fails
+- Warns in the run log after 10 consecutive upstream commits produce no classified link changes
 
 ## Installation
 
@@ -88,11 +89,14 @@ Environment variables are also supported:
 - `FMHY_LAST_COMMIT_SHA_FILE`
 - `FMHY_HISTORY_DIR`
 - `FMHY_MIN_COMMITS`
-- `FMHY_MAX_HISTORY`
+- `FMHY_MAX_HISTORY` (default: `100`; `0` stops creating snapshots and preserves existing archives; negative values are invalid)
 - `FMHY_MONTHLY_OUTPUT`
 - `FMHY_GITHUB_TIMEOUT_SECONDS`
 - `FMHY_GITHUB_RETRIES`
 - `GITHUB_TOKEN`
+
+Timeouts must be positive. Retry counts, minimum displayed commits, and retained history counts must
+be non-negative. Invalid values use their documented defaults and emit a warning.
 
 ### RSS Feed
 
@@ -100,7 +104,7 @@ The tracker automatically generates an RSS 2.0 feed at `feed.xml`.
 
 **Subscribing to the feed:**
 
-- Feed URL: `https://nuson999.github.io/fmhy-tracker/feed.xml`
+- Feed URL: `https://fmhy-tracker.pages.dev/feed.xml`
 - The feed is updated every 6 hours automatically
 - Each RSS item represents one commit with all its changes
 
@@ -124,6 +128,17 @@ This repository includes a GitHub Actions workflow that runs every 6 hours to mo
 2. Enable GitHub Actions in your fork
 3. The workflow will automatically run tests/lint checks, update generated tracker files, and deploy the static dashboard
 
+To summarize recent monitor and Pages runs locally (requires the GitHub CLI to be authenticated):
+
+```bash
+fmhy-run-health --limit 10
+```
+
+The report counts completed runs only when at least one job started. Runs with no started jobs,
+including Actions spending-limit blocks, are listed separately and excluded from the success rate.
+Failed runs include the conclusion and names of jobs that failed, timed out, or were cancelled;
+skipped jobs are omitted.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -146,11 +161,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Search is debounced by 120 ms; normalized text, rendered link markup, sorted commits, and row collections are cached in memory.
 - Facet counts and matching rows are computed together and reused during pagination. Unchanged category controls retain their DOM; off-screen resource layout is deferred by the browser.
 - System fonts avoid external font requests. Search and filters scroll naturally with the page.
-- The HTML generator writes minified, content-hashed CSS/JS under `static/dist/`. Both Pages workflows include these assets. Rebuild after changing template/source assets:
+- The HTML generator writes minified, content-hashed CSS/JS under `static/dist/`. Both Pages workflows include these assets. Rebuild after changing template/source assets using the Python environment where you installed the project dependencies:
 
   ```bash
   python -c "import json; from pathlib import Path; from fmhy_tracker import HTMLGenerator; HTMLGenerator().generate(json.loads(Path('fmhy_data.json').read_text(encoding='utf-8')))"
   ```
+
+- The generated stylesheet has a 6.5 KiB gzip budget. The generator test checks the actual minified bundle from the source assets, so a source change cannot bypass the guard by leaving `index.html` stale.
+- The generated application script has an 11 KiB gzip budget, checked the same way from the source assets.
+- Pages publishes `deployment-revision.json` with the requested and deployed commit SHAs. Deployments fail before publication if their requested revision is no longer the default-branch tip.
 
 Frontend regression checks (Node.js required): `node --test tests/frontend.test.cjs`.
 

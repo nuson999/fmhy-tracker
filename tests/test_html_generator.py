@@ -1,9 +1,12 @@
 """Tests for HTML Generator functionality."""
 
+import gzip
+import re
 import pytest
 import os
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 from fmhy_tracker import HTMLGenerator
 
@@ -307,6 +310,118 @@ def test_hashed_assets_are_stable_and_change_with_source(temp_directory):
     second = re.findall(r"static/dist/[^\"]+", output.read_text())
     assert second[0] == first[0]
     assert second[1] != first[1]
+    assert (temp_directory / first[0]).is_file()
+    assert not (temp_directory / first[1]).exists()
+    assert (temp_directory / second[1]).is_file()
+
+
+def test_failed_html_replace_keeps_previous_page_and_assets(temp_directory):
+    template_dir = temp_directory / "templates"
+    static_dir = temp_directory / "static"
+    template_dir.mkdir()
+    static_dir.mkdir()
+    (template_dir / "index.html").write_text(
+        '<link href="{{ css_url }}"><script src="{{ js_url }}"></script>'
+    )
+    (static_dir / "styles.css").write_text("body { color: red; }")
+    (static_dir / "app.js").write_text("function init() { return 2; }")
+    output = temp_directory / "index.html"
+    old_assets = (
+        "static/dist/styles.0000000000000000.css",
+        "static/dist/app.0000000000000000.js",
+    )
+    for url in old_assets:
+        asset = temp_directory / url
+        asset.parent.mkdir(parents=True, exist_ok=True)
+        asset.write_text("previous asset")
+    previous_page = (
+        f'<link href="{old_assets[0]}"><script src="{old_assets[1]}"></script>'
+    )
+    output.write_text(previous_page, encoding="utf-8")
+    real_replace = os.replace
+
+    def fail_page_replace(source, destination):
+        if Path(destination) == output:
+            raise PermissionError("page replace failed")
+        return real_replace(source, destination)
+
+    with (
+        patch("fmhy_tracker.storage.os.replace", side_effect=fail_page_replace),
+        pytest.raises(PermissionError, match="page replace failed"),
+    ):
+        HTMLGenerator(str(template_dir), str(static_dir)).generate({}, str(output))
+
+    assert output.read_text(encoding="utf-8") == previous_page
+    assert all((temp_directory / url).is_file() for url in old_assets)
+    assert list((temp_directory / "static" / "dist").glob(".index.html.*.tmp")) == []
+
+
+def test_generated_stylesheet_stays_within_compressed_size_budget(temp_directory):
+    """Keep the minified dashboard CSS small enough for routine loads."""
+    output = temp_directory / "index.html"
+    HTMLGenerator().generate({"commits": []}, str(output))
+
+    match = re.search(
+        r'href="(static/dist/styles\.[a-f0-9]{16}\.css)"',
+        output.read_text(encoding="utf-8"),
+    )
+    assert match, "generated HTML must reference its minified stylesheet"
+    stylesheet = (temp_directory / match.group(1)).read_bytes()
+    compressed_size = len(gzip.compress(stylesheet, mtime=0))
+
+    assert compressed_size <= 6656, (
+        f"generated stylesheet is {compressed_size} compressed bytes; "
+        "budget is 6656 bytes (6.5 KiB)"
+    )
+
+
+def test_generated_script_stays_within_compressed_size_budget(temp_directory):
+    """Keep the minified dashboard JavaScript small enough for routine loads."""
+    output = temp_directory / "index.html"
+    HTMLGenerator().generate({"commits": []}, str(output))
+
+    match = re.search(
+        r'<script[^>]+src="(static/dist/app\.[a-f0-9]{16}\.js)"',
+        output.read_text(encoding="utf-8"),
+    )
+    assert match, "generated HTML must reference its minified application script"
+    script = (temp_directory / match.group(1)).read_bytes()
+    compressed_size = len(gzip.compress(script, mtime=0))
+
+    assert compressed_size <= 11264, (
+        f"generated application script is {compressed_size} compressed bytes; "
+        "budget is 11264 bytes (11 KiB)"
+    )
+
+
+def test_hashed_asset_cleanup_preserves_unrelated_files(temp_directory):
+    import re
+
+    template_dir = temp_directory / "templates"
+    static_dir = temp_directory / "static"
+    template_dir.mkdir()
+    static_dir.mkdir()
+    (template_dir / "index.html").write_text(
+        '<link href="{{ css_url }}"><script src="{{ js_url }}"></script>'
+    )
+    (static_dir / "styles.css").write_text("body { color: red; }")
+    (static_dir / "app.js").write_text("function init() { return 1; }")
+    output = temp_directory / "index.html"
+    dist = temp_directory / "static" / "dist"
+    dist.mkdir()
+    stale = dist / "app.0000000000000000.js"
+    unrelated = dist / "notes.txt"
+    stale.write_text("old")
+    unrelated.write_text("keep")
+
+    HTMLGenerator(str(template_dir), str(static_dir)).generate({}, str(output))
+
+    assert not stale.exists()
+    assert unrelated.read_text() == "keep"
+    html = output.read_text()
+    references = re.findall(r"static/dist/[^\"]+", html)
+    assert len(references) == 2
+    assert all((temp_directory / url).is_file() for url in references)
 
 
 def test_dashboard_links_work_under_github_pages_project_path(temp_directory):

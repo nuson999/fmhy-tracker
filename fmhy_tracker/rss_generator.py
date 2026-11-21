@@ -12,6 +12,7 @@ from urllib.parse import quote, urljoin, urlparse
 from pathlib import Path
 
 from .config import config
+from .storage import atomic_write_text
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ class RSSGenerator:
         escaped_text = self._escape_html(text)
         return re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped_text)
 
-    def _format_rfc822_date(self, iso_date: str) -> str:
+    def _format_rfc822_date(self, iso_date: str) -> str | None:
         """Convert ISO 8601 date string to RFC 822 format.
 
         Args:
@@ -62,9 +63,8 @@ class RSSGenerator:
                 dt = dt.replace(tzinfo=timezone.utc)
             # Convert to timestamp and format as RFC 822
             return formatdate(dt.timestamp(), usegmt=True)
-        except (ValueError, AttributeError):
-            # Fallback to current time if parsing fails
-            return formatdate(usegmt=True)
+        except (ValueError, AttributeError, OverflowError, OSError):
+            return None
 
     def _extract_link_text(self, markdown_link: str) -> str:
         """Extract clean text from markdown link.
@@ -283,7 +283,9 @@ class RSSGenerator:
                 datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             )
             build_date_elem = ET.SubElement(channel, "lastBuildDate")
-            build_date_elem.text = self._format_rfc822_date(last_updated)
+            build_date_elem.text = self._format_rfc822_date(last_updated) or formatdate(
+                usegmt=True
+            )
 
             # Generator
             generator_elem = ET.SubElement(channel, "generator")
@@ -328,8 +330,10 @@ class RSSGenerator:
                 # Publication date
                 pub_date = commit.get("date", "")
                 if pub_date:
-                    item_pubdate = ET.SubElement(item, "pubDate")
-                    item_pubdate.text = self._format_rfc822_date(pub_date)
+                    formatted_date = self._format_rfc822_date(pub_date)
+                    if formatted_date:
+                        item_pubdate = ET.SubElement(item, "pubDate")
+                        item_pubdate.text = formatted_date
 
                 # Description (HTML in CDATA)
                 description_html = self._generate_item_description(commit)
@@ -340,8 +344,7 @@ class RSSGenerator:
             xml_string = self._generate_xml_string(rss)
 
             # Write to file
-            with open(output_file, "w", encoding="utf-8") as f:
-                f.write(xml_string)
+            atomic_write_text(Path(output_file), xml_string)
 
             logger.info("RSS feed generated successfully: %s", output_file)
 
@@ -358,6 +361,14 @@ class RSSGenerator:
         Returns:
             Formatted XML string
         """
+        for element in root.iter():
+            if element.text is not None:
+                element.text = self._remove_invalid_xml_chars(element.text)
+            if element.tail is not None:
+                element.tail = self._remove_invalid_xml_chars(element.tail)
+            for name, value in element.attrib.items():
+                element.attrib[name] = self._remove_invalid_xml_chars(value)
+
         document = minidom.parseString(ET.tostring(root, encoding="utf-8"))
         # Use XML nodes rather than string replacements: HTML entities must remain
         # escaped exactly once inside reader HTML, including quotes in attributes.
@@ -373,3 +384,15 @@ class RSSGenerator:
                     part += "]]"
                 description.appendChild(document.createCDATASection(part))
         return document.toprettyxml(indent="  ", encoding="UTF-8").decode("utf-8")
+
+    @staticmethod
+    def _remove_invalid_xml_chars(value: str) -> str:
+        """Remove characters forbidden by XML 1.0 while preserving valid Unicode."""
+        return "".join(
+            char
+            for char in value
+            if ord(char) in {0x9, 0xA, 0xD}
+            or 0x20 <= ord(char) <= 0xD7FF
+            or 0xE000 <= ord(char) <= 0xFFFD
+            or 0x10000 <= ord(char) <= 0x10FFFF
+        )
