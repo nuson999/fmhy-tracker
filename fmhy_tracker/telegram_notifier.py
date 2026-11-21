@@ -8,6 +8,7 @@ which contains the token. Without both values the notifier skips quietly.
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import re
@@ -95,25 +96,39 @@ def load_tracker_data(data_file: str = "fmhy_data.json") -> dict[str, Any]:
         return json.load(file)
 
 
+def is_starred(link: str) -> bool:
+    return any(star in link for star in STAR_TOKENS)
+
+
 def collect_starred_link_changes(data: dict[str, Any]) -> list[dict[str, str]]:
-    """New and removed starred links from this run's (non-historical) commits."""
+    """New, updated and removed starred links from this run's commits.
+
+    Historical commits (re-shown only to fill the dashboard) are skipped. An
+    update counts when the line is starred before or after the change, so links
+    that gain or lose their star are reported too.
+    """
     changes: list[dict[str, str]] = []
     for commit in data.get("commits", []):
         if commit.get("isHistorical"):
             continue
-        for key, change_type in (("added", "new"), ("removed", "removed")):
+        for key in ("added", "removed"):
             for item in commit.get(key, []):
+                change_type = item.get("type")
                 link = item.get("link", "")
-                if item.get("type") == change_type and any(
-                    star in link for star in STAR_TOKENS
-                ):
-                    changes.append(
-                        {
-                            "change_type": change_type,
-                            "source": item.get("source", "unknown"),
-                            "link": link,
-                        }
-                    )
+                previous = item.get("relatedLink", "")
+                expected = ("new", "updated") if key == "added" else ("removed",)
+                if change_type not in expected:
+                    continue
+                if not (is_starred(link) or is_starred(previous)):
+                    continue
+                change = {
+                    "change_type": change_type,
+                    "source": item.get("source", "unknown"),
+                    "link": link,
+                }
+                if change_type == "updated":
+                    change["previous_link"] = previous
+                changes.append(change)
     return changes
 
 
@@ -143,6 +158,7 @@ def format_notification_message(changes: list[dict[str, str]]) -> str:
     lines = [f"FMHY starred link changes ({len(changes)})", ""]
     for change_type, heading in (
         ("new", "New starred links"),
+        ("updated", "Updated starred links"),
         ("removed", "Removed starred links"),
     ):
         items = [item for item in changes if item["change_type"] == change_type]
@@ -151,11 +167,22 @@ def format_notification_message(changes: list[dict[str, str]]) -> str:
         lines.append(f"{heading} ({len(items)})")
         for index, item in enumerate(items, start=1):
             parsed = parse_markdown_link(item["link"])
-            lines.append(f"{index}. [{item['source']}] {parsed['name']}")
+            title = f"{index}. [{item['source']}] {parsed['name']}"
+            previous = item.get("previous_link")
+            if previous is not None:
+                if not is_starred(previous):
+                    title += " (now starred)"
+                elif not is_starred(item["link"]):
+                    title += " (no longer starred)"
+            lines.append(title)
             if parsed["url"]:
                 lines.append(parsed["url"])
             if parsed["description"]:
                 lines.append(parsed["description"])
+            if previous:
+                old_url = parse_markdown_link(previous)["url"]
+                if old_url and old_url != parsed["url"]:
+                    lines.append(f"Was: {old_url}")
             lines.append("")
         lines.append("")
     lines.append(config.rss_link)
@@ -191,11 +218,39 @@ def notify_starred_links(
     return True
 
 
+TEST_MESSAGE = (
+    "FMHY Tracker test message: Telegram notifications are set up. "
+    "New, updated and removed starred (⭐/🌟) links will be posted here."
+)
+
+
+def send_test_message(
+    token: str | None = None, chat_id: str | None = None, session=None
+) -> None:
+    """Send a fixed test message; missing secrets are an error, not a skip."""
+    token = token if token is not None else config.telegram_bot_token
+    chat_id = chat_id if chat_id is not None else config.telegram_chat_id
+    if not token or not chat_id:
+        raise TelegramError(
+            "Test message not sent: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not set."
+        )
+    send_message(f"{TEST_MESSAGE}\n\n{config.rss_link}", token, chat_id, session)
+    logger.info("Sent Telegram test message.")
+
+
 def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    args = sys.argv[1:] if argv is None else argv
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("data_file", nargs="?", default=config.output_file)
+    parser.add_argument(
+        "--test", action="store_true", help="send a test message and exit"
+    )
+    args = parser.parse_args(sys.argv[1:] if argv is None else argv)
     try:
-        notify_starred_links(args[0] if args else config.output_file)
+        if args.test:
+            send_test_message()
+        else:
+            notify_starred_links(args.data_file)
     except TelegramError as exc:
         logger.error("%s", exc)
         return 1

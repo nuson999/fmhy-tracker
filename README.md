@@ -22,7 +22,7 @@ It's particularly useful for staying up-to-date with new resources added to the 
 - Generates RSS 2.0 feed for tracking changes
 - RSS feed includes all commits with detailed link changes
 - Autodiscovery support for RSS readers
-- Optional Telegram notification when starred (⭐ or 🌟) links are added or removed
+- Optional Telegram notification when starred (⭐ or 🌟) links are added, updated or removed
 - Avoids advancing the stored commit SHA when new commit processing fails
 - Warns in the run log after 10 consecutive upstream commits produce no classified link changes
 
@@ -125,7 +125,10 @@ python main.py --no-rss
 ### Telegram notifications
 
 After each scheduled run publishes, the workflow sends one Telegram message listing the starred
-links (⭐ or 🌟) that this run's commits added or removed. Nothing is sent when no starred link changed.
+links (⭐ or 🌟) that this run's new commits added, updated or removed. An update counts when the line
+is starred before or after the change, and the message notes links that gained or lost their star and
+the previous URL when it changed. Commits shown only to fill the dashboard are ignored, so nothing is
+sent when a run finds no new starred changes.
 
 Setup:
 
@@ -145,6 +148,10 @@ The token and chat ID are read only from those secrets: never commit them. Witho
 skips. A failed send doesn't fail the run. If a token is ever exposed, use `/revoke` in BotFather
 and update the secret. To test locally: set both variables and run
 `python -m fmhy_tracker.telegram_notifier`.
+
+To check the setup, open Actions → "Monitor fmhy/edit Commits" → Run workflow and tick **Send
+Telegram test message**. The run posts a short test message to the chat and fails if the secrets are
+missing or Telegram rejects the request (`python -m fmhy_tracker.telegram_notifier --test` locally).
 
 ## GitHub Actions
 

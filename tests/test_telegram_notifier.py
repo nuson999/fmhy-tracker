@@ -72,10 +72,11 @@ class FakeSession:
         return self.response
 
 
-def test_collects_only_this_runs_new_and_removed_starred_links():
+def test_collects_only_this_runs_starred_links():
     changes = tn.collect_starred_link_changes(_data())
     assert [(c["change_type"], c["source"]) for c in changes] == [
         ("new", "internet-tools"),
+        ("updated", "system-tools"),
         ("removed", "system-tools"),
     ]
 
@@ -189,3 +190,101 @@ def test_glowing_star_links_count_as_starred():
     parsed = tn.parse_markdown_link(KOTOPLAY)
     assert parsed["name"] == "KotoPlay"
     assert parsed["url"] == "https://kotoplay.to/"
+
+
+# Real updates from data/history: one gains its star, one changes its main URL,
+# one only edits its description.
+GOOGLE_AI_STUDIO = {
+    "link": "* ⭐ **[Google AI Studio](https://aistudio.google.com/app/prompts/new_chat)**"
+    " - Gemini 4 Hydrogen / Google Sign-Up",
+    "relatedLink": "* [Google AI Studio](https://aistudio.google.com/app/apps)"
+    " - Gemini 4 Hydrogen / Gemini 3.8 Flash / Google Sign-Up",
+    "source": "ai",
+    "type": "updated",
+}
+WEALTH = {
+    "link": "* ⭐ **[Wealth Shown to Scale](https://wealth-inequality.sucks.lt/)**"
+    " - Global Wealth Inequality Visualization",
+    "relatedLink": "* ⭐ **[Wealth Shown to Scale](https://litekin.github.io/pixel-wealth/)**"
+    " - Global Wealth Inequality Visualization",
+    "source": "educational",
+    "type": "updated",
+}
+QWEN = {
+    "link": "* ⭐ **[Qwen Studio](https://chat.qwen.ai/)** - Qwen4 Max / No Sign-Up",
+    "relatedLink": "* ⭐ **[Qwen Studio](https://chat.qwen.ai/)**"
+    " - Qwen4 Max Preview / Qwen3.8 Max / No Sign-Up",
+    "source": "ai",
+    "type": "updated",
+}
+UNSTARRED = {
+    "link": "* [Qwen Studio](https://chat.qwen.ai/) - Qwen4 Max",
+    "relatedLink": QWEN["link"],
+    "source": "ai",
+    "type": "updated",
+}
+PLAIN_UPDATE = {
+    "link": "* [Plain](https://p.example/new)",
+    "relatedLink": "* [Plain](https://p.example/old)",
+    "source": "x",
+    "type": "updated",
+}
+
+
+def _updates():
+    return {
+        "commits": [
+            {
+                "isHistorical": False,
+                "added": [GOOGLE_AI_STUDIO, WEALTH, QWEN, UNSTARRED, PLAIN_UPDATE],
+            }
+        ]
+    }
+
+
+def test_updated_links_count_when_starred_before_or_after():
+    changes = tn.collect_starred_link_changes(_updates())
+    assert [c["change_type"] for c in changes] == ["updated"] * 4
+    assert changes[0]["previous_link"] == GOOGLE_AI_STUDIO["relatedLink"]
+
+
+def test_updated_message_shows_star_changes_and_old_url():
+    message = tn.format_notification_message(
+        tn.collect_starred_link_changes(_updates())
+    )
+    assert "Updated starred links (4)" in message
+    assert "1. [ai] Google AI Studio (now starred)" in message
+    assert "Was: https://aistudio.google.com/app/apps" in message
+    assert "Was: https://litekin.github.io/pixel-wealth/" in message
+    assert "4. [ai] Qwen Studio (no longer starred)" in message
+    # Same URL: no "Was" line for the description-only edit.
+    assert message.count("Was: ") == 2
+    assert "Plain" not in message
+
+
+def test_test_message_requires_secrets_and_sends():
+    with pytest.raises(tn.TelegramError, match="not set"):
+        tn.send_test_message("", "42", FakeSession())
+    session = FakeSession()
+    tn.send_test_message(FAKE_TOKEN, "42", session)
+    assert len(session.calls) == 1
+    assert "test message" in session.calls[0][1]["text"]
+
+
+def test_test_flag_returns_failure_when_telegram_rejects(monkeypatch):
+    def reject(*args, **kwargs):
+        raise tn.TelegramError("Telegram API error (HTTP 401): Unauthorized")
+
+    monkeypatch.setattr(tn, "send_test_message", reject)
+    assert tn.main(["--test"]) == 1
+
+
+def test_workflow_offers_test_message_checkbox_that_can_fail_the_run():
+    workflow = (ROOT / ".github" / "workflows" / "monitor.yml").read_text(
+        encoding="utf-8"
+    )
+    assert "      telegram_test:\n" in workflow
+    step = workflow[workflow.index("- name: Send Telegram test message") :]
+    assert "if: ${{ github.event.inputs.telegram_test == 'true' }}" in step
+    assert "python -m fmhy_tracker.telegram_notifier --test" in step
+    assert "continue-on-error" not in step

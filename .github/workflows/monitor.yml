@@ -16,6 +16,11 @@ on:
         required: false
         default: false
         type: boolean
+      telegram_test:
+        description: "Send Telegram test message (fails the run if Telegram rejects it)"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   test:
@@ -120,3 +125,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m fmhy_tracker.telegram_notifier
+
+      # Manual check of the bot setup; unlike the notification, a failure fails the run.
+      - name: Send Telegram test message (manual trigger only)
+        if: ${{ github.event.inputs.telegram_test == 'true' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m fmhy_tracker.telegram_notifier --test
