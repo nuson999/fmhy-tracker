@@ -68,6 +68,24 @@
     <header role="banner">
       <h1>FMHY Tracker</h1>
       <div class="header-actions">
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search links"
+            aria-label="Search links"
+          />
+          <button
+            type="button"
+            class="search-clear"
+            id="search-clear"
+            aria-label="Clear search"
+            hidden
+          >
+            ✕
+          </button>
+        </div>
         <div class="theme-selector">
           <svg
             class="header-icon"
@@ -131,26 +149,8 @@
       </div>
     </header>
 
-    <!-- Toolbar: search + type filters (with live counts) -->
-    <div class="toolbar" role="region" aria-label="Search and filters">
-      <div class="search-container">
-        <input
-          type="text"
-          id="search-input"
-          class="search-input"
-          placeholder="Search links"
-          aria-label="Search links"
-        />
-        <button
-          type="button"
-          class="search-clear"
-          id="search-clear"
-          aria-label="Clear search"
-          hidden
-        >
-          ✕
-        </button>
-      </div>
+    <!-- Toolbar: type filters (with live counts) -->
+    <div class="toolbar" role="region" aria-label="Filters">
 
       <div
         class="stat-filters"
@@ -206,10 +206,9 @@
     </div>
 
     <div class="category-filter-container">
-      <label class="mobile-category" for="category-select"
-        >Category
+      <div class="mobile-category">
         <select id="category-select" aria-label="Filter by category"></select>
-      </label>
+      </div>
       <div class="category-filters-wrapper" id="category-filters-wrapper">
         <div id="category-filters" class="category-filters collapsed">
           <!-- Category buttons will be rendered by JavaScript -->
@@ -229,35 +228,32 @@
       </div>
     </div>
 
-    <div class="secondary-controls">
-      <div class="monthly-toggle-wrapper" id="monthly-toggle-wrapper">
-        <label class="monthly-toggle-label">
-          <input
-            type="checkbox"
-            id="monthly-toggle"
-            aria-label="Load available month history"
-            aria-describedby="monthly-message"
-          />
-          <span class="monthly-toggle-slider"></span>
-          <span class="monthly-toggle-text">Load month history</span>
-          <span class="monthly-count" id="monthly-count"></span>
-          <span
-            class="monthly-loading-spinner"
-            id="monthly-loading-spinner"
-          ></span>
-        </label>
-        <div
-          class="monthly-message hidden"
-          id="monthly-message"
-          role="status"
-        ></div>
-        <button type="button" id="monthly-retry" hidden>Retry history</button>
-      </div>
-    </div>
-
     <main class="commits" role="main">
       <div class="changes-header">
-        <h2 id="changes-heading" class="changes-heading">Resource changes</h2>
+        <h2 id="changes-heading" class="visually-hidden">Resource changes</h2>
+        <div class="monthly-toggle-wrapper" id="monthly-toggle-wrapper">
+          <label class="monthly-toggle-label">
+            <input
+              type="checkbox"
+              id="monthly-toggle"
+              aria-label="Load available month history"
+              aria-describedby="monthly-message"
+            />
+            <span class="monthly-toggle-slider"></span>
+            <span class="monthly-toggle-text">Historical</span>
+            <span class="monthly-count" id="monthly-count"></span>
+            <span
+              class="monthly-loading-spinner"
+              id="monthly-loading-spinner"
+            ></span>
+          </label>
+          <div
+            class="monthly-message hidden"
+            id="monthly-message"
+            role="status"
+          ></div>
+          <button type="button" id="monthly-retry" hidden>Retry history</button>
+        </div>
         <p class="last-updated">
           Updated <span id="last-updated">Loading...</span>
         </p>

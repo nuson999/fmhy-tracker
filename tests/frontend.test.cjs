@@ -323,3 +323,27 @@ test("header timestamp shows only the relative time; the full date is the toolti
   assert.equal(element.textContent, "15h 40m ago");
   assert.notEqual(element.title, "");
 });
+
+test("history toggle reads Historical; its accessible name names the archive month", () => {
+  const a = app({ commits: [], archiveMonth: "2026-11" });
+  const label = { textContent: "" };
+  a.context.document.querySelector = (selector) =>
+    selector === ".monthly-toggle-text" ? label : null;
+  const attributes = {};
+  a.element("monthly-toggle").setAttribute = (name, value) => {
+    attributes[name] = value;
+  };
+  a.run("updateMonthlyToggleUI()");
+  assert.equal(label.textContent, "Historical");
+  assert.equal(attributes["aria-label"], "Include November 2026 history");
+});
+
+test("pagination renders once, below the results", () => {
+  const a = app({
+    commits: Array.from({ length: 60 }, (_, i) => commit(`c${i}`, [link(`item${i}`)])),
+  });
+  a.run("renderCommits()");
+  const html = a.element("commits-container").innerHTML;
+  assert.equal((html.match(/class="pagination"/g) || []).length, 1);
+  assert.ok(html.indexOf('class="pagination"') > html.lastIndexOf("<li "));
+});

@@ -151,16 +151,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Pages contain up to 50 matching change rows, grouped by commit.
 - Compact date headings keep resource names and change labels prominent; commit messages and GitHub links remain available.
-- Pagination appears above and below results, with page buttons, a direct page input, and shareable `page` URLs. Changing a filter resets the page.
+- Pagination appears below results, with page buttons, a direct page input, and shareable `page` URLs. Changing a filter resets the page.
 - Type counts respect search, category, starred, and history selection, ignoring the selected type so alternatives can be compared.
 - Category counts respect search, type, starred, and history selection, ignoring the selected category.
 - Updated rows expose previous/current text in “What changed?”.
 - Expanded change details survive filtering and page navigation during the current visit.
-- Month history is labeled using the archive's month, merged with recent commits, and loaded only on request. Failed requests offer Retry.
+- The “Historical” toggle sits above the list, opposite the update time; its accessible name gives the archive's month. Month history is merged with recent commits and loaded only on request. Failed requests offer Retry.
 - The generator embeds the available archive month before download. Filters reset through their own controls (the All chip, All categories, the search clear button); there is no separate clear-all button or result count.
 - Search is debounced by 120 ms; normalized text, rendered link markup, sorted commits, and row collections are cached in memory.
 - Facet counts and matching rows are computed together and reused during pagination. Unchanged category controls retain their DOM; off-screen resource layout is deferred by the browser.
-- System fonts avoid external font requests. Search and filters scroll naturally with the page.
+- System fonts avoid external font requests. Search and filters scroll naturally with the page. Above 600px the search is a 150px field in the header, before the theme switcher; on phones it takes the header's second row. The phone category select has no visible label (its accessible name is "Filter by category").
 - The HTML generator writes minified, content-hashed CSS/JS under `static/dist/`. Both Pages workflows include these assets. Rebuild after changing template/source assets using the Python environment where you installed the project dependencies:
 
   ```bash

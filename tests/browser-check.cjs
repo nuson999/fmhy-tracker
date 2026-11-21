@@ -87,18 +87,18 @@ async function resetFilters(page) {
 
 async function verify(page, output) {
   await verifyAccessibility(page);
-  assert.equal(await page.locator('.pagination').count(), 2);
-  const top = page.getByRole('navigation', { name: 'Results pages (top)' });
-  await top.getByRole('button', { name: 'Page 2', exact: true }).click();
+  assert.equal(await page.locator('.pagination').count(), 1);
+  const pager = page.getByRole('navigation', { name: 'Results pages', exact: true });
+  await pager.getByRole('button', { name: 'Page 2', exact: true }).click();
   assert.equal(new URL(page.url()).searchParams.get('page'), '2');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'commits-container');
-  await top.getByRole('spinbutton').fill('12');
-  await top.getByRole('button', { name: 'Go', exact: true }).click();
+  await pager.getByRole('spinbutton').fill('12');
+  await pager.getByRole('button', { name: 'Go', exact: true }).click();
   assert.equal(new URL(page.url()).searchParams.get('page'), '12');
   await page.reload();
   await page.waitForFunction(() => state.showMonthly && !state.monthlyLoading);
   assert.equal(await page.evaluate(() => state.currentPage), 12);
-  assert.match(await top.innerText(), /Page 12 of/);
+  assert.match(await pager.innerText(), /Page 12 of/);
 
   // Filter reset, correct facet counts, and disclosure continuity in a real DOM.
   await page.locator('[data-filter="updated"]').click();
@@ -106,13 +106,13 @@ async function verify(page, output) {
   const detail = page.locator('.change-details').first();
   const identity = await detail.getAttribute('data-change-id');
   await detail.locator('summary').click();
-  await top.getByRole('button', { name: 'Next →', exact: true }).click();
-  await top.getByRole('button', { name: '← Previous', exact: true }).click();
+  await pager.getByRole('button', { name: 'Next →', exact: true }).click();
+  await pager.getByRole('button', { name: '← Previous', exact: true }).click();
   assert.equal(await page.locator('.change-details').first().getAttribute('data-change-id'), identity);
   assert.equal(await page.locator('.change-details').first().evaluate(el => el.open), true);
   await page.locator('.change-details').first().locator('summary').click();
-  await top.getByRole('button', { name: 'Next →', exact: true }).click();
-  await top.getByRole('button', { name: '← Previous', exact: true }).click();
+  await pager.getByRole('button', { name: 'Next →', exact: true }).click();
+  await pager.getByRole('button', { name: '← Previous', exact: true }).click();
   assert.equal(await page.locator('.change-details').first().evaluate(el => el.open), false);
   await resetFilters(page);
   await page.locator('[data-category="video"]').click();
@@ -141,8 +141,8 @@ async function verify(page, output) {
     }));
     assert.ok(layout.scrollWidth <= layout.width, `horizontal overflow at ${width}: ${JSON.stringify(layout)}`);
     assert.ok(!['fixed', 'sticky'].includes(layout.toolbar));
-    // Header is one row (title + actions); the update time sits unwrapped beside "Resource changes".
-    // On phones, hairlines separate the filters, the result controls and the list.
+    // Header is one row (title + actions); the update time sits unwrapped opposite the Historical toggle.
+    // A hairline separates the filters from the list heading row at every width.
     const header = await page.evaluate(() => {
       const box = (selector) => document.querySelector(selector).getBoundingClientRect();
       const updated = document.querySelector('.last-updated');
@@ -150,19 +150,31 @@ async function verify(page, output) {
       return {
         titleTop: box('header h1').top,
         titleBottom: box('header h1').bottom,
-        actionsTop: box('.header-actions').top,
-        actionsBottom: box('.header-actions').bottom,
+        actionsTop: box('.header-rss').top,
+        actionsBottom: box('.header-rss').bottom,
+        searchTop: box('.search-container').top,
+        searchWidth: Math.round(box('.search-container').width),
+        searchBeforeTheme: box('.search-container').right <= box('.theme-selector').left,
+        categoryLabel: [...document.querySelector('.mobile-category').childNodes].some(node => node.nodeType === 3 && node.textContent.trim()),
         updatedInHeader: Boolean(updated.closest('header')),
         updatedLines: Math.round(updated.getBoundingClientRect().height / parseFloat(getComputedStyle(updated).lineHeight)),
-        dividers: [borderTop('.secondary-controls'), borderTop('.commits')],
+        dividers: [borderTop('.commits')],
+        toggleBesideUpdated: document.querySelector('.changes-header').contains(document.getElementById('monthly-toggle')),
       };
     });
     assert.ok(header.actionsTop < header.titleBottom && header.actionsBottom > header.titleTop, `header actions left the title row at ${width}: ${JSON.stringify(header)}`);
+    // Search: 150px before the theme switcher on larger screens; full-width second header row on phones.
+    if (width > 600) {
+      assert.equal(header.searchWidth, 150, `header search width at ${width}`);
+      assert.ok(header.searchBeforeTheme && header.searchTop < header.titleBottom, `search left the title row at ${width}`);
+    } else {
+      assert.ok(header.searchTop >= header.titleBottom, `phone search should sit below the title at ${width}`);
+    }
+    assert.equal(header.categoryLabel, false, 'category select has no visible label text');
     assert.equal(header.updatedInHeader, false, 'update time belongs beside the changes heading');
     assert.equal(header.updatedLines, 1, `update time wraps at ${width}`);
-    if (width < 600) {
-      assert.deepEqual(header.dividers, ['1px', '1px'], `mobile group dividers missing at ${width}`);
-    }
+    assert.ok(header.toggleBesideUpdated, 'Historical toggle belongs in the list heading row');
+    assert.deepEqual(header.dividers, ['1px'], `divider above the list heading row missing at ${width}`);
     if (width < 600) {
       assert.notEqual(layout.mobileCategory, 'none');
       await page.locator('#category-select').focus();
@@ -280,10 +292,10 @@ async function verifyAccessibility(page) {
     await assertTextContrast(page, `${theme} theme category hover`);
 
     await resetFilters(page);
-    const currentPage = page.locator('.pagination[aria-label="Results pages (top)"] .page-btn[aria-current="page"]');
+    const currentPage = page.locator('.pagination[aria-label="Results pages"] .page-btn[aria-current="page"]');
     await currentPage.hover();
     await assertTextContrast(page, `${theme} theme current page hover`);
-    const otherPage = page.locator('.pagination[aria-label="Results pages (top)"] .page-btn:not([aria-current="page"]):not(:disabled)').first();
+    const otherPage = page.locator('.pagination[aria-label="Results pages"] .page-btn:not([aria-current="page"]):not(:disabled)').first();
     await otherPage.hover();
     await assertTextContrast(page, `${theme} theme other page hover`);
   }

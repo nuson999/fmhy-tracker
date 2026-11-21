@@ -57,7 +57,7 @@ function formatCommitDate(dateString){return commitDateFormatter.format(new Date
 async function loadMonthlyCommits(){if(state.monthlyData)return state.monthlyData;const response=await fetch("monthly_commits.json",{cache:"no-cache",signal:AbortSignal.timeout(15000),});if(!response.ok)throw new Error("History could not be loaded");const data=await response.json();if(!/^\d{4}-\d{2}$/.test(data.month)||!Array.isArray(data.commits)||data.commits.some((c)=>!c.sha||!Array.isArray(c.added)||!Array.isArray(c.removed),)){throw new Error("History data is invalid");}
 return data;}
 function updateMonthlyToggleUI(){const wrapper=document.getElementById("monthly-toggle-wrapper");const spinner=document.getElementById("monthly-loading-spinner");const count=document.getElementById("monthly-count");if(wrapper){wrapper.classList.toggle("loading",state.monthlyLoading);wrapper.setAttribute("aria-busy",String(state.monthlyLoading));}
-const toggle=document.getElementById("monthly-toggle");if(toggle)toggle.disabled=state.monthlyLoading;const retry=document.getElementById("monthly-retry");if(retry)retry.disabled=state.monthlyLoading;const label=document.querySelector(".monthly-toggle-text");const month=state.monthlyData?.month||window.fmhyData?.archiveMonth;if(label)label.textContent=month?`Include ${formatMonth(month)} history`:'Include month history';if(toggle)toggle.setAttribute('aria-label',label?.textContent||'Include month history');if(spinner){spinner.style.display=state.monthlyLoading?"inline-block":"none";}
+const toggle=document.getElementById("monthly-toggle");if(toggle)toggle.disabled=state.monthlyLoading;const retry=document.getElementById("monthly-retry");if(retry)retry.disabled=state.monthlyLoading;const label=document.querySelector(".monthly-toggle-text");const month=state.monthlyData?.month||window.fmhyData?.archiveMonth;if(label)label.textContent='Historical';if(toggle)toggle.setAttribute('aria-label',month?`Include ${formatMonth(month)} history`:'Include month history');if(spinner){spinner.style.display=state.monthlyLoading?"inline-block":"none";}
 if(count&&state.monthlyData){count.textContent=`(${state.monthlyData.totalCommits})`;count.style.display="inline";}else if(count){count.style.display="none";}}
 function showMonthlyMessage(text){const message=document.getElementById("monthly-message");if(message){message.textContent=text;message.classList.remove("hidden");}}
 function formatMonth(month){return monthFormatter.format(new Date(`${month}-01T12:00:00Z`));}
@@ -112,7 +112,7 @@ const isHistorical=commit.isHistorical===true;const isMonthlyHistorical=commit.i
       ${addedHtml}
       ${removedHtml}
     </section>`;}
-function renderPagination(totalItems,position='bottom'){const totalPages=Math.ceil(totalItems/state.itemsPerPage);if(totalPages<=1)return'';const pages=[...new Set([1,state.currentPage-1,state.currentPage,state.currentPage+1,totalPages])].filter(page=>page>=1&&page<=totalPages).sort((a,b)=>a-b);let previous=0;const numbers=pages.map(page=>{const gap=previous&&page-previous>1?'<span class="page-gap" aria-hidden="true">…</span>':'';previous=page;return`${gap}<button type="button" class="page-btn page-number" data-page="${page}" aria-label="Page ${page}" ${page === state.currentPage ? 'aria-current="page"' : ''}>${page}</button>`;}).join('');return`<nav class="pagination" aria-label="Results pages (${position})">
+function renderPagination(totalItems){const totalPages=Math.ceil(totalItems/state.itemsPerPage);if(totalPages<=1)return'';const pages=[...new Set([1,state.currentPage-1,state.currentPage,state.currentPage+1,totalPages])].filter(page=>page>=1&&page<=totalPages).sort((a,b)=>a-b);let previous=0;const numbers=pages.map(page=>{const gap=previous&&page-previous>1?'<span class="page-gap" aria-hidden="true">…</span>':'';previous=page;return`${gap}<button type="button" class="page-btn page-number" data-page="${page}" aria-label="Page ${page}" ${page === state.currentPage ? 'aria-current="page"' : ''}>${page}</button>`;}).join('');return`<nav class="pagination" aria-label="Results pages">
     <div class="page-navigation">
       <button type="button" class="page-btn" data-page="${state.currentPage - 1}" ${state.currentPage === 1 ? 'disabled' : ''}>← Previous</button>
       <div class="page-numbers">${numbers}</div>
@@ -120,8 +120,8 @@ function renderPagination(totalItems,position='bottom'){const totalPages=Math.ce
     </div>
     <form class="page-jump">
       <span class="page-info">Page ${state.currentPage} of ${totalPages}</span>
-      <label for="page-${position}">Go to</label>
-      <input id="page-${position}" name="page" type="number" inputmode="numeric" min="1" max="${totalPages}" value="${state.currentPage}" required aria-label="Page number (${position})">
+      <label for="page-input">Go to</label>
+      <input id="page-input" name="page" type="number" inputmode="numeric" min="1" max="${totalPages}" value="${state.currentPage}" required aria-label="Page number">
       <button class="page-btn" type="submit">Go</button>
     </form>
   </nav>`;}
@@ -152,7 +152,7 @@ commits.set(commit.sha,{...commit,added:[],removed:[]});commits.get(commit.sha)
 [type==="removed"?"removed":"added"].push(item);}
 container.querySelectorAll?.('details[data-change-id]').forEach(details=>{if(details.open)expandedChanges.add(details.dataset.changeId);else expandedChanges.delete(details.dataset.changeId);});let html="";let currentGroup=null;for(const commit of commits.values()){const group=state.showMonthly?formatMonth(commit.date.slice(0,7)):null;if(group&&group!==currentGroup){html+=`<div class="date-group-divider"><span class="divider-line"></span><span class="divider-text">${escapeHtml(group)}</span><span class="divider-line"></span></div>`;currentGroup=group;}
 html+=renderCommit(commit);}
-container.innerHTML=html?renderPagination(rows.length,'top')+html+renderPagination(rows.length):'<div class="no-changes">No matching changes found. Try removing a filter or changing your search.</div>';highlightSearchMatches(container);if(syncUrl)updateUrl();}
+container.innerHTML=html?html+renderPagination(rows.length):'<div class="no-changes">No matching changes found. Try removing a filter or changing your search.</div>';highlightSearchMatches(container);if(syncUrl)updateUrl();}
 function highlightSearchMatches(container){const query=state.searchQuery.trim();if(!query)return;const needle=query.toLowerCase();const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT,{acceptNode(node){if(!node.nodeValue||!node.nodeValue.toLowerCase().includes(needle)){return NodeFilter.FILTER_REJECT;}
 const parent=node.parentNode;if(parent&&parent.nodeName==="MARK")return NodeFilter.FILTER_REJECT;return NodeFilter.FILTER_ACCEPT;},});const targets=[];let current;while((current=walker.nextNode())){targets.push(current);}
 for(const node of targets){const text=node.nodeValue;const lower=text.toLowerCase();const frag=document.createDocumentFragment();let index=0;let found;while((found=lower.indexOf(needle,index))!==-1){if(found>index){frag.appendChild(document.createTextNode(text.slice(index,found)));}

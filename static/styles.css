@@ -146,6 +146,25 @@ header h1 {
   gap: 4px;
 }
 
+/* Larger screens: a compact search sits first among the header actions. */
+.header-actions .search-container {
+  width: 150px;
+  max-width: none;
+}
+
+.header-actions .search-input {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 32px 0 12px;
+  font-size: 0.875rem;
+}
+
+.header-actions .search-clear {
+  width: 28px;
+  height: 28px;
+  right: 4px;
+}
+
 .header-icon {
   width: 16px;
   height: 16px;
@@ -224,14 +243,59 @@ header h1 {
   margin: 0 0 8px;
 }
 
+/* Mid widths: icon-only actions so the search fits beside the title. */
+@media (min-width: 601px) and (max-width: 900px) {
+  .header-github,
+  .theme-selector {
+    width: 36px;
+    padding: 0;
+  }
+
+  .header-action-text,
+  .theme-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Phones: title and icons on the first row, full-width search on the second. */
 @media (max-width: 600px) {
   header {
+    flex-wrap: wrap;
     padding: 0 0 12px;
-    gap: 12px;
+    gap: 12px 4px;
   }
 
   header h1 {
+    flex: 1 1 auto;
     font-size: 1.375rem;
+  }
+
+  .header-actions {
+    display: contents;
+  }
+
+  .header-actions .search-container {
+    order: 1;
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .header-actions .search-input {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 44px 0 16px;
+    font-size: 0.9rem;
+  }
+
+  .header-actions .search-clear {
+    width: 40px;
+    height: 40px;
+    right: 2px;
   }
 
   .header-github,
@@ -641,8 +705,6 @@ header h1 {
 @media (max-width: 600px) {
   .mobile-category {
     display: flex;
-    align-items: center;
-    gap: 12px;
   }
 
   .mobile-category select {
@@ -734,19 +796,20 @@ header h1 {
 
 /* Results and history controls */
 
-.secondary-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin: 12px 0;
+/* The wrapper's children join the .changes-header row: toggle and update time first, then the
+   status message and Retry on their own line, so the update time never drops below the message. */
+.monthly-toggle-wrapper {
+  display: contents;
 }
 
-.monthly-toggle-wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--md-spacing-1);
-  position: relative;
+.changes-header .monthly-message,
+.changes-header #monthly-retry {
+  order: 1;
+}
+
+.changes-header .monthly-message {
+  flex-basis: 100%;
+  margin-top: 0;
 }
 
 .monthly-toggle-label {
@@ -858,11 +921,6 @@ header h1 {
 }
 
 @media (max-width: 600px) {
-  .monthly-toggle-wrapper {
-    margin-left: 0;
-    margin-top: var(--md-spacing-1);
-  }
-
   .monthly-toggle-label {
     font-size: 0.8rem;
   }
@@ -898,11 +956,6 @@ header h1 {
 }
 
 
-.monthly-toggle-wrapper {
-  flex-wrap: wrap;
-  max-width: 100%;
-}
-
 .monthly-toggle-label {
   min-height: 40px;
   max-width: 100%;
@@ -922,12 +975,6 @@ header h1 {
 
 .monthly-count {
   white-space: nowrap;
-}
-
-@media (max-width: 600px) {
-  .secondary-controls .monthly-toggle-wrapper {
-    min-width: 0;
-  }
 }
 
 /* Commit ledger */
@@ -1025,25 +1072,31 @@ header h1 {
 
 .commits {
   transition: background-color 0.3s ease;
-  padding: 20px 0;
+  margin-top: 16px;
+  padding: 16px 0;
   border: 0;
+  border-top: 1px solid var(--md-divider);
   border-radius: 0;
   background: transparent;
 }
 
+/* History toggle on the left, freshness on the right; the "Resource changes" h2 is for screen readers. */
 .changes-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 4px 16px;
   margin: 0 0 12px;
 }
 
-.changes-heading {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .last-updated {
@@ -1110,20 +1163,6 @@ header h1 {
 
 #commits-container {
   scroll-margin-top: 16px;
-}
-
-@media (max-width: 600px) {
-  .commits {
-    padding: 16px 0;
-    border-top: 1px solid var(--md-divider);
-  }
-
-  /* Phones: filters | history toggle | list, each group set off by a hairline. */
-  .secondary-controls {
-    margin: 16px 0 0;
-    padding: 16px 0;
-    border-top: 1px solid var(--md-divider);
-  }
 }
 
 /* Resource rows and details */

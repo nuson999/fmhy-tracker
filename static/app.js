@@ -552,8 +552,9 @@ function updateMonthlyToggleUI() {
   if (retry) retry.disabled = state.monthlyLoading;
   const label = document.querySelector(".monthly-toggle-text");
   const month = state.monthlyData?.month || window.fmhyData?.archiveMonth;
-  if (label) label.textContent = month ? `Include ${formatMonth(month)} history` : 'Include month history';
-  if (toggle) toggle.setAttribute('aria-label', label?.textContent || 'Include month history');
+  // The visible label stays short; the accessible name says which month it loads.
+  if (label) label.textContent = 'Historical';
+  if (toggle) toggle.setAttribute('aria-label', month ? `Include ${formatMonth(month)} history` : 'Include month history');
 
   if (spinner) {
     spinner.style.display = state.monthlyLoading ? "inline-block" : "none";
@@ -726,7 +727,8 @@ function renderCommit(commit) {
     </section>`;
 }
 
-function renderPagination(totalItems, position = 'bottom') {
+// Pagination renders once, below the results.
+function renderPagination(totalItems) {
   const totalPages = Math.ceil(totalItems / state.itemsPerPage);
   if (totalPages <= 1) return '';
   const pages = [...new Set([1, state.currentPage - 1, state.currentPage, state.currentPage + 1, totalPages])]
@@ -737,7 +739,7 @@ function renderPagination(totalItems, position = 'bottom') {
     previous = page;
     return `${gap}<button type="button" class="page-btn page-number" data-page="${page}" aria-label="Page ${page}" ${page === state.currentPage ? 'aria-current="page"' : ''}>${page}</button>`;
   }).join('');
-  return `<nav class="pagination" aria-label="Results pages (${position})">
+  return `<nav class="pagination" aria-label="Results pages">
     <div class="page-navigation">
       <button type="button" class="page-btn" data-page="${state.currentPage - 1}" ${state.currentPage === 1 ? 'disabled' : ''}>← Previous</button>
       <div class="page-numbers">${numbers}</div>
@@ -745,8 +747,8 @@ function renderPagination(totalItems, position = 'bottom') {
     </div>
     <form class="page-jump">
       <span class="page-info">Page ${state.currentPage} of ${totalPages}</span>
-      <label for="page-${position}">Go to</label>
-      <input id="page-${position}" name="page" type="number" inputmode="numeric" min="1" max="${totalPages}" value="${state.currentPage}" required aria-label="Page number (${position})">
+      <label for="page-input">Go to</label>
+      <input id="page-input" name="page" type="number" inputmode="numeric" min="1" max="${totalPages}" value="${state.currentPage}" required aria-label="Page number">
       <button class="page-btn" type="submit">Go</button>
     </form>
   </nav>`;
@@ -938,7 +940,7 @@ function renderCommits({ syncUrl = true } = {}) {
     html += renderCommit(commit);
   }
   container.innerHTML = html
-    ? renderPagination(rows.length, 'top') + html + renderPagination(rows.length)
+    ? html + renderPagination(rows.length)
     : '<div class="no-changes">No matching changes found. Try removing a filter or changing your search.</div>';
   highlightSearchMatches(container);
   if (syncUrl) updateUrl();
