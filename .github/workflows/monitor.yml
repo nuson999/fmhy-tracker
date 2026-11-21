@@ -55,6 +55,9 @@ jobs:
     needs: test
     permissions:
       contents: write
+    env:
+      # Public t.me channel link for the dashboard header (repository variable, not a secret).
+      FMHY_TELEGRAM_URL: ${{ vars.TELEGRAM_CHANNEL_URL }}
 
     steps:
       - name: Check out repository
@@ -108,3 +111,12 @@ jobs:
           -H "Accept: application/vnd.github.everest-preview+json" \
           -d '{"event_type": "deploy-static", "client_payload": {"sha": "${{ steps.publish.outputs.sha }}"}}' \
           https://api.github.com/repos/${{ github.repository }}/dispatches
+
+      # After publishing, so a failed push can't cause a duplicate message on retry.
+      # Non-fatal: Telegram being down must not fail the tracker run.
+      - name: Send Telegram notification for starred link changes
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m fmhy_tracker.telegram_notifier

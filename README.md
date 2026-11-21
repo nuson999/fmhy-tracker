@@ -22,6 +22,7 @@ It's particularly useful for staying up-to-date with new resources added to the 
 - Generates RSS 2.0 feed for tracking changes
 - RSS feed includes all commits with detailed link changes
 - Autodiscovery support for RSS readers
+- Optional Telegram notification when starred (⭐ or 🌟) links are added or removed
 - Avoids advancing the stored commit SHA when new commit processing fails
 - Warns in the run log after 10 consecutive upstream commits produce no classified link changes
 
@@ -94,6 +95,7 @@ Environment variables are also supported:
 - `FMHY_GITHUB_TIMEOUT_SECONDS`
 - `FMHY_GITHUB_RETRIES`
 - `GITHUB_TOKEN`
+- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `FMHY_TELEGRAM_URL` (optional; see Telegram notifications)
 
 Timeouts must be positive. Retry counts, minimum displayed commits, and retained history counts must
 be non-negative. Invalid values use their documented defaults and emit a warning.
@@ -119,6 +121,30 @@ The tracker automatically generates an RSS 2.0 feed at `feed.xml`.
 ```bash
 python main.py --no-rss
 ```
+
+### Telegram notifications
+
+After each scheduled run publishes, the workflow sends one Telegram message listing the starred
+links (⭐ or 🌟) that this run's commits added or removed. Nothing is sent when no starred link changed.
+
+Setup:
+
+1. Create a bot with [@BotFather](https://t.me/BotFather) and copy its token.
+2. So that other people can subscribe, create a public channel and add the bot as an admin that
+   can only post messages. Its chat ID is the channel's `@username`. (For private alerts only,
+   use your own chat ID: message the bot, then read `chat.id` from
+   `https://api.telegram.org/bot<token>/getUpdates`.)
+3. Add both as repository secrets (Settings → Secrets and variables → Actions → Secrets):
+   `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+4. To show a Telegram button in the dashboard header, add a repository *variable* (same page →
+   Variables) named `TELEGRAM_CHANNEL_URL`, for example `https://t.me/your_channel`. It is public, so
+   it is not a secret. Only `https://t.me/<name>` links are accepted. Without it the button is not
+   rendered. The next monitor run puts the button on the page.
+
+The token and chat ID are read only from those secrets: never commit them. Without them the step
+skips. A failed send doesn't fail the run. If a token is ever exposed, use `/revoke` in BotFather
+and update the secret. To test locally: set both variables and run
+`python -m fmhy_tracker.telegram_notifier`.
 
 ## GitHub Actions
 
@@ -160,7 +186,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The generator embeds the available archive month before download. Filters reset through their own controls (the All chip, All categories, the search clear button); there is no separate clear-all button or result count.
 - Search is debounced by 120 ms; normalized text, rendered link markup, sorted commits, and row collections are cached in memory.
 - Facet counts and matching rows are computed together and reused during pagination. Unchanged category controls retain their DOM; off-screen resource layout is deferred by the browser.
-- System fonts avoid external font requests. Search and filters scroll naturally with the page. Above 600px the search is a 150px field in the header, before the theme switcher; on phones it takes the header's second row. The phone category select has no visible label (its accessible name is "Filter by category").
+- System fonts avoid external font requests. Search and filters scroll naturally with the page. Above 600px the search is a 150px field in the header, before the theme switcher; on phones it takes the header's second row. The phone category select has no visible label (its accessible name is "Filter by category"). When `FMHY_TELEGRAM_URL` is set, a Telegram button follows the RSS icon on the title row at every width. The header holds at most three icons (theme, RSS, Telegram) so they fit beside the title at 320px; the fmhy/edit GitHub link is in the footer.
 - The HTML generator writes minified, content-hashed CSS/JS under `static/dist/`. Both Pages workflows include these assets. Rebuild after changing template/source assets using the Python environment where you installed the project dependencies:
 
   ```bash

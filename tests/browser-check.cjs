@@ -160,6 +160,7 @@ async function verify(page, output) {
         updatedLines: Math.round(updated.getBoundingClientRect().height / parseFloat(getComputedStyle(updated).lineHeight)),
         dividers: [borderTop('.commits')],
         toggleBesideUpdated: document.querySelector('.changes-header').contains(document.getElementById('monthly-toggle')),
+        telegram: document.querySelector('.header-telegram') ? box('.header-telegram') : null,
       };
     });
     assert.ok(header.actionsTop < header.titleBottom && header.actionsBottom > header.titleTop, `header actions left the title row at ${width}: ${JSON.stringify(header)}`);
@@ -169,6 +170,10 @@ async function verify(page, output) {
       assert.ok(header.searchBeforeTheme && header.searchTop < header.titleBottom, `search left the title row at ${width}`);
     } else {
       assert.ok(header.searchTop >= header.titleBottom, `phone search should sit below the title at ${width}`);
+    }
+    // Optional Telegram link: always on the title row beside the other icons, never by the search.
+    if (header.telegram) {
+      assert.ok(Math.abs(header.telegram.top - header.actionsTop) < 2, `Telegram link left the title row at ${width}`);
     }
     assert.equal(header.categoryLabel, false, 'category select has no visible label text');
     assert.equal(header.updatedInHeader, false, 'update time belongs beside the changes heading');

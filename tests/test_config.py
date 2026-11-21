@@ -66,3 +66,21 @@ def test_non_integer_setting_uses_default_with_warning(monkeypatch, caplog):
 
     assert settings.github_retries == Config.DEFAULT_GITHUB_RETRIES
     assert "Invalid FMHY_GITHUB_RETRIES='many'" in caplog.text
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        ("", ""),
+        ("https://t.me/fmhy_changes", "https://t.me/fmhy_changes"),
+        ("http://t.me/fmhy_changes", ""),
+        ("https://t.me/x", ""),
+        ('https://t.me/fmhy"><script>', ""),
+        ("https://evil.example/fmhy_changes", ""),
+    ],
+)
+def test_telegram_channel_url_accepts_only_public_t_me_links(
+    monkeypatch, raw, expected
+):
+    monkeypatch.setenv("FMHY_TELEGRAM_URL", raw)
+    assert Config().telegram_channel_url == expected

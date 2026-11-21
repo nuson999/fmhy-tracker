@@ -172,8 +172,8 @@ header h1 {
   fill: currentColor;
 }
 
-.header-github,
 .header-rss,
+.header-telegram,
 .theme-selector {
   position: relative;
   display: inline-flex;
@@ -194,20 +194,21 @@ header h1 {
     color 150ms ease;
 }
 
-.header-rss {
+.header-rss,
+.header-telegram {
   padding: 0;
 }
 
-.header-github:hover,
 .header-rss:hover,
+.header-telegram:hover,
 .theme-selector:hover {
   background: var(--md-raised);
   color: var(--md-text-primary);
   text-decoration: none;
 }
 
-.header-github:focus-visible,
 .header-rss:focus-visible,
+.header-telegram:focus-visible,
 .theme-selector:focus-within {
   outline: 2px solid var(--md-primary);
   outline-offset: 2px;
@@ -243,15 +244,13 @@ header h1 {
   margin: 0 0 8px;
 }
 
-/* Mid widths: icon-only actions so the search fits beside the title. */
+/* Mid widths: icon-only theme switcher so the search fits beside the title. */
 @media (min-width: 601px) and (max-width: 900px) {
-  .header-github,
   .theme-selector {
     width: 36px;
     padding: 0;
   }
 
-  .header-action-text,
   .theme-label {
     position: absolute;
     width: 1px;
@@ -298,8 +297,8 @@ header h1 {
     right: 2px;
   }
 
-  .header-github,
   .header-rss,
+  .header-telegram,
   .theme-selector {
     width: 44px;
     height: 44px;
@@ -307,7 +306,6 @@ header h1 {
   }
 
   /* Icon-only on phones; the text stays for screen readers and tests. */
-  .header-action-text,
   .theme-label {
     position: absolute;
     width: 1px;
@@ -317,6 +315,7 @@ header h1 {
     white-space: nowrap;
   }
 }
+
 
 /* Search and change filters */
 
@@ -1758,6 +1757,20 @@ mark {
 
 .footer a:hover {
   text-decoration: underline;
+}
+
+.footer-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.footer-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  fill: currentColor;
 }
 
 /* Keyboard focus and motion */

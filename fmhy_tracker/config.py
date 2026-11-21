@@ -2,6 +2,7 @@
 
 import logging
 import os
+import re
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -80,6 +81,12 @@ class Config:
             "FMHY_RSS_DESCRIPTION", self.DEFAULT_RSS_DESCRIPTION
         )
 
+        # Telegram notifications: secrets only, never defaults or committed values
+        self.telegram_bot_token = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
+        self.telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+        # Public channel link shown in the dashboard header; hidden when unset.
+        self.telegram_channel_url = self._get_telegram_url("FMHY_TELEGRAM_URL")
+
     @property
     def base_path(self) -> Path:
         """Get the base path for the project."""
@@ -110,6 +117,20 @@ class Config:
             )
             return default
         return value
+
+    def _get_telegram_url(self, name: str) -> str:
+        """Read a public t.me link, ignoring anything else with a warning."""
+        raw_value = os.getenv(name, "").strip()
+        if not raw_value:
+            return ""
+        if re.fullmatch(r"https://t\.me/[A-Za-z0-9_]{5,32}", raw_value):
+            return raw_value
+        logger.warning(
+            "Invalid %s=%r; expected https://t.me/<channel>, hiding the link.",
+            name,
+            raw_value,
+        )
+        return ""
 
     def ensure_history_dir(self) -> None:
         """Ensure the history directory exists."""

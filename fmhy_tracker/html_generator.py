@@ -1,6 +1,7 @@
 """HTML generation module for FMHY Tracker."""
 
 import hashlib
+import html
 import json
 import logging
 import re
@@ -10,6 +11,7 @@ from pathlib import Path
 from rcssmin import cssmin
 from rjsmin import jsmin
 
+from .config import config
 from .storage import atomic_write_text
 
 logger = logging.getLogger(__name__)
@@ -30,6 +32,22 @@ class HTMLGenerator:
             Path(template_dir) if template_dir else base_path / "templates"
         )
         self.static_dir = Path(static_dir) if static_dir else base_path / "static"
+
+    def _apply_telegram_link(self, html_content: str) -> str:
+        """Fill the header Telegram link, or drop it when no channel is set."""
+        block = re.compile(
+            r"[ \t]*<!-- telegram:start -->\r?\n(.*?)[ \t]*<!-- telegram:end -->\r?\n",
+            re.DOTALL,
+        )
+        url = config.telegram_channel_url
+        if url:
+            return block.sub(
+                lambda match: match.group(1).replace(
+                    "{{ telegram_url }}", html.escape(url, quote=True)
+                ),
+                html_content,
+            )
+        return block.sub("", html_content)
 
     def _read_file(self, filepath: Path) -> str:
         """Read a file and return its contents.
@@ -147,6 +165,7 @@ class HTMLGenerator:
             html_content = template.replace("{{ css_content }}", css_content)
             html_content = html_content.replace("{{ js_content }}", js_content)
             html_content = html_content.replace("{{ data_json }}", data_json)
+            html_content = self._apply_telegram_link(html_content)
             for extension, url in asset_urls.items():
                 html_content = html_content.replace("{{ " + extension + "_url }}", url)
 

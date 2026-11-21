@@ -492,3 +492,31 @@ def test_custom_archive_path_and_malformed_metadata(temp_directory):
     archive.write_text("broken json")
     generator.generate({"commits": []}, str(output), monthly_file=str(archive))
     assert '"archiveMonth"' not in output.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("url", ["", "https://t.me/fmhy_changes"])
+def test_header_telegram_link_only_when_channel_configured(temp_directory, url):
+    from fmhy_tracker.config import config
+
+    output = temp_directory / "index.html"
+    with patch.object(config, "telegram_channel_url", url):
+        HTMLGenerator().generate({"commits": []}, str(output))
+    page = output.read_text(encoding="utf-8")
+    assert "{{ telegram_url }}" not in page
+    assert "telegram:start" not in page
+    if url:
+        assert f'class="header-telegram"\n          href="{url}"' in page.replace(
+            "\r\n", "\n"
+        )
+    else:
+        assert "header-telegram" not in page
+
+
+def test_upstream_github_link_lives_in_footer_not_header(temp_directory):
+    output = temp_directory / "index.html"
+    HTMLGenerator().generate({"commits": []}, str(output))
+    page = output.read_text(encoding="utf-8")
+    header = page[page.index("<header") : page.index("</header>")]
+    footer = page[page.index("<footer") : page.index("</footer>")]
+    assert "github.com/fmhy/edit" not in header
+    assert 'href="https://github.com/fmhy/edit"' in footer
