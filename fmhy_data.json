@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2026-11-21T06:18:12.647511Z",
+  "lastUpdated": "2026-11-21T06:22:16.246570Z",
   "totalAdded": 0,
-  "totalRemoved": 1,
+  "totalRemoved": 0,
   "totalNew": 0,
   "totalUpdated": 0,
   "totalCommits": 5,
@@ -18,7 +18,7 @@
           "type": "removed"
         }
       ],
-      "isHistorical": false
+      "isHistorical": true
     },
     {
       "sha": "ead96efadf3f6eaafff945adcc931d263a94ba05",
