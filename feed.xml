@@ -5,9 +5,22 @@
     <link>https://nuson999.github.io/fmhy-tracker</link>
     <description><![CDATA[Track changes in the FMHY repository - new, updated, and removed links]]></description>
     <atom:link href="https://nuson999.github.io/fmhy-tracker/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 20 Nov 2026 20:08:47 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 21 Nov 2026 02:27:49 GMT</lastBuildDate>
     <generator>FMHY Tracker</generator>
     <language>en-us</language>
+    <item>
+      <title>2 updated</title>
+      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/ead96efadf3f6eaafff945adcc931d263a94ba05</guid>
+      <link>https://github.com/fmhy/edit/commit/ead96efadf3f6eaafff945adcc931d263a94ba05</link>
+      <pubDate>Sat, 21 Nov 2026 00:11:26 GMT</pubDate>
+      <description><![CDATA[<p><strong>Commit:</strong> chore: rotate streaming aggregators (FIFO)</p>
+<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/ead96efadf3f6eaafff945adcc931d263a94ba05">ead96efa</a></p>
+<h3>Updated Links (2)</h3>
+<ul>
+<li>[video] 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle<br/><strong>Before:</strong> 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle<br/><strong>After:</strong> 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle</li>
+<li>[video] ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle<br/><strong>Before:</strong> ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle<br/><strong>After:</strong> ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle</li>
+</ul>]]></description>
+    </item>
     <item>
       <title>2 updated</title>
       <guid isPermaLink="true">https://github.com/fmhy/edit/commit/991c9a0d248f8ab56e21601399c23335a061b6e6</guid>
@@ -139,17 +152,6 @@
 <li>[video] <a href="https://tvnow247.top/">TV247US</a> - TV / Sports</li>
 <li>[video] <a href="https://filmvault.xyz/">⁠FilmVault</a> - Movies / TV / Telegram Recommended</li>
 </ul>]]></description>
-    </item>
-    <item>
-      <title>No changes</title>
-      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/6645e766cfc641f97bd93ec72f0d9ad7a9dc440b</guid>
-      <link>https://github.com/fmhy/edit/commit/6645e766cfc641f97bd93ec72f0d9ad7a9dc440b</link>
-      <pubDate>Fri, 20 Nov 2026 08:49:58 GMT</pubDate>
-      <description><![CDATA[<p><strong>Commit:</strong> Style Join Server as a brand pill button with subtle hover (#7355)
-
-Co-authored-by: Devin AI &lt;158243242+devin-ai-integration[bot]@users.noreply.github.com&gt;</p>
-<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/6645e766cfc641f97bd93ec72f0d9ad7a9dc440b">6645e766</a></p>
-<p>No link changes in this commit.</p>]]></description>
     </item>
   </channel>
 </rss>

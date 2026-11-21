@@ -1,8 +1,30 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-20T20:08:49.211444Z",
-  "totalCommits": 77,
+  "generatedAt": "2026-11-21T02:27:51.080947Z",
+  "totalCommits": 78,
   "commits": [
+    {
+      "sha": "ead96efadf3f6eaafff945adcc931d263a94ba05",
+      "date": "2026-11-21T00:11:26Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[PopcornMovies](https://popcornmovies.st/)** or [BingeBox](https://bingebox.ac/) - 4K / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[PopcornMovies](https://popcornmovies.st/)** or [BingeBox](https://bingebox.ac/) - 4K / External Subs / Ad-Toggle"
+        },
+        {
+          "link": "* ⭐ **[Flixer](https://flixer.gd)**, [2](https://flixer.su/), [3](https://flixer.cx/) or [Hexa](https://hexa.su/) - 1080p / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Flixer](https://flixer.gd)**, [2](https://flixer.su/), [3](https://flixer.cx/) or [Hexa](https://hexa.su/) - 1080p / Ad-Toggle"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
     {
       "sha": "991c9a0d248f8ab56e21601399c23335a061b6e6",
       "date": "2026-11-20T18:58:53Z",
@@ -23,7 +45,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "d9c94ffc873c3fa2a5b6836cc6701bbe7e0d524f",
@@ -39,7 +61,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "856fdb72c21bc1a431edc23659573ace4d5163cc",
@@ -132,7 +154,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "edec9cd231035591c5d68965a221ab8872fc368c",
@@ -459,7 +481,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "6645e766cfc641f97bd93ec72f0d9ad7a9dc440b",
@@ -468,7 +490,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "998e47f50f8470fa7dc3992a80a170a32e88e40e",
@@ -477,7 +499,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "d849308f58490d3c5b8e87cdbab72b492b02f905",
@@ -499,7 +521,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "c8f5f2de534e9ed49184f43b242ed8e004eefaa9",
@@ -532,7 +554,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "c7a18391bafd82a71a996eefa2e1833af5f1f167",
@@ -565,7 +587,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "bbcc72965ffd2b1067630f4334a37cdd3c9578d0",
@@ -638,7 +660,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "c85001129c0fbc8e051188f733da796762fad5a6",
@@ -700,7 +722,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "1a40d00700c0786d8798062659050f2a907bdc96",
@@ -709,7 +731,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "1534decc1e361ec90d003d21ec331b66e39e4f39",
@@ -718,7 +740,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "7bf78eaaf8b76f9db0c607b37770696342d1fe88",
@@ -734,7 +756,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "fc77488d3f9bdee4d952a72e5a870e78890e46a6",
@@ -1222,7 +1244,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "8bcd423cd54c4ba7d318dfe05698dd2f4f9dd9e3",
@@ -1231,7 +1253,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "ac5876d0bad25d0f48531209cdf5de42e7caf89e",
@@ -1253,7 +1275,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "436f11aa0bcb2c9a51427063cceaa5553e883b61",
@@ -3717,7 +3739,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "902d70977400fcefae4345650f80c5ac1cde1294",
@@ -4448,7 +4470,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "726bd7eddb3894492bbca00c433c9dc4ba3ae010",
