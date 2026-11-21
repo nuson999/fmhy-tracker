@@ -65,7 +65,7 @@ if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
         const sorted = values.slice(4).sort((a, b) => a - b);
         result[kind] = { medianMs: sorted[Math.floor(sorted.length / 2)], p95Ms: sorted[Math.ceil(sorted.length * .95) - 1] };
       }
-      clearAllFilters();
+      setFilter('all'); setCategoryFilter('all');
       return { rows: getRows().length, ...result };
     });
     fs.writeFileSync(path.join(output, baseline ? 'baseline.json' : 'after.json'), JSON.stringify(metrics, null, 2));
@@ -74,6 +74,16 @@ if (process.env.CHROME_PATH) launch.executablePath = process.env.CHROME_PATH;
     console.log(JSON.stringify({ mode: baseline ? 'baseline' : 'after', metrics, errors }, null, 2));
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
+
+// The page has no "clear filters" control; reset through the same functions its controls call.
+async function resetFilters(page) {
+  await page.evaluate(() => {
+    if (state.searchQuery) clearSearch();
+    if (state.showOnlyStarred) toggleStarFilter();
+    setFilter('all');
+    setCategoryFilter('all');
+  });
+}
 
 async function verify(page, output) {
   await verifyAccessibility(page);
@@ -104,14 +114,13 @@ async function verify(page, output) {
   await top.getByRole('button', { name: 'Next →', exact: true }).click();
   await top.getByRole('button', { name: '← Previous', exact: true }).click();
   assert.equal(await page.locator('.change-details').first().evaluate(el => el.open), false);
-  await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
-  assert.equal(await page.evaluate(() => state.showMonthly), true);
+  await resetFilters(page);
   await page.locator('[data-category="video"]').click();
   assert.equal(await page.evaluate(() => document.activeElement.dataset.category), 'video');
   await page.keyboard.press('/');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'search-input');
   await page.keyboard.type('github');
-  await page.waitForFunction(() => !document.getElementById('clear-all').disabled && state.searchQuery === 'github');
+  await page.waitForFunction(() => state.searchQuery === 'github');
   await page.waitForTimeout(180); // Exercise the intentional 120 ms debounce.
   assert.equal(new URL(page.url()).searchParams.get('q'), 'github');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'search-input');
@@ -119,7 +128,7 @@ async function verify(page, output) {
   assert.equal(await page.evaluate(() => document.activeElement.id), 'search-clear');
   await page.keyboard.press('Enter');
   assert.equal(await page.evaluate(() => state.searchQuery), '');
-  await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+  await resetFilters(page);
 
   for (const width of [1280, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
@@ -132,26 +141,34 @@ async function verify(page, output) {
     }));
     assert.ok(layout.scrollWidth <= layout.width, `horizontal overflow at ${width}: ${JSON.stringify(layout)}`);
     assert.ok(!['fixed', 'sticky'].includes(layout.toolbar));
-    // Header stays two lines: title + actions on one row, the timestamp unwrapped below.
+    // Header is one row (title + actions); the update time sits unwrapped beside "Resource changes".
+    // On phones, hairlines separate the filters, the result controls and the list.
     const header = await page.evaluate(() => {
       const box = (selector) => document.querySelector(selector).getBoundingClientRect();
       const updated = document.querySelector('.last-updated');
+      const borderTop = (selector) => getComputedStyle(document.querySelector(selector)).borderTopWidth;
       return {
         titleTop: box('header h1').top,
+        titleBottom: box('header h1').bottom,
         actionsTop: box('.header-actions').top,
         actionsBottom: box('.header-actions').bottom,
-        titleBottom: box('header h1').bottom,
+        updatedInHeader: Boolean(updated.closest('header')),
         updatedLines: Math.round(updated.getBoundingClientRect().height / parseFloat(getComputedStyle(updated).lineHeight)),
+        dividers: [borderTop('.secondary-controls'), borderTop('.commits')],
       };
     });
     assert.ok(header.actionsTop < header.titleBottom && header.actionsBottom > header.titleTop, `header actions left the title row at ${width}: ${JSON.stringify(header)}`);
-    assert.equal(header.updatedLines, 1, `header timestamp wraps at ${width}`);
+    assert.equal(header.updatedInHeader, false, 'update time belongs beside the changes heading');
+    assert.equal(header.updatedLines, 1, `update time wraps at ${width}`);
+    if (width < 600) {
+      assert.deepEqual(header.dividers, ['1px', '1px'], `mobile group dividers missing at ${width}`);
+    }
     if (width < 600) {
       assert.notEqual(layout.mobileCategory, 'none');
       await page.locator('#category-select').focus();
       await page.locator('#category-select').selectOption('video');
       assert.equal(await page.evaluate(() => document.activeElement.id), 'category-select');
-      await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+      await resetFilters(page);
     }
     await page.screenshot({ path: path.join(output, `after-${width}.png`) });
   }
@@ -262,7 +279,7 @@ async function verifyAccessibility(page) {
     await page.locator('[data-category="mobile"]').hover();
     await assertTextContrast(page, `${theme} theme category hover`);
 
-    await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
+    await resetFilters(page);
     const currentPage = page.locator('.pagination[aria-label="Results pages (top)"] .page-btn[aria-current="page"]');
     await currentPage.hover();
     await assertTextContrast(page, `${theme} theme current page hover`);

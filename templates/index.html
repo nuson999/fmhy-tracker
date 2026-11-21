@@ -66,12 +66,7 @@
   </head>
   <body>
     <header role="banner">
-      <div class="header-brand">
-        <h1>FMHY Tracker</h1>
-        <p class="last-updated">
-          Updated <span id="last-updated">Loading...</span>
-        </p>
-      </div>
+      <h1>FMHY Tracker</h1>
       <div class="header-actions">
         <div class="theme-selector">
           <svg
@@ -210,9 +205,6 @@
       </div>
     </div>
 
-    <div class="filter-context">
-      <div id="active-filters" aria-label="Active filters"></div>
-    </div>
     <div class="category-filter-container">
       <label class="mobile-category" for="category-select"
         >Category
@@ -238,16 +230,6 @@
     </div>
 
     <div class="secondary-controls">
-      <button type="button" id="clear-all" class="clear-all" disabled>
-        Clear filters
-      </button>
-      <span
-        class="result-count"
-        id="result-count"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      ></span>
       <div class="monthly-toggle-wrapper" id="monthly-toggle-wrapper">
         <label class="monthly-toggle-label">
           <input
@@ -274,7 +256,12 @@
     </div>
 
     <main class="commits" role="main">
-      <h2 id="changes-heading" class="changes-heading">Resource changes</h2>
+      <div class="changes-header">
+        <h2 id="changes-heading" class="changes-heading">Resource changes</h2>
+        <p class="last-updated">
+          Updated <span id="last-updated">Loading...</span>
+        </p>
+      </div>
       <div
         id="commits-container"
         role="region"

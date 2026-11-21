@@ -97,7 +97,7 @@ test("pagination excludes non-matching commits and caps one large commit at 50 r
     (a.element("commits-container").innerHTML.match(/<li /g) || []).length,
     15,
   );
-  assert.equal(a.element("result-count").textContent, "51–65 of 65 changes");
+  assert.match(a.element("commits-container").innerHTML, /Page 2 of 2/);
 });
 
 test("facet totals include monthly data, deduplicate SHA and rows, and respect other filters", () => {
@@ -116,7 +116,10 @@ test("facet totals include monthly data, deduplicate SHA and rows, and respect o
   assert.equal(a.element("total-removed").textContent, 1);
   a.run('state.currentFilter = "removed"; renderCommits()');
   assert.equal(a.element("total-all").textContent, 2);
-  assert.equal(a.element("result-count").textContent, "1–1 of 1 changes");
+  assert.equal(
+    (a.element("commits-container").innerHTML.match(/<li /g) || []).length,
+    1,
+  );
   assert.match(
     a.element("category-filters").innerHTML,
     /video[\s\S]*category-count">1/,
@@ -246,10 +249,13 @@ test("rapid typing renders only the final query after the debounce", async () =>
   a.run(
     'handleSearch({target: {value: "a"}}); handleSearch({target: {value: "alpha"}})',
   );
-  assert.equal(a.element("result-count").textContent, "");
+  assert.equal(a.element("commits-container").innerHTML, "");
   assert.equal(pending, 1);
   scheduled();
-  assert.equal(a.element("result-count").textContent, "1–1 of 1 changes");
+  assert.equal(
+    (a.element("commits-container").innerHTML.match(/<li /g) || []).length,
+    1,
+  );
 });
 
 test("malformed monthly data fails without enabling history", async () => {
@@ -306,7 +312,7 @@ test("history restores a requested page only after the archive is available", as
   a.element('monthly-toggle').checked = true;
   await a.run('toggleMonthlyView({ restorePage: 3 })');
   assert.equal(a.run('state.currentPage'), 3);
-  assert.equal(a.element('result-count').textContent, '101–150 of 160 changes');
+  assert.match(a.element('commits-container').innerHTML, /Page 3 of 4/);
 });
 
 test("header timestamp shows only the relative time; the full date is the tooltip", () => {

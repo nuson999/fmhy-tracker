@@ -157,7 +157,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Updated rows expose previous/current text in “What changed?”.
 - Expanded change details survive filtering and page navigation during the current visit.
 - Month history is labeled using the archive's month, merged with recent commits, and loaded only on request. Failed requests offer Retry.
-- The generator embeds the available archive month before download. “Clear filters” keeps history enabled.
+- The generator embeds the available archive month before download. Filters reset through their own controls (the All chip, All categories, the search clear button); there is no separate clear-all button or result count.
 - Search is debounced by 120 ms; normalized text, rendered link markup, sorted commits, and row collections are cached in memory.
 - Facet counts and matching rows are computed together and reused during pagination. Unchanged category controls retain their DOM; off-screen resource layout is deferred by the browser.
 - System fonts avoid external font requests. Search and filters scroll naturally with the page.

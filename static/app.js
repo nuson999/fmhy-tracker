@@ -893,32 +893,6 @@ function updateSummaryStats() {
           : counts[type];
   }
 }
-function renderActiveFilters() {
-  const filters = [];
-  if (state.searchQuery.trim())
-    filters.push(["search", `Search: ${state.searchQuery.trim()}`]);
-  if (state.currentFilter !== "all")
-    filters.push(["type", state.currentFilter]);
-  if (state.categoryFilter !== "all")
-    filters.push(["category", state.categoryFilter.replaceAll("-", " ")]);
-  if (state.showOnlyStarred) filters.push(["starred", "Starred"]);
-  const container = document.getElementById("active-filters");
-  if (container) {
-    const markup = filters
-      .map(
-        ([key, label]) =>
-          `<button type="button" class="active-filter" data-remove-filter="${key}" aria-label="Remove ${escapeAttribute(label)} filter">${escapeHtml(label)} ×</button>`,
-      )
-      .join("");
-    if (container.dataset.markup !== markup) {
-      container.innerHTML = markup;
-      container.dataset.markup = markup;
-    }
-  }
-  const reset = document.getElementById("clear-all");
-  if (reset) reset.disabled = !filters.length;
-}
-
 // Render all commits
 function renderCommits({ syncUrl = true } = {}) {
   clearTimeout(searchTimer);
@@ -927,7 +901,6 @@ function renderCommits({ syncUrl = true } = {}) {
   const focusedCategory = document.activeElement?.dataset?.category;
   updateSummaryStats();
   renderCategoryFilters();
-  renderActiveFilters();
   if (focusedCategory) {
     [...document.querySelectorAll(".category-btn")]
       .find((button) => button.dataset.category === focusedCategory)
@@ -969,36 +942,8 @@ function renderCommits({ syncUrl = true } = {}) {
     : '<div class="no-changes">No matching changes found. Try removing a filter or changing your search.</div>';
   highlightSearchMatches(container);
   if (syncUrl) updateUrl();
-  const count = document.getElementById("result-count");
-  if (count)
-    count.textContent = rows.length
-      ? `${start + 1}–${start + pageRows.length} of ${rows.length} changes`
-      : "0 changes";
 }
 
-// True when any search box / filter / toggle is narrowing the results
-// Reset every filter/search control back to its default and re-render
-function clearAllFilters() {
-  state.searchQuery = "";
-  state.currentFilter = "all";
-  state.categoryFilter = "all";
-  state.showOnlyStarred = false;
-  state.currentPage = 1;
-  writePreference("fmhy-show-starred", "false");
-
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) searchInput.value = "";
-  updateSearchClear();
-  syncStarToggleUI();
-
-  document.querySelectorAll(".stat-filter[data-filter]").forEach((btn) => {
-    const isAll = btn.dataset.filter === "all";
-    btn.classList.toggle("active", isAll);
-    btn.setAttribute("aria-pressed", String(isAll));
-  });
-
-  renderCommits();
-}
 
 // Wrap occurrences of the search query in <mark> across visible text nodes.
 // Operates on the DOM (not the HTML string) so links and markup stay intact.
@@ -1099,17 +1044,6 @@ function init(data) {
   document
     .getElementById("category-select")
     ?.addEventListener("change", (e) => setCategoryFilter(e.target.value));
-  document
-    .getElementById("clear-all")
-    ?.addEventListener("click", clearAllFilters);
-  document.getElementById("active-filters")?.addEventListener("click", (e) => {
-    const key = e.target.closest("[data-remove-filter]")?.dataset.removeFilter;
-    if (key === "search") clearSearch();
-    if (key === "type") setFilter("all");
-    if (key === "category") setCategoryFilter("all");
-    if (key === "starred") toggleStarFilter();
-    if (key) document.getElementById("search-input")?.focus({ preventScroll: true });
-  });
   document.getElementById("monthly-retry")?.addEventListener("click", () => {
     document.getElementById("monthly-toggle").checked = true;
     toggleMonthlyView();

@@ -117,24 +117,20 @@ select {
   }
 }
 
-/* Header: title + freshness on the left, quiet actions on the right */
+/* Header: title on the left, quiet actions on the right */
 
 header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: flex;
   align-items: center;
-  column-gap: 16px;
+  justify-content: space-between;
+  gap: 16px;
   padding: 8px 0 16px;
   margin-bottom: 16px;
   border-bottom: 1px solid var(--md-divider);
 }
 
-/* Title and actions share the first row; the timestamp gets the full width below. */
-.header-brand {
-  display: contents;
-}
-
 header h1 {
+  min-width: 0;
   margin: 0;
   color: var(--md-text-primary);
   font-size: 1.75rem;
@@ -143,16 +139,7 @@ header h1 {
   line-height: 1.2;
 }
 
-.last-updated {
-  grid-column: 1 / -1;
-  margin: 4px 0 0;
-  color: var(--md-text-secondary);
-  font-size: 0.8125rem;
-  font-variant-numeric: tabular-nums;
-}
-
 .header-actions {
-  grid-area: 1 / 2;
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -240,7 +227,7 @@ header h1 {
 @media (max-width: 600px) {
   header {
     padding: 0 0 12px;
-    column-gap: 12px;
+    gap: 12px;
   }
 
   header h1 {
@@ -412,27 +399,10 @@ header h1 {
   }
 }
 
-.filter-context {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#active-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .search-clear {
   width: 40px;
   height: 40px;
   right: 2px;
-}
-
-.filter-context:has(#active-filters:empty) {
-  display: none;
 }
 
 .toolbar {
@@ -766,20 +736,16 @@ header h1 {
 
 .secondary-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-}
-
-.result-count {
-  font-size: 0.8rem;
-  color: var(--md-text-secondary);
-  font-weight: 500;
+  gap: 8px 12px;
+  margin: 12px 0;
 }
 
 .monthly-toggle-wrapper {
   display: flex;
   align-items: center;
   gap: var(--md-spacing-1);
-  margin-left: var(--md-spacing-2);
   position: relative;
 }
 
@@ -916,20 +882,14 @@ header h1 {
   }
 }
 
-.active-filter,
-.clear-all,
 #monthly-retry {
-  min-height: 44px;
+  min-height: 40px;
   padding: 8px 12px;
   border: 1px solid var(--md-divider);
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--md-surface);
   color: var(--md-text-primary);
   cursor: pointer;
-}
-
-.clear-all {
-  flex-shrink: 0;
 }
 
 .monthly-toggle-label input {
@@ -937,42 +897,6 @@ header h1 {
   height: 1px;
 }
 
-.secondary-controls {
-  flex-wrap: wrap;
-}
-
-.secondary-controls .monthly-toggle-wrapper {
-  margin-left: auto;
-}
-
-@media (max-width: 600px) {
-  .secondary-controls {
-    flex-direction: row;
-  }
-
-  .secondary-controls .monthly-toggle-wrapper {
-    flex-basis: 100%;
-  }
-}
-
-.secondary-controls {
-  justify-content: flex-start;
-  gap: 8px 12px;
-  margin: 12px 0;
-}
-
-.clear-all,
-#monthly-retry {
-  min-height: 40px;
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-.clear-all:disabled {
-  color: var(--md-text-secondary);
-  cursor: default;
-  opacity: 0.7;
-}
 
 .monthly-toggle-wrapper {
   flex-wrap: wrap;
@@ -1001,13 +925,8 @@ header h1 {
 }
 
 @media (max-width: 600px) {
-  .secondary-controls {
-    align-items: center;
-  }
-
   .secondary-controls .monthly-toggle-wrapper {
     min-width: 0;
-    margin-left: 0;
   }
 }
 
@@ -1112,10 +1031,27 @@ header h1 {
   background: transparent;
 }
 
-.changes-heading {
+.changes-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
   margin: 0 0 12px;
+}
+
+.changes-heading {
+  margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
+}
+
+.last-updated {
+  margin: 0;
+  color: var(--md-text-secondary);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .commit {
@@ -1179,6 +1115,14 @@ header h1 {
 @media (max-width: 600px) {
   .commits {
     padding: 16px 0;
+    border-top: 1px solid var(--md-divider);
+  }
+
+  /* Phones: filters | history toggle | list, each group set off by a hairline. */
+  .secondary-controls {
+    margin: 16px 0 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--md-divider);
   }
 }
 
