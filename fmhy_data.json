@@ -1,32 +1,11 @@
 {
-  "lastUpdated": "2026-11-22T06:40:34.445878Z",
-  "totalAdded": 49,
-  "totalRemoved": 4,
-  "totalNew": 19,
-  "totalUpdated": 30,
+  "lastUpdated": "2026-11-22T13:58:53.484453Z",
+  "totalAdded": 0,
+  "totalRemoved": 0,
+  "totalNew": 0,
+  "totalUpdated": 0,
   "totalCommits": 5,
   "commits": [
-    {
-      "sha": "6e74732425331b07d4d7c3b428807605e8ee0977",
-      "date": "2026-11-22T00:12:33Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)"
-        },
-        {
-          "link": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": false
-    },
     {
       "sha": "6a183656d8481b3e68123d75c0626fb606e1e07f",
       "date": "2026-11-22T01:46:16Z",
@@ -318,7 +297,28 @@
           "type": "removed"
         }
       ],
-      "isHistorical": false
+      "isHistorical": true
+    },
+    {
+      "sha": "6e74732425331b07d4d7c3b428807605e8ee0977",
+      "date": "2026-11-22T00:12:33Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)"
+        },
+        {
+          "link": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
+        }
+      ],
+      "removed": [],
+      "isHistorical": true
     },
     {
       "sha": "116d738e84d731b298f38bd9ed1f4d4399b3956d",
