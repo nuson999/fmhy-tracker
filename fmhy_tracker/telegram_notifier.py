@@ -157,16 +157,22 @@ def parse_markdown_link(markdown_link: str) -> dict[str, str]:
 
 
 def format_notification_message(changes: list[dict[str, str]]) -> str:
-    lines = [f"FMHY starred link changes ({len(changes)})", ""]
-    for change_type, heading in (
-        ("new", "New starred links"),
-        ("updated", "Updated starred links"),
-        ("removed", "Removed starred links"),
-    ):
+    sections = (
+        ("new", "New", "New starred links"),
+        ("updated", "Updated", "Updated starred links"),
+        ("removed", "Removed", "Removed starred links"),
+    )
+    # Summary first so the counts show in the chat preview.
+    counts = " · ".join(
+        f"{label} {sum(1 for c in changes if c['change_type'] == change_type)}"
+        for change_type, label, _ in sections
+    )
+    lines = [f"FMHY starred link changes ({len(changes)})", counts, ""]
+    for change_type, _, heading in sections:
         items = [item for item in changes if item["change_type"] == change_type]
         if not items:
             continue
-        lines.append(f"{heading} ({len(items)})")
+        lines.extend([f"{heading} ({len(items)})", ""])
         for index, item in enumerate(items, start=1):
             parsed = parse_markdown_link(item["link"])
             title = f"{index}. [{item['source']}] {parsed['name']}"

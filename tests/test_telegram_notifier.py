@@ -92,6 +92,18 @@ def test_parse_real_link_keeps_name_url_description():
 
 def test_message_groups_changes():
     message = tn.format_notification_message(tn.collect_starred_link_changes(_data()))
+    # Counts for all three kinds come first.
+    assert message.splitlines()[1] == "New 1 · Updated 1 · Removed 1"
+    # A kind with no changes still shows its zero.
+    removed_only = [
+        c
+        for c in tn.collect_starred_link_changes(_data())
+        if c["change_type"] == "removed"
+    ]
+    summary = tn.format_notification_message(removed_only).splitlines()[1]
+    assert summary == "New 0 · Updated 0 · Removed 1"
+    # A blank line separates each heading from its first item.
+    assert "New starred links (1)\n\n1. [" in message
     assert "New starred links (1)" in message
     assert "Removed starred links (1)" in message
     assert "https://windhawk.net/" in message
