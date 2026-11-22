@@ -4,6 +4,8 @@ Secrets rule: the bot token and chat ID come only from the environment
 (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, GitHub Actions secrets in CI). Never
 hard-code them, log them, or let an exception message carry the request URL,
 which contains the token. Without both values the notifier skips quietly.
+
+Messages never include the dashboard URL (owner's choice).
 """
 
 from __future__ import annotations
@@ -185,7 +187,6 @@ def format_notification_message(changes: list[dict[str, str]]) -> str:
                     lines.append(f"Was: {old_url}")
             lines.append("")
         lines.append("")
-    lines.append(config.rss_link)
     return "\n".join(lines).strip()
 
 
@@ -234,7 +235,7 @@ def send_test_message(
         raise TelegramError(
             "Test message not sent: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not set."
         )
-    send_message(f"{TEST_MESSAGE}\n\n{config.rss_link}", token, chat_id, session)
+    send_message(TEST_MESSAGE, token, chat_id, session)
     logger.info("Sent Telegram test message.")
 
 

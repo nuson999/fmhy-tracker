@@ -271,6 +271,18 @@ def test_test_message_requires_secrets_and_sends():
     assert "test message" in session.calls[0][1]["text"]
 
 
+def test_messages_omit_the_dashboard_url():
+    # Owner's choice: Telegram posts carry only the changed links.
+    dashboard = tn.config.rss_link
+    message = tn.format_notification_message(
+        tn.collect_starred_link_changes(_updates())
+    )
+    assert dashboard not in message
+    session = FakeSession()
+    tn.send_test_message(FAKE_TOKEN, "42", session)
+    assert dashboard not in session.calls[0][1]["text"]
+
+
 def test_test_flag_returns_failure_when_telegram_rejects(monkeypatch):
     def reject(*args, **kwargs):
         raise tn.TelegramError("Telegram API error (HTTP 401): Unauthorized")
