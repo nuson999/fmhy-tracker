@@ -5,9 +5,22 @@
     <link>https://nuson999.github.io/fmhy-tracker</link>
     <description><![CDATA[Track changes in the FMHY repository - new, updated, and removed links]]></description>
     <atom:link href="https://nuson999.github.io/fmhy-tracker/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 22 Nov 2026 19:32:43 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 07:30:11 GMT</lastBuildDate>
     <generator>FMHY Tracker</generator>
     <language>en-us</language>
+    <item>
+      <title>2 updated</title>
+      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9</guid>
+      <link>https://github.com/fmhy/edit/commit/9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9</link>
+      <pubDate>Mon, 23 Nov 2026 00:12:43 GMT</pubDate>
+      <description><![CDATA[<p><strong>Commit:</strong> chore: rotate streaming aggregators (FIFO)</p>
+<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9">9ee7f59e</a></p>
+<h3>Updated Links (2)</h3>
+<ul>
+<li>[video] 🌟 <a href="https://shuttletv.pk/"><strong>ShuttleTV</strong></a>, <a href="https://shuttletv.me/">2</a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/wsPmVB7ZJZ">Discord</a><br/><strong>Before:</strong> 🌟 <a href="https://shuttletv.pk/"><strong>ShuttleTV</strong></a>, <a href="https://shuttletv.me/">2</a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/wsPmVB7ZJZ">Discord</a><br/><strong>After:</strong> 🌟 <a href="https://shuttletv.pk/"><strong>ShuttleTV</strong></a>, <a href="https://shuttletv.me/">2</a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/wsPmVB7ZJZ">Discord</a></li>
+<li>[video] ⭐ <a href="https://ghostflix.st/"><strong>Ghostflix</strong></a>, <a href="https://redflix.st/">2</a>, <a href="https://redflix.ac/">3</a> - 1080p / Dual Audio / External Subs / Ad-Toggle / <a href="https://redflix.fans/">Status</a> / <a href="https://discord.gg/wp5SkSWHW5">Invite</a> / <a href="https://t.me/multichannelofficial">Telegram</a><br/><strong>Before:</strong> ⭐ <a href="https://ghostflix.st/"><strong>Ghostflix</strong></a>, <a href="https://redflix.st/">2</a>, <a href="https://redflix.ac/">3</a> - 1080p / Dual Audio / External Subs / Ad-Toggle / <a href="https://redflix.fans/">Status</a> / <a href="https://discord.gg/wp5SkSWHW5">Invite</a> / <a href="https://t.me/multichannelofficial">Telegram</a><br/><strong>After:</strong> ⭐ <a href="https://ghostflix.st/"><strong>Ghostflix</strong></a>, <a href="https://redflix.st/">2</a>, <a href="https://redflix.ac/">3</a> - 1080p / Dual Audio / External Subs / Ad-Toggle / <a href="https://redflix.fans/">Status</a> / <a href="https://discord.gg/wp5SkSWHW5">Invite</a> / <a href="https://t.me/multichannelofficial">Telegram</a></li>
+</ul>]]></description>
+    </item>
     <item>
       <title>19 added, 28 updated, 4 removed</title>
       <guid isPermaLink="true">https://github.com/fmhy/edit/commit/6a183656d8481b3e68123d75c0626fb606e1e07f</guid>
@@ -112,19 +125,6 @@
 <ul>
 <li>[video] 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle<br/><strong>Before:</strong> 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle<br/><strong>After:</strong> 🌟 <a href="https://popcornmovies.st/"><strong>PopcornMovies</strong></a> or <a href="https://bingebox.ac/">BingeBox</a> - 4K / External Subs / Ad-Toggle</li>
 <li>[video] ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle<br/><strong>Before:</strong> ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle<br/><strong>After:</strong> ⭐ <a href="https://flixer.gd"><strong>Flixer</strong></a>, <a href="https://flixer.su/">2</a>, <a href="https://flixer.cx/">3</a> or <a href="https://hexa.su/">Hexa</a> - 1080p / Ad-Toggle</li>
-</ul>]]></description>
-    </item>
-    <item>
-      <title>2 updated</title>
-      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/991c9a0d248f8ab56e21601399c23335a061b6e6</guid>
-      <link>https://github.com/fmhy/edit/commit/991c9a0d248f8ab56e21601399c23335a061b6e6</link>
-      <pubDate>Fri, 20 Nov 2026 18:58:53 GMT</pubDate>
-      <description><![CDATA[<p><strong>Commit:</strong> updated  pages</p>
-<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/991c9a0d248f8ab56e21601399c23335a061b6e6">991c9a0d</a></p>
-<h3>Updated Links (2)</h3>
-<ul>
-<li>[audio] ⭐ <a href="https://artistgrid.cx/"><strong>ArtistGrid</strong></a> / <a href="https://github.com/ArtistGrid/">GitHub</a> or <a href="https://unmusic.xyz/">⁠unmusic</a> - Unreleased<br/><strong>Before:</strong> ⭐ <a href="https://artistgrid.cx/"><strong>ArtistGrid</strong></a> / <a href="https://github.com/ArtistGrid/">GitHub</a>, <a href="https://www.unreleased.world/">unreleased.world</a> or <a href="https://unmusic.xyz/">⁠unmusic</a> - Unreleased<br/><strong>After:</strong> ⭐ <a href="https://artistgrid.cx/"><strong>ArtistGrid</strong></a> / <a href="https://github.com/ArtistGrid/">GitHub</a> or <a href="https://unmusic.xyz/">⁠unmusic</a> - Unreleased</li>
-<li>[internet-tools] <a href="https://mail.aionda.com/">Aionda Mail</a> - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Unlimited<br/><strong>Before:</strong> <a href="https://mail.aionda.com/">Aionda Mail</a> - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Catch-All<br/><strong>After:</strong> <a href="https://mail.aionda.com/">Aionda Mail</a> - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Unlimited</li>
 </ul>]]></description>
     </item>
   </channel>

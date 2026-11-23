@@ -1,8 +1,30 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-22T19:32:43.999968Z",
-  "totalCommits": 81,
+  "generatedAt": "2026-11-23T07:30:15.206429Z",
+  "totalCommits": 82,
   "commits": [
+    {
+      "sha": "9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9",
+      "date": "2026-11-23T00:12:43Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[ShuttleTV](https://shuttletv.pk/)**, [2](https://shuttletv.me/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/wsPmVB7ZJZ)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[ShuttleTV](https://shuttletv.pk/)**, [2](https://shuttletv.me/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/wsPmVB7ZJZ)"
+        },
+        {
+          "link": "* ⭐ **[Ghostflix](https://ghostflix.st/)**, [2](https://redflix.st/), [3](https://redflix.ac/) - 1080p / Dual Audio / External Subs / Ad-Toggle / [Status](https://redflix.fans/) / [Invite](https://discord.gg/wp5SkSWHW5) / [Telegram](https://t.me/multichannelofficial)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Ghostflix](https://ghostflix.st/)**, [2](https://redflix.st/), [3](https://redflix.ac/) - 1080p / Dual Audio / External Subs / Ad-Toggle / [Status](https://redflix.fans/) / [Invite](https://discord.gg/wp5SkSWHW5) / [Telegram](https://t.me/multichannelofficial)"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
     {
       "sha": "6a183656d8481b3e68123d75c0626fb606e1e07f",
       "date": "2026-11-22T01:46:16Z",
@@ -295,7 +317,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "6e74732425331b07d4d7c3b428807605e8ee0977",
@@ -317,7 +339,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "116d738e84d731b298f38bd9ed1f4d4399b3956d",
@@ -332,7 +354,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "ead96efadf3f6eaafff945adcc931d263a94ba05",
@@ -354,7 +376,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "991c9a0d248f8ab56e21601399c23335a061b6e6",
@@ -2532,7 +2554,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "a80c81d2bfd13660f762fdc1c3fd01faf92df43a",
@@ -2572,7 +2594,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "8a5d607049f488571e61dce9b8a2971c4cda212f",
@@ -2581,7 +2603,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "e08cd6a35c13955d6c04dee952660c9cf5ceaf52",
@@ -2615,7 +2637,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "3f1c0fee9ac883b5eec853ff5be56407fd344003",
@@ -2624,7 +2646,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "c1e85ed047d584f7f8cd09a1ca8461790d7703a5",
@@ -2979,7 +3001,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "8824a9b13361db2e29af7fc7cafb5bf8cd81fcef",
@@ -3007,7 +3029,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "d9a853b38c3ede1e665796ab318c5e638682c29c",
@@ -3016,7 +3038,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "2a02ffa0cbb58a9b98a0f389e4709960439989fc",
@@ -3778,7 +3800,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "0450bd41abe146ff23887131105489f5139ac730",
