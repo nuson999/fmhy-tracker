@@ -1,79 +1,11 @@
 {
-  "lastUpdated": "2026-11-24T09:49:32.112097Z",
-  "totalAdded": 38,
-  "totalRemoved": 9,
-  "totalNew": 7,
-  "totalUpdated": 31,
-  "totalCommits": 7,
+  "lastUpdated": "2026-11-24T22:22:36.020739Z",
+  "totalAdded": 0,
+  "totalRemoved": 0,
+  "totalNew": 0,
+  "totalUpdated": 0,
+  "totalCommits": 5,
   "commits": [
-    {
-      "sha": "ddc808de5131f8399d6c6f226251310e3d534e43",
-      "date": "2026-11-24T00:11:17Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)"
-        },
-        {
-          "link": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": false
-    },
-    {
-      "sha": "07c4036dcde36bea7bdf2c309576054d85588f76",
-      "date": "2026-11-24T00:13:10Z",
-      "message": "small fix",
-      "added": [],
-      "removed": [],
-      "isHistorical": false
-    },
-    {
-      "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
-      "date": "2026-11-24T00:17:17Z",
-      "message": "small fix",
-      "added": [],
-      "removed": [],
-      "isHistorical": false
-    },
-    {
-      "sha": "7a3698ea88220403a4ee2e1e6f2450c37a18aa77",
-      "date": "2026-11-24T02:16:25Z",
-      "message": "Search sementic feature (#7378)\n\n* Move search query logic from VPLocalSearchBox into theme/search/engine.ts\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to typo-tolerant search when exact search finds nothing\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Rank whole-word heading matches above substring title hits; demote archive pages\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Expand abbreviations and intent words in search queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Share one tokenizer between the search index and queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Cache the search index and prefetch it on search intent\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Focus search results on the matching list entry\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Mirror the search query into ?q= and trim excerpts to matching entries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Add opt-in semantic search (Ternlight) with entry line highlight\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fix search highlighting after query planner merge; drop unused markRaw import\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Recover short-word typos in fallback; rank other-platform sections below the asked platform\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make semantic the third state of the exact/fuzzy toggle; remove sparkle button\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to intent words when a query names something the wiki doesn't list\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Fall back to intent words when a query names something the wiki doesn't list\"\n\nThis reverts commit c7365e3f6eda0e1d66708991941928560f9d8b28.\n\n* Keep exact search strict; run the typo-tolerant fallback in fuzzy mode only\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make exact search literal: no query planner or word expansions in = mode\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Semantic mode: rank by embeddings only, without keyword results\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Semantic mode: rank by embeddings only, without keyword results\"\n\nThis reverts commit 35dfeb818080a1cdda2d6b98345ed5bdb8a8afb5.\n\n---------\n\nCo-authored-by: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>",
-      "added": [],
-      "removed": [],
-      "isHistorical": false
-    },
-    {
-      "sha": "886b488576f4f0d61e1a3fe6caef2b64200d2c39",
-      "date": "2026-11-24T02:20:12Z",
-      "message": "Derive the sitemap hostname from the deployment instead of hardcoding fmhy.net (#7358)\n\n* Derive sitemap hostname from SITE_HOST with fmhy.net fallback\n\n* Derive sitemap hostname from Pages preview URL, SITE_HOST still wins\n\n---------\n\nCo-authored-by: eli32-vlc <eli32-vlc@users.noreply.github.com>",
-      "added": [],
-      "removed": [],
-      "isHistorical": false
-    },
-    {
-      "sha": "8d3dea15c8a947b4de3f58e93c687edb03b8253b",
-      "date": "2026-11-24T02:27:15Z",
-      "message": "set all links to fmhy discord as the new discord page (#7401)\n\nCo-authored-by: litekin <litekin@tutamail.com>",
-      "added": [
-        {
-          "link": "* https://rentry.org/Piracy-BG/",
-          "source": "beginners-guide",
-          "type": "updated",
-          "relatedLink": "* https://rentry.org/Piracy-BG/"
-        }
-      ],
-      "removed": [],
-      "isHistorical": false
-    },
     {
       "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
       "date": "2026-11-24T06:42:52Z",
@@ -330,7 +262,46 @@
           "type": "removed"
         }
       ],
-      "isHistorical": false
+      "isHistorical": true
+    },
+    {
+      "sha": "8d3dea15c8a947b4de3f58e93c687edb03b8253b",
+      "date": "2026-11-24T02:27:15Z",
+      "message": "set all links to fmhy discord as the new discord page (#7401)\n\nCo-authored-by: litekin <litekin@tutamail.com>",
+      "added": [
+        {
+          "link": "* https://rentry.org/Piracy-BG/",
+          "source": "beginners-guide",
+          "type": "updated",
+          "relatedLink": "* https://rentry.org/Piracy-BG/"
+        }
+      ],
+      "removed": [],
+      "isHistorical": true
+    },
+    {
+      "sha": "886b488576f4f0d61e1a3fe6caef2b64200d2c39",
+      "date": "2026-11-24T02:20:12Z",
+      "message": "Derive the sitemap hostname from the deployment instead of hardcoding fmhy.net (#7358)\n\n* Derive sitemap hostname from SITE_HOST with fmhy.net fallback\n\n* Derive sitemap hostname from Pages preview URL, SITE_HOST still wins\n\n---------\n\nCo-authored-by: eli32-vlc <eli32-vlc@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isHistorical": true
+    },
+    {
+      "sha": "7a3698ea88220403a4ee2e1e6f2450c37a18aa77",
+      "date": "2026-11-24T02:16:25Z",
+      "message": "Search sementic feature (#7378)\n\n* Move search query logic from VPLocalSearchBox into theme/search/engine.ts\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to typo-tolerant search when exact search finds nothing\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Rank whole-word heading matches above substring title hits; demote archive pages\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Expand abbreviations and intent words in search queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Share one tokenizer between the search index and queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Cache the search index and prefetch it on search intent\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Focus search results on the matching list entry\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Mirror the search query into ?q= and trim excerpts to matching entries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Add opt-in semantic search (Ternlight) with entry line highlight\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fix search highlighting after query planner merge; drop unused markRaw import\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Recover short-word typos in fallback; rank other-platform sections below the asked platform\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make semantic the third state of the exact/fuzzy toggle; remove sparkle button\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to intent words when a query names something the wiki doesn't list\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Fall back to intent words when a query names something the wiki doesn't list\"\n\nThis reverts commit c7365e3f6eda0e1d66708991941928560f9d8b28.\n\n* Keep exact search strict; run the typo-tolerant fallback in fuzzy mode only\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make exact search literal: no query planner or word expansions in = mode\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Semantic mode: rank by embeddings only, without keyword results\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Semantic mode: rank by embeddings only, without keyword results\"\n\nThis reverts commit 35dfeb818080a1cdda2d6b98345ed5bdb8a8afb5.\n\n---------\n\nCo-authored-by: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isHistorical": true
+    },
+    {
+      "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
+      "date": "2026-11-24T00:17:17Z",
+      "message": "small fix",
+      "added": [],
+      "removed": [],
+      "isHistorical": true
     }
   ],
   "zeroChangeStreak": 0,
