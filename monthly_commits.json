@@ -1,8 +1,341 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-23T23:50:22.625721Z",
-  "totalCommits": 83,
+  "generatedAt": "2026-11-24T09:49:35.610904Z",
+  "totalCommits": 90,
   "commits": [
+    {
+      "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
+      "date": "2026-11-24T06:42:52Z",
+      "message": "updated 11 pages",
+      "added": [
+        {
+          "link": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.4 / GLM 5.3 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)",
+          "source": "ai",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.4 / GLM 5.4 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)"
+        },
+        {
+          "link": "* [Meta AI](https://www.meta.ai/) - Muse Spark 1.3 / Muse Glimmer 30B / May Require Sign-Up / Unlimited",
+          "source": "ai",
+          "type": "updated",
+          "relatedLink": "* [Meta AI](https://www.meta.ai/) - Muse Spark 1.3 / Muse Glimmer 30B / Meta Sign-Up / Unlimited"
+        },
+        {
+          "link": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)",
+          "source": "ai",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / GLM 5.4 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)"
+        },
+        {
+          "link": "* [MarioCube](https://mariocube.com/) - GameCube Homebrew Resources",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources"
+        },
+        {
+          "link": "* [⁠Dolphin Depot](https://dolphindepot.org/) - GameCube Homebrew App Store",
+          "source": "gaming-tools",
+          "type": "new"
+        },
+        {
+          "link": "* [NASOS](https://download.digiex.net/Consoles/GameCube/Apps/NASOSbeta1.rar) - GameCube iso.dec to ISO Converter",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* [NASOS](https://download.digiex.net/Consoles/GameCube/Apps/NASOSbeta1.rar) - Gamecube iso.dec to ISO Converter"
+        },
+        {
+          "link": "* [MarioCube](https://mariocube.com/) - Wii & GameCube Homebrew Resources",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources"
+        },
+        {
+          "link": "* [Quiver Launcher](https://quiverlauncher.com/) / [GitHub](https://github.com/tgeorgiadis/quiver-launcher) or [Decomp Buddy](https://decompbuddy.com/) - Launch / Manage Recompiled Games ⁠",
+          "source": "gaming",
+          "type": "updated",
+          "relatedLink": "* [Quiver Launcher](https://quiverlauncher.com/) / [GitHub](https://github.com/tgeorgiadis/quiver-launcher), [Decomp Buddy](https://decompbuddy.com/) or [GithubLauncher](https://github.com/SirDiabo/GithubLauncher) - Launch / Manage Recompiled Games ⁠"
+        },
+        {
+          "link": "* ⭐ **[Firefox](https://www.firefox.com/)** / [Nightly](https://www.firefox.com/channel/desktop/#nightly) / [Beta](https://www.firefox.com/channel/desktop/#beta) / [GitHub](https://github.com/mozilla-firefox/firefox) or [⁠Waterfox](https://www.waterfox.com/) / [GitHub](https://github.com/BrowserWorks/waterfox)",
+          "source": "internet-tools",
+          "type": "updated",
+          "relatedLink": "* ⭐ **ScrollAnywhere** - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/scroll_anywhere/) / [Chrome](https://chrome.google.com/webstore/detail/scrollanywhere/jehmdpemhgfgjblpkilmeoafmkhbckhi) - Improves Scrolling Functionality"
+        },
+        {
+          "link": "* [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [SpinTheWheel](https://spinthewheel.io/), [SpinTheWheel](https://spinthewheel.net/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners",
+          "source": "misc",
+          "type": "new"
+        },
+        {
+          "link": "* [APKCombo](https://apkcombo.com/)",
+          "source": "mobile",
+          "type": "new"
+        },
+        {
+          "link": "* 🌐 **[Morphe Patch Index](https://morphe-patches.software/)** / [2](https://awesome-morphe.vercel.app/) - Morphe Patch Indexes / [Requests](https://morphe-patches.software/requests)",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* 🌐 **[Morphe Patch Index](https://morphe-patches.software/)** / [2](https://awesome-morphe.vercel.app/) - Morphe Patch Indexes"
+        },
+        {
+          "link": "* ⭐ **[⁠Seal+](https://sealplus.in/)** - Multi-Site Audio Downloader / [GitHub](https://github.com/MaheshTechnicals/Sealplus)",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus) or [Seal](https://github.com/JunkFood02/Seal) - Multi-Site Audio Downloader"
+        },
+        {
+          "link": "* ⭐ **[YTDLnis](https://ytdlnis.org/)** / [GitHub](https://github.com/deniscerri/ytdlnis), **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus), [Hazel](https://github.com/SibtainOcn/Hazel), [⁠VRKA Android](https://github.com/MaverickRox/VRKA-Android), [SnapTube](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/android#wiki_.25B7_modded_apks) (search) or [SongTube](https://github.com/SongTube/SongTube-App) - Audio / Video Downloaders",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[YTDLnis](https://ytdlnis.org/)** / [GitHub](https://github.com/deniscerri/ytdlnis), **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus), [Seal](https://github.com/JunkFood02/Seal), [Hazel](https://github.com/SibtainOcn/Hazel), [⁠VRKA Android](https://github.com/MaverickRox/VRKA-Android), [SnapTube](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/android#wiki_.25B7_modded_apks) (search) or [SongTube](https://github.com/SongTube/SongTube-App) - Audio / Video Downloaders"
+        },
+        {
+          "link": "* ⭐ **[⁠raincord](https://www.raincord.dev/)** - Modded Discord Clients / [Discord](https://discord.gg/qkdPGunwjW)",
+          "source": "mobile",
+          "type": "new"
+        },
+        {
+          "link": "* [⁠Free Japanese Fonts](https://www.freejapanesefont.com/) - Fonts",
+          "source": "non-english",
+          "type": "new"
+        },
+        {
+          "link": "* [Playstation Haber](https://playstationhaber.com/) or [MCpsp](https://www.mcpsp.com) - PlayStation Piracy Forums",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [Playstation Haber](https://playstationhaber.com/) / [MCpsp](https://www.mcpsp.com) - PlayStation Piracy Forums"
+        },
+        {
+          "link": "* [⁠Sofaflix](https://vuonphim.com/) - Movies / TV / Anime / Sub / Dub / 1080p / [Threads](https://www.threads.com/@vuonphim_com) / [Telegram](https://t.me/sofaflixxx)",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [⁠Sofaflix](https://sofaflix.rest/) - Movies / TV / Anime / Sub / Dub / 1080p / [Telegram](https://t.me/addlist/66uKS-YYSyZmM2M1)"
+        },
+        {
+          "link": "* [⁠Tram Phim](https://tramphim.wtf/) - Movies / TV / Anime / Sub / Dub / 1080p / 4K / [Threads](https://www.threads.com/@tram_phim) / [Telegram](https://t.me/tramphimorgTV)",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [⁠Tram Phim](https://tramphim.app/) - Movies / TV / Anime / Sub / Dub / 1080p / 4K / [Telegram](https://t.me/Adtramphim)"
+        },
+        {
+          "link": "* 🌐 **[Instance Scores](https://searx.neocities.org/instancescores)** or [searx.space](https://searx.space/) - Searx Instance Indexes",
+          "source": "storage",
+          "type": "updated",
+          "relatedLink": "* 🌐 **[Instance Scores](https://searx.neocities.org/instancescores)**, [searx.space](https://searx.space/) or [Searx Index](https://www.startpage.com/sp/search?q=%22powered%20by%20Searx%22) - Searx Instance Indexes"
+        },
+        {
+          "link": "* **Note** - Sites that check and play streams within their own custom player exclusively. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/). Stars and superstars rotate separately daily to keep things fair (top super moves to bottom super, top normal moves to bottom normal daily).",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
+        },
+        {
+          "link": "* 🌟 **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
+        },
+        {
+          "link": "* ⭐ **[Vumeto](https://vumeto.live/)** - 4K / Dual Audio / Pop up + Redirect Free",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [Vumeto](https://vumeto.live/) - 4K / Dual Audio / Pop up + Redirect Free"
+        },
+        {
+          "link": "* **Note** - Sites that fork the original P-Stream / movie-web projects. You can add **extra sources** to these by using this **[extension](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/movie-web-sources.md)**. Default sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading.",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that fork the original P-Stream / movie-web projects. You can add **extra sources** to these by using this **[extension](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/movie-web-sources.md)**. Default sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites allow you to turn off ads in settings."
+        },
+        {
+          "link": "* [StreamWatch](https://streamwatch.online/), [2](https://pstream.site/) - 1080p / External Subs / [Discord](https://discord.gg/5eWu9Vz6tQ) / [GitHub](https://github.com/steveyout/streamwatch)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [StreamWatch](https://streamwatch.online/), [2](https://pstream.site/), [3](https://streamwatch.pages.dev/) - 1080p / External Subs / [Discord](https://discord.gg/5eWu9Vz6tQ) / [GitHub](https://github.com/steveyout/streamwatch)"
+        },
+        {
+          "link": "* **Note** - Sites with a focus on a single player / server. These are generally good in terms of speed, consistency, and having less mislabeled content. Many also remove and/or fix broken links. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/).",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
+        },
+        {
+          "link": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) or [Flicx](https://fli.cx/) - 4K / External Subs / Pop up + Redirect Free",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) or [Flicx](https://fli.cx/) - 4K / External Subs"
+        },
+        {
+          "link": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/).",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
+        },
+        {
+          "link": "* [PiePrime](https://pieprime.cc/) - 3 Sources",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* [Aloso](https://aloso.vercel.app/) - 38 Sources / Pop up + Redirect Free",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* [⁠bAnime](https://banime.top/) - Sub / Dub / Auto-Next / [Status](https://status.banime.top/) / [Discord](https://discord.gg/tJqRjg5WzH)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [⁠bAnime](https://banime.top/) - Sub / Dub / Auto-Next / [Status](https://status.banime.top/) / [Discord](https://discord.gg/tJqRjg5WzH)"
+        },
+        {
+          "link": "* ⭐ **[StreamSports99](https://streamsports99.is/live-tv)** - TV / Sports / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[StreamSports99](https://sstreamsports99.is/live-tv)** - TV / Sports / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)"
+        },
+        {
+          "link": "* [BINTV](https://www.bintv.cc/) / [Discord](https://discord.com/invite/fp3EQjFAJQ)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [BINTV](https://www.bintv.cc/) / [Status](https://www.bintv.link/) / [Discord](https://discord.com/invite/fp3EQjFAJQ)"
+        },
+        {
+          "link": "* [Tap4Sport](https://tap4sport.st/), [2](https://tap4sport.pw/) / [Status](http://tap4sport.link/)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [Tap4Sport](https://tap4sport.st/), [2](https://tap4sport.ci/), [3](https://tap4sport.pw/) / [Status](http://tap4sport.link/)"
+        },
+        {
+          "link": "* [FullMatchShows](https://fullmatchshows.com) - Football Replays",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [FullMatchShows](https://fullmatchshows.com) - Football Replays"
+        }
+      ],
+      "removed": [
+        {
+          "link": "* https://addons.mozilla.org/en-US/firefox/addon/scroll_anywhere/",
+          "source": ".vitepress/notes/scrollanywhere-addons",
+          "type": "removed"
+        },
+        {
+          "link": "* https://chrome.google.com/webstore/detail/scrollanywhere/jehmdpemhgfgjblpkilmeoafmkhbckhi",
+          "source": ".vitepress/notes/scrollanywhere-addons",
+          "type": "removed"
+        },
+        {
+          "link": "* https://addons.opera.com/en/extensions/details/scrollanywhere/?display=en",
+          "source": ".vitepress/notes/scrollanywhere-addons",
+          "type": "removed"
+        },
+        {
+          "link": "* [Pack Generator](https://output.com/products/pack-generator) - Sample Pack Generator",
+          "source": "ai",
+          "type": "removed"
+        },
+        {
+          "link": "* [Consent-O-matic](https://consentomatic.au.dk/) / [2](https://github.com/cavi-au/Consent-O-Matic) - Block Cookie Consent Popups",
+          "source": "internet-tools",
+          "type": "removed"
+        },
+        {
+          "link": "* [Wheel Decide](https://wheeldecide.com/), [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [Ultimate Wheel](https://ultimatewheelspin.com/), [SpinTheWheel](https://spinthewheel.io/), [SpinTheWheel](https://spinthewheel.net/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners",
+          "source": "misc",
+          "type": "removed"
+        },
+        {
+          "link": "* [SongSync](https://github.com/Lambada10/SongSync) - Lyrics App",
+          "source": "mobile",
+          "type": "removed"
+        },
+        {
+          "link": "* ⭐ **[Valenced](https://valenced.app/)** / [Discord](https://discord.com/invite/dtBTQHYSx4) / [Fonts](https://github.com/Rairof/Theme-Fonts), [2](https://github.com/Purple-EyeZ/Bunny-Fonts) / [GitHub](https://github.com/Valenced) or **[⁠raincord](https://www.raincord.dev/)** / [Discord](https://discord.gg/qkdPGunwjW) - Modded Discord Clients",
+          "source": "mobile",
+          "type": "removed"
+        },
+        {
+          "link": "* [KissAsian.video](https://kissasian.video/) - TV / Movies",
+          "source": "video",
+          "type": "removed"
+        }
+      ],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "8d3dea15c8a947b4de3f58e93c687edb03b8253b",
+      "date": "2026-11-24T02:27:15Z",
+      "message": "set all links to fmhy discord as the new discord page (#7401)\n\nCo-authored-by: litekin <litekin@tutamail.com>",
+      "added": [
+        {
+          "link": "* https://rentry.org/Piracy-BG/",
+          "source": "beginners-guide",
+          "type": "updated",
+          "relatedLink": "* https://rentry.org/Piracy-BG/"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "886b488576f4f0d61e1a3fe6caef2b64200d2c39",
+      "date": "2026-11-24T02:20:12Z",
+      "message": "Derive the sitemap hostname from the deployment instead of hardcoding fmhy.net (#7358)\n\n* Derive sitemap hostname from SITE_HOST with fmhy.net fallback\n\n* Derive sitemap hostname from Pages preview URL, SITE_HOST still wins\n\n---------\n\nCo-authored-by: eli32-vlc <eli32-vlc@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "7a3698ea88220403a4ee2e1e6f2450c37a18aa77",
+      "date": "2026-11-24T02:16:25Z",
+      "message": "Search sementic feature (#7378)\n\n* Move search query logic from VPLocalSearchBox into theme/search/engine.ts\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to typo-tolerant search when exact search finds nothing\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Rank whole-word heading matches above substring title hits; demote archive pages\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Expand abbreviations and intent words in search queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Share one tokenizer between the search index and queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Cache the search index and prefetch it on search intent\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Focus search results on the matching list entry\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Mirror the search query into ?q= and trim excerpts to matching entries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Add opt-in semantic search (Ternlight) with entry line highlight\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fix search highlighting after query planner merge; drop unused markRaw import\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Recover short-word typos in fallback; rank other-platform sections below the asked platform\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make semantic the third state of the exact/fuzzy toggle; remove sparkle button\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to intent words when a query names something the wiki doesn't list\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Fall back to intent words when a query names something the wiki doesn't list\"\n\nThis reverts commit c7365e3f6eda0e1d66708991941928560f9d8b28.\n\n* Keep exact search strict; run the typo-tolerant fallback in fuzzy mode only\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make exact search literal: no query planner or word expansions in = mode\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Semantic mode: rank by embeddings only, without keyword results\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Semantic mode: rank by embeddings only, without keyword results\"\n\nThis reverts commit 35dfeb818080a1cdda2d6b98345ed5bdb8a8afb5.\n\n---------\n\nCo-authored-by: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
+      "date": "2026-11-24T00:17:17Z",
+      "message": "small fix",
+      "added": [],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "07c4036dcde36bea7bdf2c309576054d85588f76",
+      "date": "2026-11-24T00:13:10Z",
+      "message": "small fix",
+      "added": [],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "ddc808de5131f8399d6c6f226251310e3d534e43",
+      "date": "2026-11-24T00:11:17Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)"
+        },
+        {
+          "link": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
     {
       "sha": "9e19368dc2839eef74be9766f641041fd226835a",
       "date": "2026-11-23T11:10:10Z",
@@ -513,7 +846,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9",
@@ -535,7 +868,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "6a183656d8481b3e68123d75c0626fb606e1e07f",
@@ -829,7 +1162,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "6e74732425331b07d4d7c3b428807605e8ee0977",
@@ -851,7 +1184,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "116d738e84d731b298f38bd9ed1f4d4399b3956d",
@@ -3010,7 +3343,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "9065de912942a42ee20d832ced98c7a04682c259",

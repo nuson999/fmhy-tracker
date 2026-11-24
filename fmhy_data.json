@@ -1,872 +1,338 @@
 {
-  "lastUpdated": "2026-11-23T23:50:20.182713Z",
-  "totalAdded": 75,
-  "totalRemoved": 13,
-  "totalNew": 14,
-  "totalUpdated": 61,
-  "totalCommits": 5,
+  "lastUpdated": "2026-11-24T09:49:32.112097Z",
+  "totalAdded": 38,
+  "totalRemoved": 9,
+  "totalNew": 7,
+  "totalUpdated": 31,
+  "totalCommits": 7,
   "commits": [
     {
-      "sha": "9e19368dc2839eef74be9766f641041fd226835a",
-      "date": "2026-11-23T11:10:10Z",
-      "message": "updated 20 pages",
+      "sha": "ddc808de5131f8399d6c6f226251310e3d534e43",
+      "date": "2026-11-24T00:11:17Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
       "added": [
         {
-          "link": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.4 / GLM 5.4 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)",
-          "source": "ai",
+          "link": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)",
+          "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.3 / GLM 5.3 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)"
+          "relatedLink": "* 🌟 **[FlyStream](https://flystream.net/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Subreddit](https://www.reddit.com/r/FlyStream/) / [Discord](https://discord.gg/flystream)"
         },
         {
-          "link": "* [DeepSeek](https://chat.deepseek.com/) - DeepSeek V4.1 Flash 1017 / Sign-Up / [Subreddit](https://www.reddit.com/r/DeepSeek/) / [Discord](https://discord.com/invite/Tc7c45Zzu5) / [GitHub](https://github.com/deepseek-ai)",
-          "source": "ai",
+          "link": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)",
+          "source": "video",
           "type": "updated",
-          "relatedLink": "* [DeepSeek](https://chat.deepseek.com/) - DeepSeek V4.1 Flash 1017 / Sign-Up / [Subreddit](https://www.reddit.com/r/DeepSeek/) / [Discord](https://discord.com/invite/Tc7c45Zzu5) / [GitHub](https://github.com/deepseek-ai)"
-        },
+          "relatedLink": "* ⭐ **[dulo](https://dulo.mov/)** - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/kSsqjhE2Sp)"
+        }
+      ],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "07c4036dcde36bea7bdf2c309576054d85588f76",
+      "date": "2026-11-24T00:13:10Z",
+      "message": "small fix",
+      "added": [],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
+      "date": "2026-11-24T00:17:17Z",
+      "message": "small fix",
+      "added": [],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "7a3698ea88220403a4ee2e1e6f2450c37a18aa77",
+      "date": "2026-11-24T02:16:25Z",
+      "message": "Search sementic feature (#7378)\n\n* Move search query logic from VPLocalSearchBox into theme/search/engine.ts\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to typo-tolerant search when exact search finds nothing\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Rank whole-word heading matches above substring title hits; demote archive pages\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Expand abbreviations and intent words in search queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Share one tokenizer between the search index and queries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Cache the search index and prefetch it on search intent\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Focus search results on the matching list entry\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Mirror the search query into ?q= and trim excerpts to matching entries\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Add opt-in semantic search (Ternlight) with entry line highlight\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fix search highlighting after query planner merge; drop unused markRaw import\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Recover short-word typos in fallback; rank other-platform sections below the asked platform\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make semantic the third state of the exact/fuzzy toggle; remove sparkle button\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Fall back to intent words when a query names something the wiki doesn't list\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Fall back to intent words when a query names something the wiki doesn't list\"\n\nThis reverts commit c7365e3f6eda0e1d66708991941928560f9d8b28.\n\n* Keep exact search strict; run the typo-tolerant fallback in fuzzy mode only\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Make exact search literal: no query planner or word expansions in = mode\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Semantic mode: rank by embeddings only, without keyword results\n\nCo-Authored-By: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>\n\n* Revert \"Semantic mode: rank by embeddings only, without keyword results\"\n\nThis reverts commit 35dfeb818080a1cdda2d6b98345ed5bdb8a8afb5.\n\n---------\n\nCo-authored-by: Devin AI <158243242+devin-ai-integration[bot]@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "886b488576f4f0d61e1a3fe6caef2b64200d2c39",
+      "date": "2026-11-24T02:20:12Z",
+      "message": "Derive the sitemap hostname from the deployment instead of hardcoding fmhy.net (#7358)\n\n* Derive sitemap hostname from SITE_HOST with fmhy.net fallback\n\n* Derive sitemap hostname from Pages preview URL, SITE_HOST still wins\n\n---------\n\nCo-authored-by: eli32-vlc <eli32-vlc@users.noreply.github.com>",
+      "added": [],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "8d3dea15c8a947b4de3f58e93c687edb03b8253b",
+      "date": "2026-11-24T02:27:15Z",
+      "message": "set all links to fmhy discord as the new discord page (#7401)\n\nCo-authored-by: litekin <litekin@tutamail.com>",
+      "added": [
         {
-          "link": "* [Kimi](https://www.kimi.ai/), [2](https://www.kimi.com/) - Kimi K2.6 / Slides / Google Login or Phone # Required / [Subreddit](https://www.reddit.com/r/kimi/) / [Discord](https://discord.gg/TYU2fdJykW) / [GitHub](https://github.com/MoonshotAI)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [Kimi](https://www.kimi.ai/), [2](https://www.kimi.com/) - Kimi K2.6 / Slides / Google Login or Phone # Required / [Subreddit](https://www.reddit.com/r/kimi/) / [Discord](https://discord.gg/TYU2fdJykW) / [GitHub](https://github.com/MoonshotAI)"
-        },
-        {
-          "link": "* [MiniMax AI](https://agent.minimax.io/) - MiniMax M3.1 Flash / Agent / Sign-Up / [GitHub](https://github.com/MiniMax-AI/)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [MiniMax AI](https://agent.minimax.io/) - MiniMax M3.1 Flash / Agent / Sign-Up / [GitHub](https://github.com/MiniMax-AI/)"
-        },
-        {
-          "link": "* [Tencent AI Studio](https://aistudio.tencent.com/) - Hy4 / Unlimited / Sign-Up",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [Tencent AI Studio](https://aistudio.tencent.com/) - Hy4 / Unlimited / Sign-Up"
-        },
-        {
-          "link": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / GLM 5.4 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / GLM 5.3 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)"
-        },
-        {
-          "link": "* [Sarvam](https://dashboard.sarvam.ai/chat) - GLM 5.4 / DeepSeek V4.1 Flash 1017 / Sign-Up",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [Sarvam](https://dashboard.sarvam.ai/chat) - GLM 5.3 / DeepSeek V4.1 Flash 1017 / Sign-Up"
-        },
-        {
-          "link": "* [⁠Lumo](https://lumo.proton.me/) - GLM 5.4 (Max, 20 Daily) / Qwen3.5 122B A10B (Lite, 100 Daily) / Sign-Up / [Reasoning](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/better-reasoning.md)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [⁠Lumo](https://lumo.proton.me/) - GLM 5.3 (Max, 20 Daily) / Qwen3.5 122B A10B (Lite, 100 Daily) / Sign-Up / [Reasoning](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/better-reasoning.md)"
-        },
-        {
-          "link": "* [⁠ISH](https://ish.chat/) - DeepSeek V4 Flash 0731 / GLM 5.4 Flash / 50K Tokens Daily / [Subreddit](https://www.reddit.com/r/Ishchat/) / [Discord](https://discord.gg/cwDTVKyKJz)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [⁠ISH](https://ish.chat/) - DeepSeek V4 Flash 0731 / GLM 5.3 Flash / 50K Tokens Daily / [Subreddit](https://www.reddit.com/r/Ishchat/) / [Discord](https://discord.gg/cwDTVKyKJz)"
-        },
-        {
-          "link": "* [Arena](https://arena.ai/text/direct) - Multiple Models / Agent / Sign-Up / [Limits](https://help.arena.ai/articles/5476762589-credit-sytem) / [X](https://x.com/arena) / [Discord](https://discord.com/invite/lmarena)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [Arena](https://arena.ai/text/direct) - Multiple Models / Agent / Sign-Up / [Limits](https://help.arena.ai/articles/5476762589-credit-sytem) / [X](https://x.com/arena) / [Discord](https://discord.com/invite/lmarena)"
-        },
-        {
-          "link": "* ⭐ **[⁠Ask Brave](https://search.brave.com/ask)** - AI Search Engine",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠Ask Brave](https://search.brave.com/ask)** - AI Search Engine"
-        },
-        {
-          "link": "* ⭐ **[ArtistGrid](https://artistgrid.cx/)** / [GitHub](https://github.com/ArtistGrid/), [yedits](https://tracker.yedits.xyz/) / [Discord](https://discord.gg/2huJDqqq6Y) or [⁠unmusic](https://unmusic.xyz/) - Unreleased",
-          "source": "audio",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[ArtistGrid](https://artistgrid.cx/)** / [GitHub](https://github.com/ArtistGrid/) or [⁠unmusic](https://unmusic.xyz/) - Unreleased"
-        },
-        {
-          "link": "* [⁠PFlix Music](https://pflix.net/music) - Browser Music",
-          "source": "audio",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠NIN Live](https://ninlive.com/) - Nine Inch Nails (NIN) Live Archive",
-          "source": "audio",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **[Drone Zone](https://somafm.com/player/#/now-playing/dronezone)**, **[NTS Slow Focus](https://www.nts.live/infinite-mixtapes/slow-focus)**, **[Music For Programming](https://musicforprogramming.net/latest/)** or [Ambient Sleeping Pill](https://ambientsleepingpill.com/) - Ambient Music Stations / Playlists",
-          "source": "audio",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Drone Zone](https://somafm.com/player/#/now-playing/dronezone)**, **[NTS Slow Focus](https://www.nts.live/infinite-mixtapes/slow-focus)** or **[Music For Programming](https://musicforprogramming.net/latest/)** - Ambient Music Stations / Playlists"
-        },
-        {
-          "link": "* ⭐ **[ArtistGrid](https://artistgrid.cx/)** / [GitHub](https://github.com/ArtistGrid/), [yedits](https://tracker.yedits.xyz/) / [Discord](https://discord.gg/2huJDqqq6Y) or [⁠unmusic](https://unmusic.xyz/) - Unreleased",
-          "source": "audio",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[ArtistGrid](https://artistgrid.cx/)** / [GitHub](https://github.com/ArtistGrid/) or [⁠unmusic](https://unmusic.xyz/) - Unreleased"
-        },
-        {
-          "link": "* **Sports Streaming: [StreamCorner](https://strmcrnr.st/) / [TimStreams](https://timstreams.st/)**",
+          "link": "* https://rentry.org/Piracy-BG/",
           "source": "beginners-guide",
           "type": "updated",
-          "relatedLink": "* **Sports Streaming: [StreamCorner](https://streamcorner.st/) / [TimStreams](https://timstreams.st/)**"
-        },
+          "relatedLink": "* https://rentry.org/Piracy-BG/"
+        }
+      ],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
+      "date": "2026-11-24T06:42:52Z",
+      "message": "updated 11 pages",
+      "added": [
         {
-          "link": "* **Streaming: [animepahe](https://animepahe.pw/) / [Anikoto](https://anikototv.to/) / [Re:ANIME](https://reanime.to/) / [Miruro](https://www.miruro.com/)**",
-          "source": "beginners-guide",
-          "type": "new"
-        },
-        {
-          "link": "* [CollectUI](https://collectui.com/), [Hoverstat](https://www.hoverstat.es/), [httpster](https://httpster.net/), [Recent](https://recent.design/), [Websitevice](https://websitevice.com/), [Dribbble](https://dribbble.com/), [ReallyGoodUX](https://goodux.appcues.com/), [⁠Designeer](https://designeer.xyz/inspiration), [Pixlpin](https://pixlpin.com/) or [Pageflows](https://pageflows.com/) - UI / Site Design Inspiration",
-          "source": "developer-tools",
+          "link": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.4 / GLM 5.3 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)",
+          "source": "ai",
           "type": "updated",
-          "relatedLink": "* [CollectUI](https://collectui.com/), [Hoverstat](https://www.hoverstat.es/), [httpster](https://httpster.net/), [Recent](https://recent.design/), [Websitevice](https://websitevice.com/), [Dribbble](https://dribbble.com/), [ReallyGoodUX](https://goodux.appcues.com/), [Pixlpin](https://pixlpin.com/) or [Pageflows](https://pageflows.com/) - UI / Site Design Inspiration"
+          "relatedLink": "* ⭐ **[⁠Z.ai](https://chat.z.ai/)** - GLM 5.4 / GLM 5.4 Flash / Agent / Slides / Sign-Up / [Discord](https://discord.gg/QR7SARHRxK) / [GitHub](https://github.com/zai-org)"
         },
         {
-          "link": "* [Project NOMAD](https://www.projectnomad.us/) / [GitHub](https://github.com/Crosstalk-Solutions/project-nomad) or [⁠Lastbook](https://lastbook.org/) / [GitHub](https://github.com/Immortal-Protocols/lastbook) - Self-Contained Offline Knowledge + Off-Grid Databases",
-          "source": "educational",
+          "link": "* [Meta AI](https://www.meta.ai/) - Muse Spark 1.3 / Muse Glimmer 30B / May Require Sign-Up / Unlimited",
+          "source": "ai",
           "type": "updated",
-          "relatedLink": "* [Project NOMAD](https://www.projectnomad.us/) - Self-Contained Offline Knowledge + Off-Grid Database / [GitHub](https://github.com/Crosstalk-Solutions/project-nomad)"
+          "relatedLink": "* [Meta AI](https://www.meta.ai/) - Muse Spark 1.3 / Muse Glimmer 30B / Meta Sign-Up / Unlimited"
         },
         {
-          "link": "* *\"Truthfully you guys provide a platform so captivating, from your main menu page you really don't know which way to go. Coz movies IT'S ALL THERE, AI fanatics IT'S ALL THERE, never did good at school NO PROBLEM YOU GOT OUR BACKS, well to cut my long story short A BIG THANKS from my side. At 52 I love discovering new things and you guys give just that. A World on it's own. Lovely stuff.\"*",
-          "source": "feedback",
-          "type": "new"
+          "link": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)",
+          "source": "ai",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠Together.ai](https://chat.together.ai/)** - DeepSeek V4.1 Flash 1017 / GLM 5.4 / Sign-Up / Up To 110 Daily / [Discord](https://discord.gg/9Rk6sSeWEG)"
         },
         {
-          "link": "* ⭐ **[Apollo](https://github.com/ClassicOldSong/Apollo)** - Remote Server for Moonlight / [Mobile](https://github.com/ClassicOldSong/moonlight-android)",
+          "link": "* [MarioCube](https://mariocube.com/) - GameCube Homebrew Resources",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources"
+        },
+        {
+          "link": "* [⁠Dolphin Depot](https://dolphindepot.org/) - GameCube Homebrew App Store",
           "source": "gaming-tools",
           "type": "new"
         },
         {
-          "link": "* ⭐ **[Ascendara](https://ascendara.app/)** - Game Library / Launcher / Downloader / Achievement Support / Windows, Linux / [Discord](https://ascendara.app/discord) / [GitHub](https://github.com/Ascendara/ascendara)",
+          "link": "* [NASOS](https://download.digiex.net/Consoles/GameCube/Apps/NASOSbeta1.rar) - GameCube iso.dec to ISO Converter",
           "source": "gaming-tools",
           "type": "updated",
-          "relatedLink": "* ⭐ **[Ascendara](https://ascendara.app/)** - Game Library / Launcher / Downloader / Windows, Linux / [Discord](https://ascendara.app/discord) / [GitHub](https://github.com/Ascendara/ascendara)"
+          "relatedLink": "* [NASOS](https://download.digiex.net/Consoles/GameCube/Apps/NASOSbeta1.rar) - Gamecube iso.dec to ISO Converter"
         },
         {
-          "link": "* ⭐ **[GameBounty](https://gamebounty.st/)** - Download / Pre-installed / Achievements / [Discord](https://discord.gg/dmjUJ4xCEV)",
-          "source": "gaming",
-          "type": "new"
+          "link": "* [MarioCube](https://mariocube.com/) - Wii & GameCube Homebrew Resources",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources"
         },
         {
-          "link": "* ⭐ **[RetroGameTalk](https://retrogametalk.com/)** (sign-up required) / [Subreddit](https://www.reddit.com/r/RetroGameTalk/), [CDRomance](https://cdromance.com/), [⁠ROMHack.ing](https://www.romhack.ing/) / [Discord](https://discord.gg/uAufcgz), [ROMhacking](https://www.romhacking.net/) or [⁠ROMHack Plaza](https://romhackplaza.org/) / [Discord](https://discord.gg/5CKzeWmZZU) - ROM Fan Translations / Hacks",
+          "link": "* [Quiver Launcher](https://quiverlauncher.com/) / [GitHub](https://github.com/tgeorgiadis/quiver-launcher) or [Decomp Buddy](https://decompbuddy.com/) - Launch / Manage Recompiled Games ⁠",
           "source": "gaming",
           "type": "updated",
-          "relatedLink": "* ⭐ **[RetroGameTalk](https://retrogametalk.com/)** (sign-up required) / [Subreddit](https://www.reddit.com/r/RetroGameTalk/), [⁠ROMHack.ing](https://www.romhack.ing/) / [Discord](https://discord.gg/uAufcgz), [ROMhacking](https://www.romhacking.net/) or [⁠ROMHack Plaza](https://romhackplaza.org/) / [Discord](https://discord.gg/5CKzeWmZZU) - ROM Fan Translations / Hacks"
+          "relatedLink": "* [Quiver Launcher](https://quiverlauncher.com/) / [GitHub](https://github.com/tgeorgiadis/quiver-launcher), [Decomp Buddy](https://decompbuddy.com/) or [GithubLauncher](https://github.com/SirDiabo/GithubLauncher) - Launch / Manage Recompiled Games ⁠"
         },
         {
-          "link": "* [TextureCan](https://www.texturecan.com/) - Textures",
-          "source": "image-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [Aionda Mail](https://mail.aionda.com/) - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Catch-All",
+          "link": "* ⭐ **[Firefox](https://www.firefox.com/)** / [Nightly](https://www.firefox.com/channel/desktop/#nightly) / [Beta](https://www.firefox.com/channel/desktop/#beta) / [GitHub](https://github.com/mozilla-firefox/firefox) or [⁠Waterfox](https://www.waterfox.com/) / [GitHub](https://github.com/BrowserWorks/waterfox)",
           "source": "internet-tools",
           "type": "updated",
-          "relatedLink": "* [Aionda Mail](https://mail.aionda.com/) - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Catch-All Unlimited"
+          "relatedLink": "* ⭐ **ScrollAnywhere** - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/scroll_anywhere/) / [Chrome](https://chrome.google.com/webstore/detail/scrollanywhere/jehmdpemhgfgjblpkilmeoafmkhbckhi) - Improves Scrolling Functionality"
         },
         {
-          "link": "* [cringeMDb](https://cringemdb.com/), [Age Rating JuJu](https://www.ageratingjuju.com/) or [Common Sense Media](https://www.commonsensemedia.org/) - Find SFW Movies",
+          "link": "* [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [SpinTheWheel](https://spinthewheel.io/), [SpinTheWheel](https://spinthewheel.net/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners",
           "source": "misc",
-          "type": "updated",
-          "relatedLink": "* [cringeMDb](https://cringemdb.com/), [Age Rating JuJu](https://www.ageratingjuju.com/), [Common Sense Media](https://www.commonsensemedia.org/) or [Unconsenting Media](https://www.unconsentingmedia.org) - Find SFW Movies"
+          "type": "new"
         },
         {
-          "link": "* [Wheel Decide](https://wheeldecide.com/), [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [Ultimate Wheel](https://ultimatewheelspin.com/), [SpinTheWheel](https://spinthewheel.io/), [SpinTheWheel](https://spinthewheel.net/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners",
-          "source": "misc",
-          "type": "updated",
-          "relatedLink": "* [Wheel Decide](https://wheeldecide.com/), [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [Ultimate Wheel](https://ultimatewheelspin.com/), [PickerWheel](https://pickerwheel.com/), [SpinWheelify](https://spinwheelify.com/), [SpinTheWheel](https://spinthewheel.io/), [HeySpinner](https://heyspinner.com/), [SpinTheWheel](https://spinthewheel.net/), [TheSpinnerWheel](https://thespinnerwheel.com/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners"
-        },
-        {
-          "link": "* [KISS](https://kisslauncher.com/) - Low-Memory Usage Launcher / [GitHub](https://github.com/Neamar/KISS)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [KISS](https://kisslauncher.com/) / [GitHub](https://github.com/Neamar/KISS) - Low-Memory Usage Launcher"
-        },
-        {
-          "link": "* [InstaEclipse](https://t.me/Eclipse_mods_a) - Modded Instagram Client / [Warning](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/insta-android-critical.md)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [InstaEclipse](https://github.com/ReSo7200/InstaEclipse/) - Modded Instagram Client"
-        },
-        {
-          "link": "* [⁠Peel](https://github.com/mazzz1y/peel), [⁠WebToApp](https://github.com/shiaho777/web-to-app) or [NativeAlpha](https://github.com/cylonid/NativeAlphaForAndroid) - Turn Sites into Apps / Borderless Fullscreen",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [⁠Peel](https://github.com/mazzz1y/peel) or [NativeAlpha](https://github.com/cylonid/NativeAlphaForAndroid) - Turn Sites into Apps / Borderless Fullscreen"
-        },
-        {
-          "link": "* ⭐ **[⁠GameNative](https://gamenative.app/)** - Game Emulator / Launcher / GOG, Steam & Epic Games / [Discord](https://discord.gg/2hKv4VfZfE) / [GitHub](https://github.com/utkarshdalal/GameNative)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠GameNative](https://gamenative.app/)** - Game Emulator / Launcher / [Discord](https://discord.gg/2hKv4VfZfE) / [GitHub](https://github.com/utkarshdalal/GameNative)"
-        },
-        {
-          "link": "* [LastWave](https://lastwave.clashprojects.in/) - YouTube Music Player / [GitHub](https://github.com/Clash-Projects/LastWave-native)",
+          "link": "* [APKCombo](https://apkcombo.com/)",
           "source": "mobile",
           "type": "new"
         },
         {
-          "link": "* [⁠ViWaves](https://github.com/heyjumanji/ViWave) - YouTube Music Player / [Discord](https://discord.gg/YJez4tpVk2)",
+          "link": "* 🌐 **[Morphe Patch Index](https://morphe-patches.software/)** / [2](https://awesome-morphe.vercel.app/) - Morphe Patch Indexes / [Requests](https://morphe-patches.software/requests)",
           "source": "mobile",
           "type": "updated",
-          "relatedLink": "* [⁠ViWaves](https://github.com/heyjumanji/ViWave) - YouTube Music Player"
+          "relatedLink": "* 🌐 **[Morphe Patch Index](https://morphe-patches.software/)** / [2](https://awesome-morphe.vercel.app/) - Morphe Patch Indexes"
         },
         {
-          "link": "* ⭐ **[⁠AMARadio](https://amaradio.org/)** - Radio App / [GitHub](https://github.com/ounben/AMARadio/)",
+          "link": "* ⭐ **[⁠Seal+](https://sealplus.in/)** - Multi-Site Audio Downloader / [GitHub](https://github.com/MaheshTechnicals/Sealplus)",
           "source": "mobile",
           "type": "updated",
-          "relatedLink": "* [⁠AMARadio](https://amaradio.org/) - Radio App / [GitHub](https://github.com/ounben/AMARadio)"
+          "relatedLink": "* ⭐ **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus) or [Seal](https://github.com/JunkFood02/Seal) - Multi-Site Audio Downloader"
         },
         {
-          "link": "* ⭐ **[LiveContainer](https://github.com/LiveContainer/LiveContainer)**, [2](https://github.com/LiveContainerMirror/LiveContainer/) - iOS App Container Launcher / [Discord](https://discord.gg/qNMUaC3JA6) / [Note](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/livecontainer.md)",
+          "link": "* ⭐ **[YTDLnis](https://ytdlnis.org/)** / [GitHub](https://github.com/deniscerri/ytdlnis), **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus), [Hazel](https://github.com/SibtainOcn/Hazel), [⁠VRKA Android](https://github.com/MaverickRox/VRKA-Android), [SnapTube](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/android#wiki_.25B7_modded_apks) (search) or [SongTube](https://github.com/SongTube/SongTube-App) - Audio / Video Downloaders",
           "source": "mobile",
           "type": "updated",
-          "relatedLink": "* [LiveContainer](https://github.com/LiveContainer/LiveContainer), [2](https://github.com/LiveContainerMirror/LiveContainer/) - iOS App Container Launcher / [Discord](https://discord.gg/qNMUaC3JA6)"
+          "relatedLink": "* ⭐ **[YTDLnis](https://ytdlnis.org/)** / [GitHub](https://github.com/deniscerri/ytdlnis), **[⁠Seal+](https://sealplus.in/)** / [GitHub](https://github.com/MaheshTechnicals/Sealplus), [Seal](https://github.com/JunkFood02/Seal), [Hazel](https://github.com/SibtainOcn/Hazel), [⁠VRKA Android](https://github.com/MaverickRox/VRKA-Android), [SnapTube](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/android#wiki_.25B7_modded_apks) (search) or [SongTube](https://github.com/SongTube/SongTube-App) - Audio / Video Downloaders"
         },
         {
-          "link": "* [IPALibrary](https://ipalibrary.me/) - Tweaked Apps",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [IPALibrary](https://ipalibrary.me/) - Tweaked Apps / Use Safari to Translate"
-        },
-        {
-          "link": "* [⁠iosBoom](https://iosboom.com/) - Tweaked App Library",
+          "link": "* ⭐ **[⁠raincord](https://www.raincord.dev/)** - Modded Discord Clients / [Discord](https://discord.gg/qkdPGunwjW)",
           "source": "mobile",
           "type": "new"
         },
         {
-          "link": "* [MySeed](https://m.myseed.tv/) - Movies / TV / Anime",
-          "source": "non-english",
-          "type": "updated",
-          "relatedLink": "* [MySeed](https://m.myseed.tv/ ) - Movies / TV / Anime"
-        },
-        {
-          "link": "* [Chinese Programming Books](https://github.com/justjavac/free-programming-books-zh_CN) or [bookstack](https://www.bookstack.cn/) - Programming Books",
-          "source": "non-english",
-          "type": "updated",
-          "relatedLink": "* [Chinese Programming Books](https://github.com/justjavac/free-programming-books-zh_CN) - Programming Books"
-        },
-        {
-          "link": "* [⁠Diziizle](https://www.diziizle.you/) - TV",
+          "link": "* [⁠Free Japanese Fonts](https://www.freejapanesefont.com/) - Fonts",
           "source": "non-english",
           "type": "new"
         },
         {
-          "link": "* [FMHY X](https://x.fmhy.bid/) - Alternative Style",
-          "source": "other/backups",
+          "link": "* [Playstation Haber](https://playstationhaber.com/) or [MCpsp](https://www.mcpsp.com) - PlayStation Piracy Forums",
+          "source": "non-english",
           "type": "updated",
-          "relatedLink": "* [FMHY X](https://d.fmhy.bid/) - Alternative Style w/ Link Check"
+          "relatedLink": "* [Playstation Haber](https://playstationhaber.com/) / [MCpsp](https://www.mcpsp.com) - PlayStation Piracy Forums"
         },
         {
-          "link": "* [fmhy.vencat.dev](https://fmhy.vencat.dev/) / [GitHub](https://github.com/vendettacat/srylus)",
-          "source": "other/backups",
+          "link": "* [⁠Sofaflix](https://vuonphim.com/) - Movies / TV / Anime / Sub / Dub / 1080p / [Threads](https://www.threads.com/@vuonphim_com) / [Telegram](https://t.me/sofaflixxx)",
+          "source": "non-english",
           "type": "updated",
-          "relatedLink": "* [fmhy.vencat.dev](https://fmhy.vencat.dev/) - Safe for Work (no nsfw page) / [GitHub](https://github.com/vendettacat/srylus)"
+          "relatedLink": "* [⁠Sofaflix](https://sofaflix.rest/) - Movies / TV / Anime / Sub / Dub / 1080p / [Telegram](https://t.me/addlist/66uKS-YYSyZmM2M1)"
         },
         {
-          "link": "* [fmhy.xyz](https://fmhy.xyz/)",
-          "source": "other/backups",
+          "link": "* [⁠Tram Phim](https://tramphim.wtf/) - Movies / TV / Anime / Sub / Dub / 1080p / 4K / [Threads](https://www.threads.com/@tram_phim) / [Telegram](https://t.me/tramphimorgTV)",
+          "source": "non-english",
           "type": "updated",
-          "relatedLink": "* [fmhy.xyz](https://fmhy.xyz/) - Safe for Work (no nsfw page)"
+          "relatedLink": "* [⁠Tram Phim](https://tramphim.app/) - Movies / TV / Anime / Sub / Dub / 1080p / 4K / [Telegram](https://t.me/Adtramphim)"
         },
         {
-          "link": "* [SFW Rentry](https://rentry.co/piracy) / [Mirror](https://rentry.org/piracy)",
-          "source": "other/backups",
+          "link": "* 🌐 **[Instance Scores](https://searx.neocities.org/instancescores)** or [searx.space](https://searx.space/) - Searx Instance Indexes",
+          "source": "storage",
           "type": "updated",
-          "relatedLink": "* [SFW Rentry](https://rentry.co/piracy) / [Mirror](https://rentry.org/piracy)"
+          "relatedLink": "* 🌐 **[Instance Scores](https://searx.neocities.org/instancescores)**, [searx.space](https://searx.space/) or [Searx Index](https://www.startpage.com/sp/search?q=%22powered%20by%20Searx%22) - Searx Instance Indexes"
         },
         {
-          "link": "* [⁠rifteyy](https://rifteyy.org/) - Malware Removal Guides / Blog / [Infostealer Prevention / Recovery](https://rifteyy.org/report/the-ultimate-guide-to-infostealers)",
-          "source": "privacy",
-          "type": "updated",
-          "relatedLink": "* [⁠rifteyy](https://rifteyy.org/) - Malware Removal Guides / Blog / [Infostrealer Prevention / Recovery](https://rifteyy.org/report/the-ultimate-guide-to-infostealers)"
-        },
-        {
-          "link": "* ⭐ **[v2rayNG](https://github.com/2dust/v2rayNG)** or [MahsaNG](https://github.com/GFW-knocker/MahsaNG) / [Telegram](https://t.me/s/mahsa_net), [2](https://t.me/+YIlqV-fl9y4zMmRk) - Proxy Client / Android",
-          "source": "privacy",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[v2rayNG](https://github.com/2dust/v2rayNG)**, [NekoBox](https://matsuridayo.github.io/) / [GitHub](https://github.com/MatsuriDayo/NekoBoxForAndroid/) or [MahsaNG](https://github.com/GFW-knocker/MahsaNG) / [Telegram](https://t.me/s/mahsa_net), [2](https://t.me/+YIlqV-fl9y4zMmRk) - Proxy Client / Android"
-        },
-        {
-          "link": "* ⭐ **[Z-Library](https://z-lib.gd/)**, [2](https://z-library.sk/), [3](https://1lib.sk/), [4](https://articles.sk/), [5](https://z-library.im/), [6](https://z-lib.sk/), [7](https://z-library.qa/), [8](https://z-library.gy/) - Books / Comics / [Apps / Extensions](https://go-to-library.sk/), [2](https://vysetv.cc/) / [.onion](http://loginzlib2vrak5zzpcocc3ouizykn6k5qecgj2tzlnab5wcbqhembyd.onion/), [2](http://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/) / [Subreddit](https://www.reddit.com/r/zlibrary/)",
-          "source": "reading",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Z-Library](https://z-lib.gd/)**, [2](https://z-library.sk/), [3](https://1lib.sk/), [4](https://z-lib.fm/), [5](https://articles.sk/), [6](https://z-library.im/), [7](https://z-lib.sk/), [8](https://z-library.qa/), [9](https://z-library.gy/) - Books / Comics / [Apps / Extensions](https://go-to-library.sk/), [2](https://vysetv.cc/) / [.onion](http://loginzlib2vrak5zzpcocc3ouizykn6k5qecgj2tzlnab5wcbqhembyd.onion/), [2](http://bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion/) / [Subreddit](https://www.reddit.com/r/zlibrary/)"
-        },
-        {
-          "link": "* [WeLib](https://welib.gl/) - Anna's Archive Mirror / Account Required for Downloads / [Unofficial](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/welib-note.md)",
-          "source": "reading",
-          "type": "updated",
-          "relatedLink": "* [WeLib](https://welib.org/) / [2](https://welib.st/) - Anna's Archive Mirror / Account Required for Downloads / [Unofficial](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/welib-note.md)"
-        },
-        {
-          "link": "* [⁠muscatnonfiction](https://t.me/muscatnonfiction)",
-          "source": "reading",
-          "type": "new"
-        },
-        {
-          "link": "* [Anime-Planet](https://anime-planet.com/) - Manga / [Discord](https://discord.gg/animeplanet)",
-          "source": "reading",
-          "type": "updated",
-          "relatedLink": "* [Anime-Planet](https://www.anime-planet.com/) - Anime"
-        },
-        {
-          "link": "* ⭐ **[Apollo](https://github.com/ClassicOldSong/Apollo)** - Remote Server for Moonlight / Windows, macOS, Linux",
-          "source": "system-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [Mouse Without Borders](https://www.microsoft.com/en-us/download/details.aspx?id=35460) - Multi-Computer Client / Windows",
-          "source": "system-tools",
-          "type": "updated",
-          "relatedLink": "* [Mouse Without Borders](https://www.microsoft.com/en-us/garage/wall-of-fame/mouse-without-borders/) - Multi-Computer Client / Windows"
-        },
-        {
-          "link": "* [Screen-Sharing](https://github.com/tonghohin/screen-sharing) - Web-Based",
-          "source": "system-tools",
-          "type": "updated",
-          "relatedLink": "* [Screen-Sharing](https://share-your-screen.vercel.app/) - Web-Based / [GitHub](https://github.com/tonghohin/screen-sharing)"
-        },
-        {
-          "link": "* 🌟 **[7Movies](https://7movies.ws/)**, [2](https://7movies.ac/), [3](https://7shows.st/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Mirrors](https://7domains.fans/) / [Discord](https://discord.gg/JxgRaYMVHF) / [Telegram](https://t.me/+0XhCnzzvCt9hMTNl)",
+          "link": "* **Note** - Sites that check and play streams within their own custom player exclusively. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/). Stars and superstars rotate separately daily to keep things fair (top super moves to bottom super, top normal moves to bottom normal daily).",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* 🌟 **[7Movies](https://7movies.ac/)**, [2](https://7movies.ws/), [3](https://7shows.st/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Mirrors](https://7domains.fans/) / [Discord](https://discord.gg/JxgRaYMVHF) / [Telegram](https://t.me/+0XhCnzzvCt9hMTNl)"
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
         },
         {
-          "link": "* 🌟 **[SweetFox](https://sweetfox.st/)**, [2](http://sweetfox.app/) or [67Movies](https://67movies.st/) - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "link": "* 🌟 **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[SweetFox](https://sweetfox.app/)**, [2](http://sweetfox.st) or [67Movies](https://67movies.st/) - 4K / Dual Audio / External Subs / Ad-Toggle"
+          "relatedLink": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
         },
         {
-          "link": "* ⭐ **[Way2Movies](https://way2movies.vip/)**, [2](https://old.way2movies.vip), [3](https://beta.way2movies.live/), [4](https://way2movies.live/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)",
+          "link": "* ⭐ **[Vumeto](https://vumeto.live/)** - 4K / Dual Audio / Pop up + Redirect Free",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[Way2Movies](https://beta.way2movies.live/)**, [2](https://way2movies.live/), [3](httpsld.way2movies.vip), [4](httpsway2movies.vip) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)"
+          "relatedLink": "* [Vumeto](https://vumeto.live/) - 4K / Dual Audio / Pop up + Redirect Free"
         },
         {
-          "link": "* [Reeflix](https://reeflix.st/) - 4K / Dual Audio / External Subs / Pop up + Redirect Free",
+          "link": "* **Note** - Sites that fork the original P-Stream / movie-web projects. You can add **extra sources** to these by using this **[extension](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/movie-web-sources.md)**. Default sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading.",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that fork the original P-Stream / movie-web projects. You can add **extra sources** to these by using this **[extension](https://github.com/fmhy/edit/blob/main/docs/.vitepress/notes/movie-web-sources.md)**. Default sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites allow you to turn off ads in settings."
+        },
+        {
+          "link": "* [StreamWatch](https://streamwatch.online/), [2](https://pstream.site/) - 1080p / External Subs / [Discord](https://discord.gg/5eWu9Vz6tQ) / [GitHub](https://github.com/steveyout/streamwatch)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [StreamWatch](https://streamwatch.online/), [2](https://pstream.site/), [3](https://streamwatch.pages.dev/) - 1080p / External Subs / [Discord](https://discord.gg/5eWu9Vz6tQ) / [GitHub](https://github.com/steveyout/streamwatch)"
+        },
+        {
+          "link": "* **Note** - Sites with a focus on a single player / server. These are generally good in terms of speed, consistency, and having less mislabeled content. Many also remove and/or fix broken links. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/).",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
+        },
+        {
+          "link": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) or [Flicx](https://fli.cx/) - 4K / External Subs / Pop up + Redirect Free",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) or [Flicx](https://fli.cx/) - 4K / External Subs"
+        },
+        {
+          "link": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and try a VPN if a site is not loading. You can check sites pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/).",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* **Note** - Sites that allow users to choose between multiple different players from a list. Sources vary site-to-site depending on which sites feel are worth using. Make sure to install an [adblocker](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/adblock-vpn-privacy#wiki_.25BA_adblocking) (full version of uBlock Origin), and keep in mind some sites have no popups/redirect ads, or allow you to turn them off in settings. We note popup/redirect ad statuses of each site, as well as their other respective pros & cons on the [grading page](https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading) / [2](https://fmhy-grading.pages.dev/)."
+        },
+        {
+          "link": "* [PiePrime](https://pieprime.cc/) - 3 Sources",
           "source": "video",
           "type": "new"
         },
         {
-          "link": "* ⭐ **[LE MOVIE](https://lemovie.site/)** - 1080p / Dual Audio / Pop up + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[LE MOVIE](https://lemovie.site/)** - 1080p / Dual Audio / Pop up + Redirect Free"
-        },
-        {
-          "link": "* [Q62](https://q62flix.ws/) - 1080p / Dual Audio / Popup + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Q62](https://q62flix.ws/)** - 1080p / Dual Audio / Popup + Redirect Free"
-        },
-        {
-          "link": "* [CinemaCity](https://cinemacity.cc/) - 480p / Dual Audio / Popup + Redirect Free / Signup Required / [Telegram](https://t.me/CinemaCity_rip)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [CinemaCity](https://cinemacity.cc/) - 480p / Dual Audio / Popup + Redirect Free / [Telegram](https://t.me/CinemaCity_rip)"
-        },
-        {
-          "link": "* ⭐ **[ZetMoon](https://zetmoon.live/)** - 39 Sources / Popup + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[ZetMoon](https://zetmoon.live/)** - 38 Sources / Popup + Redirect Free"
-        },
-        {
-          "link": "* [TonkaCine](https://tonkacine.watch/) - 9 Sources / Popup + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[TonkaCine](https://tonkacine.watch/)** - 8 Sources / Popup + Redirect Free"
-        },
-        {
-          "link": "* [Cineshine](https://cineshine.org/) - 38 Sources / Pop up + Redirect Free",
+          "link": "* [Aloso](https://aloso.vercel.app/) - 38 Sources / Pop up + Redirect Free",
           "source": "video",
           "type": "new"
         },
         {
-          "link": "* [Youflex](https://youflex.top/) - 30 Sources / Popup + Redirect Free",
+          "link": "* [⁠bAnime](https://banime.top/) - Sub / Dub / Auto-Next / [Status](https://status.banime.top/) / [Discord](https://discord.gg/tJqRjg5WzH)",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* [Youflex](https://youflex.top/) - 30 Sources / Popup + Redirect Free"
+          "relatedLink": "* [⁠bAnime](https://banime.top/) - Sub / Dub / Auto-Next / [Status](https://status.banime.top/) / [Discord](https://discord.gg/tJqRjg5WzH)"
         },
         {
-          "link": "* ⭐ **[StreamSports99](https://sstreamsports99.is/live-tv)** - TV / Sports / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)",
+          "link": "* ⭐ **[StreamSports99](https://streamsports99.is/live-tv)** - TV / Sports / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[StreamSports99](https://streamsports99.ru)** / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.su/vpns) / [Discord](https://discord.gg/sUwU528aRn)"
+          "relatedLink": "* ⭐ **[StreamSports99](https://sstreamsports99.is/live-tv)** - TV / Sports / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)"
         },
         {
-          "link": "* ⭐ **[StreamSports99](https://streamsports99.is)** / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.is/vpns) / [Discord](https://discord.gg/sUwU528aRn)",
+          "link": "* [BINTV](https://www.bintv.cc/) / [Discord](https://discord.com/invite/fp3EQjFAJQ)",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[StreamSports99](https://streamsports99.ru)** / [Mirrors](https://streamsports99.website/) / [Bypass Blocks](https://streamsports99.su/vpns) / [Discord](https://discord.gg/sUwU528aRn)"
+          "relatedLink": "* [BINTV](https://www.bintv.cc/) / [Status](https://www.bintv.link/) / [Discord](https://discord.com/invite/fp3EQjFAJQ)"
         },
         {
-          "link": "* ⭐ **[DaddyLive](https://dlhd.st/)**, [2](https://thedaddy.li/) / [Status](https://daddylive.pk/) / [Telegram](https://t.me/+8uBUT1-0B741NTll)",
+          "link": "* [Tap4Sport](https://tap4sport.st/), [2](https://tap4sport.pw/) / [Status](http://tap4sport.link/)",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* ⭐ **[DaddyLive](https://dlive.sx/)**, [2](https://daddylive.pk/) / [Telegram](https://t.me/+8uBUT1-0B741NTll)"
+          "relatedLink": "* [Tap4Sport](https://tap4sport.st/), [2](https://tap4sport.ci/), [3](https://tap4sport.pw/) / [Status](http://tap4sport.link/)"
         },
         {
-          "link": "* [⁠CMVTV](https://cmvwd.lovable.app/) / [Telegram](https://t.me/cricketmemesverse)",
+          "link": "* [FullMatchShows](https://fullmatchshows.com) - Football Replays",
           "source": "video",
           "type": "updated",
-          "relatedLink": "* [⁠CMVTV](https://cmvxd.lovable.app/) / [Status](https://cmvwd.lovable.app/) / [Telegram](https://t.me/cricketmemesverse)"
-        },
-        {
-          "link": "* [⁠#IPTV](https://app.hashtagiptv.com/) - IPTV Web Player",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [⁠#IPTV](https://www.hashtagiptv.com/) - IPTV Web Player"
-        },
-        {
-          "link": "* [SSR Movies](https://ssrmovies.blue/) - Movies / TV / 4K / HEVC / [Telegram](https://telegram.dog/+MF2EXeitLjMxY2Ux)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [SSR Movies](https://ssrmovies.blue/) - Movies / TV / 4K / HEVC / [Telegram](https://telegram.dog/+MF2EXeitLjMxY2Ux)"
-        },
-        {
-          "link": "* [FilmGo](https://www.filmgo.live/) - Movies / TV / 1080p / HEVC",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [FilmGo](https://www.filmgo.live/) - Movies / TV / 1080p / HEVC"
-        },
-        {
-          "link": "* [TodayTVSeries](https://www.todaytvseries1.com/) - TV / 1080p / HEVC",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [TodayTVSeries](https://www.todaytvseries1.com/) - TV / 1080p / HEVC"
-        },
-        {
-          "link": "* [Anime-Planet](https://www.anime-planet.com/) - Anime / [Discord](https://discord.gg/animeplanet)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [Anime-Planet](https://www.anime-planet.com/) - Anime"
+          "relatedLink": "* [FullMatchShows](https://fullmatchshows.com) - Football Replays"
         }
       ],
       "removed": [
         {
-          "link": "* [420.moe](https://420.moe/) - 420 Radio",
-          "source": "audio",
+          "link": "* https://addons.mozilla.org/en-US/firefox/addon/scroll_anywhere/",
+          "source": ".vitepress/notes/scrollanywhere-addons",
           "type": "removed"
         },
         {
-          "link": "* [Ambient Sleeping Pill](https://ambientsleepingpill.com/) - Lofi Radio",
-          "source": "audio",
+          "link": "* https://chrome.google.com/webstore/detail/scrollanywhere/jehmdpemhgfgjblpkilmeoafmkhbckhi",
+          "source": ".vitepress/notes/scrollanywhere-addons",
           "type": "removed"
         },
         {
-          "link": "* **Streaming: [Anikoto](https://anikototv.to/) / [Re:ANIME](https://reanime.to/) / [Miruro](https://www.miruro.com/) / [animepahe](https://animepahe.pw/)**",
-          "source": "beginners-guide",
+          "link": "* https://addons.opera.com/en/extensions/details/scrollanywhere/?display=en",
+          "source": ".vitepress/notes/scrollanywhere-addons",
           "type": "removed"
         },
         {
-          "link": "* ⭐ **[Sunshine](https://app.lizardbyte.dev/Sunshine/)** or [Apollo](https://github.com/ClassicOldSong/Apollo) - Remote Server for Moonlight / [Mobile](https://github.com/ClassicOldSong/moonlight-android) / [Discord](https://discord.com/invite/d6MpcrbYQs) / [GitHub](https://github.com/LizardByte/Sunshine)",
-          "source": "gaming-tools",
+          "link": "* [Pack Generator](https://output.com/products/pack-generator) - Sample Pack Generator",
+          "source": "ai",
           "type": "removed"
         },
         {
-          "link": "* [WineGDK](https://github.com/Weather-OS/WineGDK) - Bedrock Launcher / macOS, Linux / [Guide](https://minecraft.wiki/w/Tutorial:Playing_Minecraft_on_Linux#WineGDK)",
-          "source": "gaming-tools",
+          "link": "* [Consent-O-matic](https://consentomatic.au.dk/) / [2](https://github.com/cavi-au/Consent-O-Matic) - Block Cookie Consent Popups",
+          "source": "internet-tools",
           "type": "removed"
         },
         {
-          "link": "* [TheOfficeStareMachine](http://theofficestaremachine.com/) - The Office Video Emotion Search",
+          "link": "* [Wheel Decide](https://wheeldecide.com/), [SpinWheelPlus](https://spinwheelplus.com/), [SpinTheWheel](https://spinthewheelweb.com/), [Ultimate Wheel](https://ultimatewheelspin.com/), [SpinTheWheel](https://spinthewheel.io/), [SpinTheWheel](https://spinthewheel.net/) or [Wheel of Names](https://wheelofnames.com/) - Wheel Randomizers / Spinners",
           "source": "misc",
           "type": "removed"
         },
         {
-          "link": "* [Animejara](https://animejara.com/) - Anime / Sub / [Discord](https://discord.com/invite/MTzZTPffXs)",
-          "source": "non-english",
+          "link": "* [SongSync](https://github.com/Lambada10/SongSync) - Lyrics App",
+          "source": "mobile",
           "type": "removed"
         },
         {
-          "link": "* [Dummies Store](https://t.me/dummiesbook) - Books for Dummies Collection",
-          "source": "reading",
+          "link": "* ⭐ **[Valenced](https://valenced.app/)** / [Discord](https://discord.com/invite/dtBTQHYSx4) / [Fonts](https://github.com/Rairof/Theme-Fonts), [2](https://github.com/Purple-EyeZ/Bunny-Fonts) / [GitHub](https://github.com/Valenced) or **[⁠raincord](https://www.raincord.dev/)** / [Discord](https://discord.gg/qkdPGunwjW) - Modded Discord Clients",
+          "source": "mobile",
           "type": "removed"
         },
         {
-          "link": "* ⭐ **[Sunshine](https://app.lizardbyte.dev/Sunshine/)** or [Apollo](https://github.com/ClassicOldSong/Apollo) - Remote Server for Moonlight / Windows, macOS, Linux / [Discord](https://discord.com/invite/d6MpcrbYQs) / [GitHub](https://github.com/LizardByte/Sunshine)",
-          "source": "system-tools",
-          "type": "removed"
-        },
-        {
-          "link": "* [AnimeLover](https://animelover.site/) - Sub / Dub",
-          "source": "video",
-          "type": "removed"
-        },
-        {
-          "link": "* [Silent Hall of Fame](https://silent-hall-of-fame.org/index.php/free-films) - Silent Films / Rare Films",
-          "source": "video",
-          "type": "removed"
-        },
-        {
-          "link": "* [WorldFree4u](https://worldfree4u.expert/) - Movies / 4K / HEVC",
-          "source": "video",
-          "type": "removed"
-        },
-        {
-          "link": "* [Unconsenting Media](https://www.unconsentingmedia.org) - Database of Sexual Violence in Movies / Shows",
+          "link": "* [KissAsian.video](https://kissasian.video/) - TV / Movies",
           "source": "video",
           "type": "removed"
         }
       ],
       "isHistorical": false
-    },
-    {
-      "sha": "9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9",
-      "date": "2026-11-23T00:12:43Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[ShuttleTV](https://shuttletv.pk/)**, [2](https://shuttletv.me/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/wsPmVB7ZJZ)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[ShuttleTV](https://shuttletv.pk/)**, [2](https://shuttletv.me/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/wsPmVB7ZJZ)"
-        },
-        {
-          "link": "* ⭐ **[Ghostflix](https://ghostflix.st/)**, [2](https://redflix.st/), [3](https://redflix.ac/) - 1080p / Dual Audio / External Subs / Ad-Toggle / [Status](https://redflix.fans/) / [Invite](https://discord.gg/wp5SkSWHW5) / [Telegram](https://t.me/multichannelofficial)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Ghostflix](https://ghostflix.st/)**, [2](https://redflix.st/), [3](https://redflix.ac/) - 1080p / Dual Audio / External Subs / Ad-Toggle / [Status](https://redflix.fans/) / [Invite](https://discord.gg/wp5SkSWHW5) / [Telegram](https://t.me/multichannelofficial)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": true
-    },
-    {
-      "sha": "6a183656d8481b3e68123d75c0626fb606e1e07f",
-      "date": "2026-11-22T01:46:16Z",
-      "message": "updated 19 pages",
-      "added": [
-        {
-          "link": "* [⁠MAI Labs](https://labs.microsoft.ai/chat?model=mai-image-2-7) - MAI-Image-2.7 / MAI-Image-2.7 Flash / 10 Daily / Sign-Up",
-          "source": "ai",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠bewf TTS](https://tts.bewfon.top/) / No Sign-Up",
-          "source": "ai",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠Aidoru Online](https://aidoru-online.me/) - Japanese Idol Group Performances / Torrents / Signup Required",
-          "source": "audio",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **Electron Tools** - [App Store](https://www.electronjs.org/) / [Debugger](https://github.com/pd4d10/debugtron) / [Builder](https://www.electron.build/)",
-          "source": "developer-tools",
-          "type": "updated",
-          "relatedLink": "* ⭐ **Electron Tools** - [App Store](https://www.electronjs.org/apps/) / [Debugger](https://github.com/pd4d10/debugtron) / [Builder](https://www.electron.build/)"
-        },
-        {
-          "link": "* 🌐 **[⁠Free Coding Agents](https://docs.google.com/spreadsheets/d/1j0v2102Xznu06JJoscHZS2C0zdIQqWdA/)**",
-          "source": "developer-tools",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **[⁠Wealth Shown to Scale](https://wealth-inequality.sucks.lt/)** / [Source Code](https://codeberg.org/litekin/pixel-wealth/), [2](https://github.com/Evolving-Thoughts/pixel-wealth) / [Codeberg](https://codeberg.org/litekin/wealth-visualize) - Global Wealth Inequality Visualization",
-          "source": "educational",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠Wealth Shown to Scale](https://wealth-inequality.sucks.lt/)** / [Source Code](https://codeberg.org/litekin/pixel-wealth/), [2](https://evolving-thoughts.github.io/1-pixel-wealth/) / [GitHub](https://github.com/Evolving-Thoughts/1-pixel-wealth) - Global Wealth Inequality Visualization"
-        },
-        {
-          "link": "* [⁠Lib Shammes](https://github.com/Kirkland-Pickles/Shammes) - Find / Manage Game Art / Bulk Add Non-Steam Games",
-          "source": "gaming-tools",
-          "type": "updated",
-          "relatedLink": "* [⁠Lib Shammes](https://github.com/Kirkland-Pickles/lib-shammes) - Find / Manage Game Art / Bulk Add Non-Steam Games"
-        },
-        {
-          "link": "* ⭐ **[Steamless](https://github.com/atom0s/Steamless)**, **[Steam-Auto-Crack](https://github.com/SteamAutoCracks/Steam-auto-crack/)**, [RUNEAutoCracker](https://runeautocracker.vercel.app/) or [SteamAutoCracker](https://github.com/BigBoiCJ/SteamAutoCracker) / [GUI](https://github.com/harryeffinpotter/Steam-Autocracker-GUI/) - Steam DRM Removal / DLC Unlockers",
-          "source": "gaming-tools",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Steamless](https://github.com/atom0s/Steamless)**, **[Steam-Auto-Crack](https://github.com/SteamAutoCracks/Steam-auto-crack/)**, [RUNEAutoCracker](https://runeautocracker.vercel.app/) / [GitHHub](https://github.com/Mush-iii/RUNEAutoCracker) or [SteamAutoCracker](https://github.com/BigBoiCJ/SteamAutoCracker) / [GUI](https://github.com/harryeffinpotter/Steam-Autocracker-GUI/) - Steam DRM Removal / DLC Unlockers"
-        },
-        {
-          "link": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources",
-          "source": "gaming-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [MarioCube](https://mariocube.com/) - Gamecube Homebrew Resources",
-          "source": "gaming-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [MinecraftSkins](https://www.minecraftskins.com/), [SkinMC](https://skinmc.net/), [mcskincraft](https://mcskincraft.com/), [MC-Skins](https://mc-skins.com/), [MC Profiles](https://mcprofiles.net/), [MCSkins](https://mcskins.top/) or [BedrockExplorer](https://www.bedrockexplorer.com/queries/free-content/everyone/all/) - Minecraft Skins",
-          "source": "gaming-tools",
-          "type": "updated",
-          "relatedLink": "* [MinecraftSkins](https://www.minecraftskins.com/), [SkinMC](https://skinmc.net/), [MC-Skins](https://mc-skins.com/), [MC Profiles](https://mcprofiles.net/), [MCSkins](https://mcskins.top/) or [BedrockExplorer](https://www.bedrockexplorer.com/queries/free-content/everyone/all/) - Minecraft Skins"
-        },
-        {
-          "link": "* [⁠Liquipedia Dota 2](https://liquipedia.net/dota2/) - Dota 2 Wiki",
-          "source": "gaming-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [Team Forever](https://teamforeverdev.github.io/) - Sonic 1 & 2 Enhanced / [S1F Mods](https://gamebanana.com/mods/games/10601) / [S2A Mods](https://gamebanana.com/mods/games/15019) / [YouTube](https://www.youtube.com/@teamforeverdev) / [BlueSky](https://bsky.app/profile/teamforever.bsky.social)",
-          "source": "gaming",
-          "type": "updated",
-          "relatedLink": "* [Team Forever](https://teamforeveronline.wixsite.com/home) - Sonic 1 & 2 Enhanced / [S1F Mods](https://gamebanana.com/mods/games/10601) / [S2A Mods](https://gamebanana.com/mods/games/15019) / [YouTube](https://www.youtube.com/@teamforeverdev) / [BlueSky](https://bsky.app/profile/teamforever.bsky.social)"
-        },
-        {
-          "link": "*  [MarioCube](https://mariocube.com/) - Wii Game WADs",
-          "source": "gaming",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠VasTexture](https://sites.google.com/view/infinitexture/) - Textures",
-          "source": "image-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [Search All](https://www.searchall.net/), [WebSitesSearch](https://web-sites-search.web.app/) or [gnod Search](https://www.gnod.com/search/) - Multi-Site Search",
-          "source": "internet-tools",
-          "type": "updated",
-          "relatedLink": "* [Search All](https://www.searchall.net/), [WebSitesSearch](https://web-sites-search.web.app/), [gnod Search](https://www.gnod.com/search/) or [AIO Search](https://www.aiosearch.com/) - Multi-Site Search"
-        },
-        {
-          "link": "* [Aionda Mail](https://mail.aionda.com/) - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Catch-All Unlimited",
-          "source": "internet-tools",
-          "type": "updated",
-          "relatedLink": "* [Aionda Mail](https://mail.aionda.com/) - 25 Shared / 10 Forwards Per Alias / 1 Month Expiry / Unlimited"
-        },
-        {
-          "link": "* [Ghostty](https://ghostty.org/) / [GitHub](https://github.com/ghostty-org/ghostty) or [⁠rootshell](https://www.rootshell.com/) / [GitHub](https://github.com/kitknox/rootshell) - Terminal Emulators",
-          "source": "linux-macos",
-          "type": "updated",
-          "relatedLink": "* [Ghostty](https://ghostty.org/) - Terminal Emulator / [GitHub](https://github.com/ghostty-org/ghostty)"
-        },
-        {
-          "link": "* [NoSignups](https://nosignups.net/) / [GitHub](https://github.com/BraveOPotato/FckSignups), [SaaS Discovery](https://saasdiscovery.com/) or [Electron](https://www.electronjs.org/) - Web App Indexes",
-          "source": "misc",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠DVD Double Dip](https://www.dvddoubledip.com/) - Blu-ray & DVD Comparisons",
-          "source": "misc",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠PhWalls](https://phwalls.com/) - Stock Device Wallpapers",
-          "source": "mobile",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠Limusic](https://limusic.app/#android) - YouTube Music Player / [GitHub](https://github.com/SimoHypers/limusic-android)",
-          "source": "mobile",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠ViWaves](https://github.com/heyjumanji/ViWave) - YouTube Music Player",
-          "source": "mobile",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **[DailyAL](https://dailyanimelist.web.app/)** / [GitHub](https://github.com/JICA98/DailyAL), [AL-chan](https://zend10.github.io/AL-chan/), [Nekome](https://github.com/Chesire/Nekome), [Moelist](https://axiel7.github.io/moelist/) / [GitHub](https://github.com/axiel7/moelistkmp), [Kitsune](https://github.com/Drumber/Kitsune) or [AniTrend](https://anitrend.co/) / [GitHub](https://github.com/AniTrend/anitrend-app) - Anime Trackers",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[DailyAL](https://dailyanimelist.web.app/)** / [GitHub](https://github.com/JICA98/DailyAL), [AL-chan](https://zend10.github.io/AL-chan/), [Nekome](https://github.com/Chesire/Nekome), [Moelist](https://moelist.net/), [Kitsune](https://github.com/Drumber/Kitsune) or [AniTrend](https://anitrend.co/) / [GitHub](https://github.com/AniTrend/anitrend-app) - Anime Trackers"
-        },
-        {
-          "link": "* [⁠CAPlayground](https://github.com/CAPlayground/CAPlayground) - Create & Download Custom Animated Wallpapers / Requires Nugget (or similar)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [⁠CAPlayground](https://caplayground.vercel.app/) - Create & Download Custom Animated Wallpapers / Requires Nugget (or similar) / [GitHub](https://github.com/CAPlayground/CAPlayground)"
-        },
-        {
-          "link": "* [iSH Shell](https://ish.app/) / [GitHub](https://github.com/ish-app/ish), [⁠rootshell](https://www.rootshell.com/) / [GitHub](https://github.com/kitknox/rootshell) or [a-Shell](https://holzschu.github.io/a-Shell_iOS/) - Terminal Emulators",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [iSH Shell](https://ish.app/) / [GitHub](https://github.com/ish-app/ish) or [a-Shell](https://holzschu.github.io/a-Shell_iOS/) - Terminal Emulators"
-        },
-        {
-          "link": "* ⭐ **[FaselHD](https://web11206x.faselhdx.one/)** - Movies / TV / Anime / 1080p",
-          "source": "non-english",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[FaselHD](https://web11206x.faselhdx.one/) - Movies / TV / Anime / 1080p"
-        },
-        {
-          "link": "* [⁠Animpow](https://animpow.com/) - Anime",
-          "source": "non-english",
-          "type": "new"
-        },
-        {
-          "link": "* [fmhy.vencat.dev](https://fmhy.vencat.dev/) - Safe for Work (no nsfw page) / [GitHub](https://github.com/vendettacat/srylus)",
-          "source": "other/backups",
-          "type": "updated",
-          "relatedLink": "* [fmhy.vencat.dev](https://fmhy.vencat.dev/) / [GitHub](https://github.com/vendettacat/srylus)"
-        },
-        {
-          "link": "* ⭐ **Pi-Hole Tools** - [Filters](https://github.com/zachlagden/Pi-hole-Optimized-Blocklists) / [DNS Resolver](https://www.nlnetlabs.nl/projects/unbound/) / [Tray App](https://github.com/PinchToDebug/Pihole-Tray/) / [Android Server](https://github.com/DesktopECHO/Pi-hole-for-Android) (root) / Windows, Android",
-          "source": "privacy",
-          "type": "updated",
-          "relatedLink": "* ⭐ **Pi-Hole Tools** - [Filters](https://firebog.net/), [2](https://github.com/zachlagden/Pi-hole-Optimized-Blocklists) / [DNS Resolver](https://www.nlnetlabs.nl/projects/unbound/) / [Tray App](https://github.com/PinchToDebug/Pihole-Tray/) / [Android Server](https://github.com/DesktopECHO/Pi-hole-for-Android) (root) / Windows, Android"
-        },
-        {
-          "link": "* [ANY.RUN](https://any.run/) - Online Sandbox / Contact them Discord / X for Signup",
-          "source": "privacy",
-          "type": "new"
-        },
-        {
-          "link": "* [Molly](https://github.com/mollyim/mollyim-android) - Android",
-          "source": "privacy",
-          "type": "new"
-        },
-        {
-          "link": "* [Sign Language Dataset Compendium](https://www.sign-lang.uni-hamburg.de/lr/compendium/index.html) - Sign Language Datasets",
-          "source": "reading",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠fmhytube](https://fmhytube.suntown.town/) - Curated Video Directory / Based on YT Channel Spreadsheet / [Discord](https://discord.gg/Ku8p5KRfqa)",
-          "source": "social-media-tools",
-          "type": "updated",
-          "relatedLink": "* [⁠fmhytube](https://fmhytube.suntown.town/) - Curated Video Directory / Based on YT Channel Spreadsheet"
-        },
-        {
-          "link": "* [⁠PhWalls](https://phwalls.com/) - Stock System Wallpapers",
-          "source": "system-tools",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **[Way2Movies](https://beta.way2movies.live/)**, [2](https://way2movies.live/), [3](httpsld.way2movies.vip), [4](httpsway2movies.vip) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Way2Movies](https://beta.way2movies.live/)**, [2](https://way2movies.live/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)"
-        },
-        {
-          "link": "* [ThugTV](https://thugtv.st) - 720p / Dual Audio / Ad-Toggle / [Telegram](https://t.me/thugtvonline) / [Discord](https://discord.gg/kZWYkvuGhM)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [ThugTV](https://thugtv.online/), [2](https://thugtv.st) - 1080p / Dual Audio / Ad-Toggle / [Telegram](https://t.me/thugtvonline) / [Discord](https://discord.gg/kZWYkvuGhM)"
-        },
-        {
-          "link": "* ⭐ **[Basement](https://basementx.lol/)** - 4K / Dual Audio / External Subs / [Status](https://rentry.co/basementx) / [Discord](https://discord.com/invite/bWYUqEg7Xq)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Basement](https://basementx.lol/)** - 1080p / Dual Audio / External Subs / [Status](https://rentry.co/basementx) / [Discord](https://discord.com/invite/bWYUqEg7Xq)"
-        },
-        {
-          "link": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) or [Flicx](https://fli.cx/) - 4K / External Subs",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Cno](https://cno.to/)** / [Beta](https://beta.cno.to/) - 4K / External Subs"
-        },
-        {
-          "link": "* ⭐ **[LE MOVIE](https://lemovie.site/)** - 1080p / Dual Audio / Pop up + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [LE MOVIE](https://lemovie.site/) - 1080p / Dual Audio / Pop up + Redirect Free"
-        },
-        {
-          "link": "* ⭐ **[⁠Gotaku](https://gotaku.to//)**, [2](https://gotaku.ch), [3](https://gotaku.li) - Sub / Dub / Auto-Next / [Mirrors](https://igotaku.to/)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠Gotaku](https://gotaku.to/)** - Sub / Dub / Auto-Next"
-        },
-        {
-          "link": "* ⭐ **[⁠AniXo](https://anixo.live/)**, [2](https://anixo.cfd/) - Sub / Dub / Auto-Next",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠AniXo](https://anixo.live/)**, [2](https://anixo.cfd/), [3](https://anixo.online/home) - Sub / Dub / Auto-Next"
-        },
-        {
-          "link": "* [⁠Matchora](https://matchora.to/channels) - TV / Sports",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [⁠Matchora](https://matchora.to/)"
-        },
-        {
-          "link": "* [⁠Matchora](https://matchora.to/)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [⁠Matchora](https://matchora.to/)"
-        },
-        {
-          "link": "* [SportOnTV](https://sportontv.stream/) / [Discord](https://discord.gg/YhQPSSMps2) / [Mirrors](https://sotproxy.ext.io)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [SportOnTV](https://sportontv.click/) / [Discord](https://discord.gg/YhQPSSMps2) / [Mirrors](https://sotproxy.ext.io)"
-        },
-        {
-          "link": "* [FreeF1](https://freef1-live.vercel.app/) - Motorsports / [Discord](https://discord.com/invite/KYXHCAzhN4)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [FreeF1](https://freef1-live.vercel.app/) - Motorsports"
-        },
-        {
-          "link": "* [MMA Replay All](https://mmareplayall.com/) - MMA Replays",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [MMA Replay All](https://rentry.co/FMHYB64#mrpa) - MMA Replays"
-        }
-      ],
-      "removed": [
-        {
-          "link": "* https://github.com/bepass-org/oblivion-desktop",
-          "source": ".vitepress/notes/alt-warp-clients",
-          "type": "removed"
-        },
-        {
-          "link": "* [⁠MAI Playground](https://playground.microsoft.ai/chat) - MAI-Image-2.5 / MAI-Image-2.5 Flash / MAI-Image-2.5-Pro / 10 Daily / Sign-Up",
-          "source": "ai",
-          "type": "removed"
-        },
-        {
-          "link": "* [Store.app](https://store.app/), [NoSignups](https://nosignups.net/) / [GitHub](https://github.com/BraveOPotato/FckSignups), [SaaS Discovery](https://saasdiscovery.com/) or [Electron](https://www.electronjs.org/apps) - Web App Indexes",
-          "source": "misc",
-          "type": "removed"
-        },
-        {
-          "link": "* [LibreDNS](https://libredns.gr/) - DNS Adblocking / German Servers",
-          "source": "privacy",
-          "type": "removed"
-        }
-      ],
-      "isHistorical": true
-    },
-    {
-      "sha": "6e74732425331b07d4d7c3b428807605e8ee0977",
-      "date": "2026-11-22T00:12:33Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[Atlantic](https://atlantic.bz/)** or [fprime](https://fprime.at/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.com/invite/ekUMJ7WVnW)"
-        },
-        {
-          "link": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": true
-    },
-    {
-      "sha": "116d738e84d731b298f38bd9ed1f4d4399b3956d",
-      "date": "2026-11-21T05:00:29Z",
-      "message": "fix",
-      "added": [],
-      "removed": [
-        {
-          "link": "* [unreleased.world](https://www.unreleased.world/) - Unreleased",
-          "source": "audio",
-          "type": "removed"
-        }
-      ],
-      "isHistorical": true
     }
   ],
   "zeroChangeStreak": 0,
-  "zeroChangeStreakThroughSha": "9e19368dc2839eef74be9766f641041fd226835a"
+  "zeroChangeStreakThroughSha": "dd9cf3c51ad008b8eb70d52dba848f449800df79"
 }
