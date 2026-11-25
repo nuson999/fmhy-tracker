@@ -1,8 +1,30 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-24T22:22:36.202549Z",
-  "totalCommits": 90,
+  "generatedAt": "2026-11-25T08:25:57.421339Z",
+  "totalCommits": 91,
   "commits": [
+    {
+      "sha": "8e397f78fff4b40c622dd927acb0d46fc784a3fd",
+      "date": "2026-11-25T00:11:14Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[Vivarium](https://vivarium.st/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/pxVxUdFxj5)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Vivarium](https://vivarium.st/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/pxVxUdFxj5)"
+        },
+        {
+          "link": "* ⭐ **[Spacedom](https://spacedom.live/)** - 4K / Dual Audio / Popup + Redirect Free / [Discord](https://discord.com/invite/6NU9thcPYs)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Spacedom](https://spacedom.live/)** - 4K / Dual Audio / Popup + Redirect Free / [Discord](https://discord.com/invite/6NU9thcPYs)"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
     {
       "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
       "date": "2026-11-24T06:42:52Z",
@@ -260,7 +282,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "8d3dea15c8a947b4de3f58e93c687edb03b8253b",
@@ -276,7 +298,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "886b488576f4f0d61e1a3fe6caef2b64200d2c39",
@@ -285,7 +307,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "7a3698ea88220403a4ee2e1e6f2450c37a18aa77",
@@ -294,7 +316,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
@@ -303,7 +325,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "07c4036dcde36bea7bdf2c309576054d85588f76",
@@ -312,7 +334,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "ddc808de5131f8399d6c6f226251310e3d534e43",
@@ -334,7 +356,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "9e19368dc2839eef74be9766f641041fd226835a",
@@ -846,7 +868,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "9ee7f59e421ad317a8e0b71d0ff24751fb8d73b9",
@@ -868,7 +890,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "6a183656d8481b3e68123d75c0626fb606e1e07f",
@@ -2516,7 +2538,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "894e17e8c69f7b6674a5eb5e79503135e1c398d9",
@@ -2538,7 +2560,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "5ac9db2d5a5d0f814c0ad17f7b69116cb0d3e2f0",
@@ -2851,7 +2873,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "bbc7d256901cbd6f4bd37a80e1a74171b906a1e5",
@@ -2860,7 +2882,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "fefb87c38f8d1a0b154af8636c57da075e8e2cb5",
@@ -2882,7 +2904,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "2d92b7b41a2abdc2cc8d2d2a0d01a8ac9d468570",
@@ -2891,7 +2913,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "531fd144292671f45d1266ea427ab3d9453a4eaf",
@@ -3334,7 +3356,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "61226a3ed4db7f185ef0ade2642b10fd58628e7b",

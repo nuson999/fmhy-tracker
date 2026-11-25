@@ -5,9 +5,22 @@
     <link>https://nuson999.github.io/fmhy-tracker</link>
     <description><![CDATA[Track changes in the FMHY repository - new, updated, and removed links]]></description>
     <atom:link href="https://nuson999.github.io/fmhy-tracker/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 24 Nov 2026 22:22:36 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 08:25:53 GMT</lastBuildDate>
     <generator>FMHY Tracker</generator>
     <language>en-us</language>
+    <item>
+      <title>2 updated</title>
+      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/8e397f78fff4b40c622dd927acb0d46fc784a3fd</guid>
+      <link>https://github.com/fmhy/edit/commit/8e397f78fff4b40c622dd927acb0d46fc784a3fd</link>
+      <pubDate>Wed, 25 Nov 2026 00:11:14 GMT</pubDate>
+      <description><![CDATA[<p><strong>Commit:</strong> chore: rotate streaming aggregators (FIFO)</p>
+<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/8e397f78fff4b40c622dd927acb0d46fc784a3fd">8e397f78</a></p>
+<h3>Updated Links (2)</h3>
+<ul>
+<li>[video] 🌟 <a href="https://vivarium.st/"><strong>Vivarium</strong></a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/pxVxUdFxj5">Discord</a><br/><strong>Before:</strong> 🌟 <a href="https://vivarium.st/"><strong>Vivarium</strong></a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/pxVxUdFxj5">Discord</a><br/><strong>After:</strong> 🌟 <a href="https://vivarium.st/"><strong>Vivarium</strong></a> - 4K / Dual Audio / External Subs / Ad-Toggle / <a href="https://discord.gg/pxVxUdFxj5">Discord</a></li>
+<li>[video] ⭐ <a href="https://spacedom.live/"><strong>Spacedom</strong></a> - 4K / Dual Audio / Popup + Redirect Free / <a href="https://discord.com/invite/6NU9thcPYs">Discord</a><br/><strong>Before:</strong> ⭐ <a href="https://spacedom.live/"><strong>Spacedom</strong></a> - 4K / Dual Audio / Popup + Redirect Free / <a href="https://discord.com/invite/6NU9thcPYs">Discord</a><br/><strong>After:</strong> ⭐ <a href="https://spacedom.live/"><strong>Spacedom</strong></a> - 4K / Dual Audio / Popup + Redirect Free / <a href="https://discord.com/invite/6NU9thcPYs">Discord</a></li>
+</ul>]]></description>
+    </item>
     <item>
       <title>7 added, 28 updated, 9 removed</title>
       <guid isPermaLink="true">https://github.com/fmhy/edit/commit/dd9cf3c51ad008b8eb70d52dba848f449800df79</guid>
@@ -183,15 +196,6 @@ This reverts commit 35dfeb818080a1cdda2d6b98345ed5bdb8a8afb5.
 
 Co-authored-by: Devin AI &lt;158243242+devin-ai-integration[bot]@users.noreply.github.com&gt;</p>
 <p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/7a3698ea88220403a4ee2e1e6f2450c37a18aa77">7a3698ea</a></p>
-<p>No link changes in this commit.</p>]]></description>
-    </item>
-    <item>
-      <title>No changes</title>
-      <guid isPermaLink="true">https://github.com/fmhy/edit/commit/79ada4bd58f2203ed3dc6d8934216608e8a48320</guid>
-      <link>https://github.com/fmhy/edit/commit/79ada4bd58f2203ed3dc6d8934216608e8a48320</link>
-      <pubDate>Tue, 24 Nov 2026 00:17:17 GMT</pubDate>
-      <description><![CDATA[<p><strong>Commit:</strong> small fix</p>
-<p><strong>SHA:</strong> <a href="https://github.com/fmhy/edit/commit/79ada4bd58f2203ed3dc6d8934216608e8a48320">79ada4bd</a></p>
 <p>No link changes in this commit.</p>]]></description>
     </item>
   </channel>

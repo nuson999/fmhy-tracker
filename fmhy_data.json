@@ -1,11 +1,32 @@
 {
-  "lastUpdated": "2026-11-24T22:22:36.020739Z",
-  "totalAdded": 0,
+  "lastUpdated": "2026-11-25T08:25:53.782846Z",
+  "totalAdded": 2,
   "totalRemoved": 0,
   "totalNew": 0,
-  "totalUpdated": 0,
+  "totalUpdated": 2,
   "totalCommits": 5,
   "commits": [
+    {
+      "sha": "8e397f78fff4b40c622dd927acb0d46fc784a3fd",
+      "date": "2026-11-25T00:11:14Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[Vivarium](https://vivarium.st/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/pxVxUdFxj5)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Vivarium](https://vivarium.st/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/pxVxUdFxj5)"
+        },
+        {
+          "link": "* ⭐ **[Spacedom](https://spacedom.live/)** - 4K / Dual Audio / Popup + Redirect Free / [Discord](https://discord.com/invite/6NU9thcPYs)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Spacedom](https://spacedom.live/)** - 4K / Dual Audio / Popup + Redirect Free / [Discord](https://discord.com/invite/6NU9thcPYs)"
+        }
+      ],
+      "removed": [],
+      "isHistorical": false
+    },
     {
       "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
       "date": "2026-11-24T06:42:52Z",
@@ -294,16 +315,8 @@
       "added": [],
       "removed": [],
       "isHistorical": true
-    },
-    {
-      "sha": "79ada4bd58f2203ed3dc6d8934216608e8a48320",
-      "date": "2026-11-24T00:17:17Z",
-      "message": "small fix",
-      "added": [],
-      "removed": [],
-      "isHistorical": true
     }
   ],
   "zeroChangeStreak": 0,
-  "zeroChangeStreakThroughSha": "dd9cf3c51ad008b8eb70d52dba848f449800df79"
+  "zeroChangeStreakThroughSha": "8e397f78fff4b40c622dd927acb0d46fc784a3fd"
 }
