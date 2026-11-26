@@ -1,32 +1,11 @@
 {
-  "lastUpdated": "2026-11-26T08:09:58.502046Z",
-  "totalAdded": 24,
-  "totalRemoved": 6,
-  "totalNew": 6,
-  "totalUpdated": 18,
+  "lastUpdated": "2026-11-26T21:27:35.132061Z",
+  "totalAdded": 0,
+  "totalRemoved": 0,
+  "totalNew": 0,
+  "totalUpdated": 0,
   "totalCommits": 5,
   "commits": [
-    {
-      "sha": "5d5e9c9f2d45db499c457c9601cca956de23bb42",
-      "date": "2026-11-26T00:11:13Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle"
-        },
-        {
-          "link": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": false
-    },
     {
       "sha": "05305b2a5ae5efc8fe4624298d03984231a40c08",
       "date": "2026-11-26T01:37:14Z",
@@ -191,7 +170,28 @@
           "type": "removed"
         }
       ],
-      "isHistorical": false
+      "isHistorical": true
+    },
+    {
+      "sha": "5d5e9c9f2d45db499c457c9601cca956de23bb42",
+      "date": "2026-11-26T00:11:13Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle"
+        },
+        {
+          "link": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)"
+        }
+      ],
+      "removed": [],
+      "isHistorical": true
     },
     {
       "sha": "ea3d87b4733d7b296208c991e3573c3075ed8150",
