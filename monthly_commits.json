@@ -1,8 +1,39 @@
 {
   "month": "2026-11",
-  "generatedAt": "2026-11-26T21:27:35.291298Z",
-  "totalCommits": 96,
+  "generatedAt": "2026-11-27T08:20:58.981666Z",
+  "totalCommits": 98,
   "commits": [
+    {
+      "sha": "13755f6fd3cadfe724fc8a12d34c4a8a2e9e9d5a",
+      "date": "2026-11-27T00:11:09Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[Movy](https://www.movy.sx/)** - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Movy](https://www.movy.sx/)** - 4K / Dual Audio / External Subs / Ad-Toggle"
+        },
+        {
+          "link": "* ⭐ **[Way2Movies](https://way2movies.vip/)**, [2](https://old.way2movies.vip), [3](https://beta.way2movies.live/), [4](https://way2movies.live/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Way2Movies](https://way2movies.vip/)**, [2](https://old.way2movies.vip), [3](https://beta.way2movies.live/), [4](https://way2movies.live/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Telegram](https://t.me/Way2MoviesFun) / [Discord](https://discord.gg/mH4zsaAmv7)"
+        }
+      ],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "today"
+    },
+    {
+      "sha": "ce1694126b6b03a016700bdfaa261854d6450b32",
+      "date": "2026-11-26T23:28:08Z",
+      "message": "fix: New badge only for entries that are actually new (#7463)\n\nThe pill was decided from a URL-keyed map of \"URLs that appeared on an added\ndiff line in the last 30 days\". That is not the same as an entry being new,\nand it produced visible false positives: Metrolist, listed since December\n2024, showed \"New, added 2026-11-25\" on both /mobile and /audio because one\ncommit inserted its link on the audio page, and masscan, ShredOS, APKCombo,\nbookstack and AnimeGO all showed up as new after wording or URL edits to\nlong-standing lines.\n\nWhat changes:\n\n- The map is keyed by page as well as URL (\"mobile.md|https://...\"), so a page\n  that inserts a link no longer badges the same link on every other page that\n  already lists it.\n- An entry only counts as new if its label did not already appear in that file\n  at the parent commit. That covers rewritten bullets (masscan or RustScan),\n  link swaps (GameBounty, CDRomance) and re-lists without any rename detection.\n- docs/.vitepress/added-dates.json holds known first-appearance dates for\n  entries older than the 30-day window, which is what keeps a re-added URL\n  from looking new. It can only make an entry look older, never newer.\n- Anything unresolved stays unbadged instead of falling back to today.\n\nUnchanged: the badge is still a real button with real \"New\" text, so Ctrl+F\nand copy still see it, the cursor stays a pointer, and the li.new hookup and\nthe hover tooltip are untouched.\n\nVerified without a docs build: `node --test tests/new-badge.test.mjs` (16\npassing, covering page scoping, name identity, known dates, renames, removed\nURLs and genuinely new entries), `node scripts/new-badge-report.mjs` (shows\nMetrolist, masscan, APKCombo and ShredOS unbadged while a genuine addition\nkeeps its date), and a one-off replay of the real parent-commit blobs for\nce8a8d73cb, edec9cd231, dd9cf3c51a and 05305b2a5a. A full VitePress build was\nnot run locally.\n\nCo-authored-by: eli32-vlc <eli32.vlc@gmail.com>",
+      "added": [],
+      "removed": [],
+      "isMonthlyHistorical": true,
+      "dateGroup": "yesterday"
+    },
     {
       "sha": "05305b2a5ae5efc8fe4624298d03984231a40c08",
       "date": "2026-11-26T01:37:14Z",
@@ -168,7 +199,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "5d5e9c9f2d45db499c457c9601cca956de23bb42",
@@ -190,7 +221,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "today"
+      "dateGroup": "yesterday"
     },
     {
       "sha": "ea3d87b4733d7b296208c991e3573c3075ed8150",
@@ -206,7 +237,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "58a6cfbe296b21ff29c74c76090206be4db1a5d2",
@@ -222,7 +253,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "ce8a8d73cb393c5b341186980d6dfe5c2403b5b6",
@@ -811,7 +842,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "8e397f78fff4b40c622dd927acb0d46fc784a3fd",
@@ -833,7 +864,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "yesterday"
+      "dateGroup": "thisWeek"
     },
     {
       "sha": "dd9cf3c51ad008b8eb70d52dba848f449800df79",
@@ -2584,7 +2615,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "c7a18391bafd82a71a996eefa2e1833af5f1f167",
@@ -2617,7 +2648,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "bbcc72965ffd2b1067630f4334a37cdd3c9578d0",
@@ -2690,7 +2721,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "c85001129c0fbc8e051188f733da796762fad5a6",
@@ -2752,7 +2783,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "1a40d00700c0786d8798062659050f2a907bdc96",
@@ -2761,7 +2792,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "1534decc1e361ec90d003d21ec331b66e39e4f39",
@@ -2770,7 +2801,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "7bf78eaaf8b76f9db0c607b37770696342d1fe88",
@@ -2786,7 +2817,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "fc77488d3f9bdee4d952a72e5a870e78890e46a6",
@@ -3274,7 +3305,7 @@
         }
       ],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "8bcd423cd54c4ba7d318dfe05698dd2f4f9dd9e3",
@@ -3283,7 +3314,7 @@
       "added": [],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "ac5876d0bad25d0f48531209cdf5de42e7caf89e",
@@ -3305,7 +3336,7 @@
       ],
       "removed": [],
       "isMonthlyHistorical": true,
-      "dateGroup": "thisWeek"
+      "dateGroup": "earlier"
     },
     {
       "sha": "436f11aa0bcb2c9a51427063cceaa5553e883b61",
