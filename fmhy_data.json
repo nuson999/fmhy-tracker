@@ -1,11 +1,340 @@
 {
-  "lastUpdated": "2026-11-27T21:12:18.103702Z",
-  "totalAdded": 61,
-  "totalRemoved": 14,
-  "totalNew": 13,
-  "totalUpdated": 48,
+  "lastUpdated": "2026-11-28T07:41:17.623557Z",
+  "totalAdded": 44,
+  "totalRemoved": 9,
+  "totalNew": 9,
+  "totalUpdated": 35,
   "totalCommits": 5,
   "commits": [
+    {
+      "sha": "750586292483ee68234630d8b0b1f4fc0dc7cbf4",
+      "date": "2026-11-28T00:10:46Z",
+      "message": "chore: rotate streaming aggregators (FIFO)",
+      "added": [
+        {
+          "link": "* 🌟 **[Cinejoy](https://cinejoy.pk/)** - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Cinejoy](https://cinejoy.pk/)** - 4K / Dual Audio / External Subs / Ad-Toggle"
+        },
+        {
+          "link": "* ⭐ **[moanatv.](https://lfmx.app/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/7CBgYwN82F)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[moanatv.](https://lfmx.app/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/7CBgYwN82F)"
+        }
+      ],
+      "removed": [],
+      "isHistorical": false
+    },
+    {
+      "sha": "450c6b3d27443b50b9714f4a7ed6bfd8438d5154",
+      "date": "2026-11-28T06:25:18Z",
+      "message": "updated 14 pages",
+      "added": [
+        {
+          "link": "* [Gemini Notebook](https://notebooklm.google.com/) - Document Chatbot / Note-Taking / Slides / [Anki Export](https://chromewebstore.google.com/detail/ankinlm/ecoealfdeebafjpmhjdlbdgpgegjeaem) / [Subreddit](https://www.reddit.com/r/notebooklm/) / [Discord](https://discord.gg/gemininotebook)",
+          "source": "ai",
+          "type": "updated",
+          "relatedLink": "* [Gemini Notebook](https://notebooklm.google.com/) - Document Chatbot / Note-Taking / Slides / [Anki Export](https://chromewebstore.google.com/detail/ankinlm/ecoealfdeebafjpmhjdlbdgpgegjeaem) / [Subreddit](https://www.reddit.com/r/notebooklm/) / [Discord](https://discord.com/invite/Az2N7BwV7r)"
+        },
+        {
+          "link": "* [vdwn.cloud](https://vdwn.cloud/), [2](https://vdriv.net), [3](ttps://mp4s.uk), [4](ttps://mp3s.uk) - Multi-Site / 320kb MP3",
+          "source": "audio",
+          "type": "updated",
+          "relatedLink": "* [vdwn.cloud](https://vdwn.cloud/) - Multi-Site / 320kb MP3"
+        },
+        {
+          "link": "* [Audion](https://audionplayer.com/) - Plugin-Based Audio Player / Windows, macOS, Linux, Android / [Discord](https://discord.gg/27XRVQsBd9) / [GitHub](https://github.com/dupitydumb/Audion)",
+          "source": "audio",
+          "type": "updated",
+          "relatedLink": "* [Audion](https://audionplayer.com/) - Plugin-Based Audio Player / Windows, macOS, Linux, Android / [Discord](https://discord.gg/27XRVQsBd9) / [GitHub](https://github.com/dupitydumb/Audion)"
+        },
+        {
+          "link": "* ↪️ **[Word Games](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/games#wiki_.25B7_word_games)**",
+          "source": "educational",
+          "type": "new"
+        },
+        {
+          "link": "* [DMDE](https://dmde.com/) - File Recovery / Partition Recovery",
+          "source": "file-tools",
+          "type": "updated",
+          "relatedLink": "* [DMDE](https://dmde.com/) - File Recovery"
+        },
+        {
+          "link": "* [Low Level Format](https://www.lowlevelformat.info/), [nwipe](https://github.com/martijnvanbrummelen/nwipe) or [ShredOS](https://shredos.com/) / [GitHub](https://github.com/PartialVolume/shredos.x86_64) Complete Hard Drive Erasers",
+          "source": "file-tools",
+          "type": "updated",
+          "relatedLink": "* [Low Level Format](https://www.lowlevelformat.info/), [nwipe](https://github.com/martijnvanbrummelen/nwipe) or [ShredOS](https://shredos.com/) / [GitHub-(https://github.com/PartialVolume/shredos.x86_64) Complete Hard Drive Erasers"
+        },
+        {
+          "link": "* [tinyMediaManager](https://www.tinymediamanager.org/) or [MediaElch](https://www.kvibes.de/mediaelch/) / [GitHub](https://github.com/komet/mediaelch) - Media Collection Managers",
+          "source": "file-tools",
+          "type": "updated",
+          "relatedLink": "* [tinyMediaManager](https://www.tinymediamanager.org/) or [MediaElch](https://www.kvibes.de/mediaelch/) - Media Collection Managers"
+        },
+        {
+          "link": "* [TVRename](https://www.tvrename.com/) / [GitHub](https://github.com/TV-Rename/tvrename) or [⁠Rename My TV Series](https://www.tweaking4all.com/home-theatre/rename-my-tv-series-v2/) - TV File Data Automation",
+          "source": "file-tools",
+          "type": "updated",
+          "relatedLink": "* [TVRename](https://www.tvrename.com/) or [⁠Rename My TV Series](https://www.tweaking4all.com/home-theatre/rename-my-tv-series-v2/) - TV File Data Automation"
+        },
+        {
+          "link": "* [LuaTools](https://lua.tools/) - Steam Multi-Tool / Manifest Tool / [Discord](https://discord.gg/luatools) / [GitHub](https://github.com/madoiscool/LuaTools)",
+          "source": "gaming-tools",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[LuaTools](https://lua.tools/)** - Steam Multi-Tool / Manifest Tool / [Discord](https://discord.gg/luatools) / [GitHub](https://github.com/madoiscool/LuaTools)"
+        },
+        {
+          "link": "* [PM2G Repacks](https://pm2g.srht.site/) - Download / PW: `pm2g` / [Discord](https://discord.gg/38FRNdYAEM)",
+          "source": "gaming",
+          "type": "updated",
+          "relatedLink": "* [PM2G Repacks](https://rentry.co/FMHYB64#pm2g) - Download / PW: `pm2g` / [Discord](https://discord.gg/38FRNdYAEM)"
+        },
+        {
+          "link": "* [MarioCube](https://mariocube.com/) - Wii Game WADs",
+          "source": "gaming",
+          "type": "updated",
+          "relatedLink": "*  [MarioCube](https://mariocube.com/) - Wii Game WADs"
+        },
+        {
+          "link": "* [⁠ScriptBlade](https://scriptblade.com/) - Multiplayer Word Battle Game",
+          "source": "gaming",
+          "type": "new"
+        },
+        {
+          "link": "* [⁠LibreCorsa](https://librecorsa.org/) - Racing Game / [GitHub](https://github.com/librecorsa/librecorsa)",
+          "source": "gaming",
+          "type": "new"
+        },
+        {
+          "link": "* [Canva](https://www.canva.com/) - Design App / Windows, macOS, Web / [Hide Pro Elements](https://greasyfork.org/scripts/591236) / [Invites](https://rentry.co/FMHYB64#canva)",
+          "source": "image-tools",
+          "type": "updated",
+          "relatedLink": "* [Canva](https://www.canva.com/) - Design App / Windows, macOS, Web / [Invites](https://rentry.co/FMHYB64#canva)"
+        },
+        {
+          "link": "* 🌐 **[Awesome List Index](https://awesome.ecosyste.ms/) / [GitHub](https://github.com/sindresorhus/awesome), [GitHub Topics](https://github.com/topics/awesome)** / [2](https://github.com/topics/awesome-list) - All Awesome Lists",
+          "source": "misc",
+          "type": "updated",
+          "relatedLink": "* 🌐 **[Awesome List Index](https://github.com/sindresorhus/awesome), [GitHub Topics](https://github.com/topics/awesome)** / [2](https://github.com/topics/awesome-list) - All Awesome Lists"
+        },
+        {
+          "link": "* [EasyPeasy](https://easypeasymethod.org/), [2](https://gitlab.com/snuggy/easypeasy) / [Audiobook](https://youtu.be/ZktxO6adTnI) or [QuitPornEasily](https://quitporneasily.com/) - Painlessly Quit Pornography",
+          "source": "misc",
+          "type": "updated",
+          "relatedLink": "* [EasyPeasy](https://easypeasymethod.org/), [2](https://gitlab.com/snuggy/easypeasy) / [Audiobook](https://youtu.be/ZktxO6adTnI) or [QuitPornEasily](https://quitporneasily.com/) - Painlessly Quit Pornography"
+        },
+        {
+          "link": "* 🌐 **[⁠Monerica](https://app.monerica.com/filter?Statuses=Verified)** or **[⁠XMRList](https://xmrlist.com/)** - Monero-Friendly Site / Service Indexes",
+          "source": "misc",
+          "type": "updated",
+          "relatedLink": "* 🌐 **[⁠Monerica](https://app.monerica.com/filter?Statuses=Verified)** - Monero-Friendly Site Index"
+        },
+        {
+          "link": "* [⁠Mouse Finder](https://shapefinder.cc/) - Interactive Mouse Hand Matching Tool + Mousepads, Keyboards & Monitors",
+          "source": "misc",
+          "type": "updated",
+          "relatedLink": "* [⁠Mouse Finder](https://shapefinder.cc/) - Interactive Mouse Hand Matching Tool"
+        },
+        {
+          "link": "* ⭐ **[Tusky](https://tusky.app/)**, [Mastodon Android](https://github.com/mastodon/mastodon-android), [Dhaaga](https://github.com/suvam0451/dhaaga) or [Pachli](https://pachli.app/) / [GitHub](https://github.com/pachli/pachli-android) - Mastodon Clients",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Tusky](https://tusky.app/)**, [Mastodon Android](https://github.com/mastodon/mastodon-android), [Dhaaga](https://github.com/suvam0451/dhaaga), [Pachli](https://pachli.app/) / [GitHub](https://github.com/pachli/pachli-android) or [SubwayTooter](https://github.com/tateisu/SubwayTooter) - Mastodon Clients"
+        },
+        {
+          "link": "* [⁠Fieldwatch](https://github.com/OffGridPete/Fieldwatch) - Receive-Only Wi-Fi & Bluetooth LE Observer",
+          "source": "mobile",
+          "type": "new"
+        },
+        {
+          "link": "* ⭐ **[⁠ArchiveTune](https://archivetune.miuka.moe/)** - Multi-Platform Streaming / [Modules](https://github.com/rukamori/ArchiveTuneModules) / [Telegram](https://t.me/ArchiveTuneGC) / [Discord](https://discord.com/invite/XF2fpb9rTq) / [GitHub](https://github.com/rukamori/ArchiveTune)",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠ArchiveTune](https://archivetune.miuka.moe/)** - Multi-Platform Streaming / [Moduels](https://github.com/rukamori/ArchiveTuneModules) / [Telegram](https://t.me/ArchiveTuneGC) / [Discord](https://discord.com/invite/XF2fpb9rTq) / [GitHub](https://github.com/rukamori/ArchiveTune)"
+        },
+        {
+          "link": "* ⭐ **[Shiopa Mobile](https://help.shiopa.com/docs/)** - Movies / TV / Anime / [Telegram](https://t.me/poprink) / [Discord](https://discord.gg/PExYdyjCK4)",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Shiopa Mobile](https://help.shiopa.com/docs/)** - Movies / TV / Anime / [Telegram](https://t.me/poprink) / [Discord](https://discord.gg/EFD9CyAqFS)"
+        },
+        {
+          "link": "* ⭐ **[Shiopa Mobile](https://help.shiopa.com/docs/)** - Movies / TV / Anime / [Telegram](https://t.me/poprink) / [Discord](https://discord.gg/PExYdyjCK4)",
+          "source": "mobile",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[Shiopa Mobile](https://help.shiopa.com/docs/)** - Movies / TV / Anime / [Telegram](https://t.me/poprink) / [Discord](https://discord.gg/EFD9CyAqFS)"
+        },
+        {
+          "link": "* [NGUỒN C](https://phim.nguonc.com/) - Movies / TV / Anime / Sub / Dub / 1080p / [Telegram](https://t.me/+nGQkkhEvZuk5MGI1)",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [NGUỒN C](https://phim.nguonc.com/) - Movies / TV / Anime / Sub / Dub / 1080p"
+        },
+        {
+          "link": "* [AnimeVietsub](https://animevietsub.zone/) - Anime / Chinese Animation / Sub / 1080p / [Telegram](https://t.me/animevietsub)",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [AnimeVietsub](https://animevietsub.bid/) - Anime / Chinese Animation / Sub / 1080p / [Telegram](https://t.me/animevietsub)"
+        },
+        {
+          "link": "* [Thoát Porn Luận](https://thu-tram.github.io/tpl/) - Porn Quitting Guide / EasyPeasy Translation",
+          "source": "non-english",
+          "type": "updated",
+          "relatedLink": "* [Thoát Porn Luận](https://thu-tram.github.io/tpl/) - Porn Quitting Guide / EasyPeasy Translation"
+        },
+        {
+          "link": "* [Nginx Proxy Manager](https://nginxproxymanager.com) / [Subreddit](https://reddit.com/r/nginxproxymanager) / [GitHub](https://github.com/NginxProxyManager/nginx-proxy-manager) or [⁠NPMplus](https://github.com/ZoeyVid/NPMplus) - Reverse Proxy UI",
+          "source": "privacy",
+          "type": "updated",
+          "relatedLink": "* [Nginx Proxy Manager](https://nginxproxymanager.com) - Reverse Proxy UI / [Subreddit](https://reddit.com/r/nginxproxymanager) / [GitHub](https://github.com/NginxProxyManager/nginx-proxy-manager)"
+        },
+        {
+          "link": "* [⁠TikFinity](https://tikfinity.zerody.one/) / [Discord](https://discord.gg/uthtmVdpy8) or [EinzzTools](https://einzzcookie.org/) / [Telegram](https://t.me/tiktracksite) - TikTok Live Toolkits",
+          "source": "video-tools",
+          "type": "updated",
+          "relatedLink": "* [⁠TikFinity](https://tikfinity.zerody.one/) - TikTok Live Toolkit / [Discord](https://discord.gg/uthtmVdpy8)"
+        },
+        {
+          "link": "* [tinyMediaManager](https://www.tinymediamanager.org/) or [MediaElch](https://www.kvibes.de/mediaelch/) / [GitHub](https://github.com/komet/mediaelch) - Media Collection Managers",
+          "source": "video-tools",
+          "type": "updated",
+          "relatedLink": "* [tinyMediaManager](https://www.tinymediamanager.org/) or [MediaElch](https://www.kvibes.de/mediaelch/) - Media Collection Managers"
+        },
+        {
+          "link": "* 🌟 **[Catflix](https://catflix.mov/)**, [2](https://beta.cinecat.eu/) - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/mSKTq4FnC)",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* 🌟 **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite) / [Discord](https://discord.gg/x8EZ4mpdCA)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[CineLite](https://cinelite.xyz/)** - 4K / Dual Audio / Ad-Toggle / [Status](https://rentry.co/cinelite)"
+        },
+        {
+          "link": "* 🌟 **[Movy](https://www.movy.sx/)** or [Racz](http://www.racz.to) - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* 🌟 **[Movy](https://www.movy.sx/)** - 4K / Dual Audio / External Subs / Ad-Toggle"
+        },
+        {
+          "link": "* ⭐ **[moanatv.](https://lfmx.app/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/7CBgYwN82F)",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* [ThugTV](https://thugtv.st) - 4K / Dual Audio / Ad-Toggle / [Telegram](https://t.me/thugtvonline) / [Discord](https://discord.gg/kZWYkvuGhM)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [ThugTV](https://thugtv.st) - 720p / Dual Audio / Ad-Toggle / [Telegram](https://t.me/thugtvonline) / [Discord](https://discord.gg/kZWYkvuGhM)"
+        },
+        {
+          "link": "* [TaroFlix](https://taroflix.net/) or [Cinetaro](https://cinetaro.to/) - 4K / Dual Audio / Ad-Toggle / [Discord](https://discord.gg/2UPkZwn9v)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [TaroFlix](https://taroflix.net/) or [Cinetaro](https://cinetaro.to/) - 1080p / Dual Audio / Ad-Toggle / [Discord](https://discord.gg/2UPkZwn9v)"
+        },
+        {
+          "link": "* [Plyx](https://plyx.cc/) - 1080p / Dual Audio / External Subs",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* [frameXTV](https://framextv.cc/) - 4K / External Subs / [Discord](https://discord.gg/vPCHZ6PgRX)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* [frameXTV](https://framextv.cc/) - 4K / External Subs / [Discord](https://discord.gg/vPCHZ6PgRX)"
+        },
+        {
+          "link": "* ⭐ **[⁠Gotaku](https://gotaku.to/)**, [2](https://gotaku.ch), [3](https://gotaku.li) - Sub / Dub / Auto-Next / [Mirrors](https://igotaku.to/)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[⁠Gotaku](https://gotaku.to//)**, [2](https://gotaku.ch), [3](https://gotaku.li) - Sub / Dub / Auto-Next / [Mirrors](https://igotaku.to/)"
+        },
+        {
+          "link": "* [⁠AniGato](https://anigato.lol/) - Sub / Dub / Auto-Next",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* ⭐ **[DramaHQ](https://dramahq.tv/)** - TV / Movies / [Subreddit](https://www.reddit.com/r/dramahq_official/) / [Discord](https://discord.gg/VF9kejyxgY)",
+          "source": "video",
+          "type": "new"
+        },
+        {
+          "link": "* ⭐ **[DaddyLive](https://thedaddy.li/)** / [Status](https://daddylive.pk/) / [Telegram](https://t.me/+8uBUT1-0B741NTll)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[DaddyLive](https://dlhd.st/)**, [2](https://thedaddy.li/) / [Status](https://daddylive.pk/) / [Telegram](https://t.me/+8uBUT1-0B741NTll)"
+        }
+      ],
+      "removed": [
+        {
+          "link": "* 🌐 **[Awesome F-Droid](https://fdroid.tabler.dev/)** / [GitHub](https://github.com/moneytoo/awesome-fdroid)",
+          "source": "mobile",
+          "type": "removed"
+        },
+        {
+          "link": "* [Cherrygram](https://arslan4k1390.github.io/cherrygram) - Advanced Client / [GitHub](https://github.com/arsLan4k1390/Cherrygram)",
+          "source": "mobile",
+          "type": "removed"
+        },
+        {
+          "link": "* [Unity_Cheat_Sheet](https://github.com/NaomiLe1811/Unity_Cheat_Sheet_Tieng_Viet) - Unity Game Engine Cheat Sheet",
+          "source": "non-english",
+          "type": "removed"
+        },
+        {
+          "link": "* [IDoc](https://idoc.pub/) - Document Search",
+          "source": "reading",
+          "type": "removed"
+        },
+        {
+          "link": "* 🌟 **[Cinecat](https://cinecat.eu/)**, [2](https://beta.cinecat.eu/) - 4K / External Subs / Ad-Toggle / [Discord](https://discord.gg/mSKTq4FnC)",
+          "source": "video",
+          "type": "removed"
+        },
+        {
+          "link": "* 🌟 **[Cinejoy](https://cinejoy.pk/)** - 4K / Dual Audio / External Subs / Ad-Toggle",
+          "source": "video",
+          "type": "removed"
+        },
+        {
+          "link": "* [Cinemove](https://cinemove.cc/) or [Cinex](https://cinex.lol/) - 1080p / Dual Audio / External Subs",
+          "source": "video",
+          "type": "removed"
+        },
+        {
+          "link": "* ⭐ **[KatDrama](https://k-drama.in/)** - TV / Movies / [Discord](https://discord.com/invite/hf3F25dRv) / [Telegram](https://t.me/kat_drama_in)",
+          "source": "video",
+          "type": "removed"
+        }
+      ],
+      "isHistorical": false
+    },
+    {
+      "sha": "3ba45b759e0ee94b182a5e74377ebfd2bf3b4504",
+      "date": "2026-11-28T06:41:28Z",
+      "message": "updated 2 pages",
+      "added": [
+        {
+          "link": "* ⭐ **[SeaDex](https://seadex.moe/)** or [SeaDex Mirror](https://seadex.pages.dev/) - Anime Video Quality Guide / [Docs](https://releases.moe/about)",
+          "source": "video",
+          "type": "updated",
+          "relatedLink": "* ⭐ **[SeaDex](https://releases.moe/)** or [SeaDex Mirror](https://seadex.pages.dev/) - Anime Video Quality Guide / [Docs](https://releases.moe/about)"
+        }
+      ],
+      "removed": [
+        {
+          "link": "* [Deep-Live-Cam](https://github.com/hacksider/Deep-Live-Cam) - Video Face Swap / Windows, macOS, Linux",
+          "source": "video-tools",
+          "type": "removed"
+        }
+      ],
+      "isHistorical": false
+    },
     {
       "sha": "739c35d7c9d1cc6b89480d6768fbb89b00596991",
       "date": "2026-11-27T09:40:08Z",
@@ -437,7 +766,7 @@
           "type": "removed"
         }
       ],
-      "isHistorical": false
+      "isHistorical": true
     },
     {
       "sha": "13755f6fd3cadfe724fc8a12d34c4a8a2e9e9d5a",
@@ -459,203 +788,8 @@
       ],
       "removed": [],
       "isHistorical": true
-    },
-    {
-      "sha": "ce1694126b6b03a016700bdfaa261854d6450b32",
-      "date": "2026-11-26T23:28:08Z",
-      "message": "fix: New badge only for entries that are actually new (#7463)\n\nThe pill was decided from a URL-keyed map of \"URLs that appeared on an added\ndiff line in the last 30 days\". That is not the same as an entry being new,\nand it produced visible false positives: Metrolist, listed since December\n2024, showed \"New, added 2026-11-25\" on both /mobile and /audio because one\ncommit inserted its link on the audio page, and masscan, ShredOS, APKCombo,\nbookstack and AnimeGO all showed up as new after wording or URL edits to\nlong-standing lines.\n\nWhat changes:\n\n- The map is keyed by page as well as URL (\"mobile.md|https://...\"), so a page\n  that inserts a link no longer badges the same link on every other page that\n  already lists it.\n- An entry only counts as new if its label did not already appear in that file\n  at the parent commit. That covers rewritten bullets (masscan or RustScan),\n  link swaps (GameBounty, CDRomance) and re-lists without any rename detection.\n- docs/.vitepress/added-dates.json holds known first-appearance dates for\n  entries older than the 30-day window, which is what keeps a re-added URL\n  from looking new. It can only make an entry look older, never newer.\n- Anything unresolved stays unbadged instead of falling back to today.\n\nUnchanged: the badge is still a real button with real \"New\" text, so Ctrl+F\nand copy still see it, the cursor stays a pointer, and the li.new hookup and\nthe hover tooltip are untouched.\n\nVerified without a docs build: `node --test tests/new-badge.test.mjs` (16\npassing, covering page scoping, name identity, known dates, renames, removed\nURLs and genuinely new entries), `node scripts/new-badge-report.mjs` (shows\nMetrolist, masscan, APKCombo and ShredOS unbadged while a genuine addition\nkeeps its date), and a one-off replay of the real parent-commit blobs for\nce8a8d73cb, edec9cd231, dd9cf3c51a and 05305b2a5a. A full VitePress build was\nnot run locally.\n\nCo-authored-by: eli32-vlc <eli32.vlc@gmail.com>",
-      "added": [],
-      "removed": [],
-      "isHistorical": true
-    },
-    {
-      "sha": "05305b2a5ae5efc8fe4624298d03984231a40c08",
-      "date": "2026-11-26T01:37:14Z",
-      "message": "updated 12 pages",
-      "added": [
-        {
-          "link": "* [ChatGPT](https://chatgpt.com/) - GPT-6 Luna / [Unlimited](https://help.openai.com/en/articles/9275245-chatgpt-free-tier-faq#how-do-rate-limits-work-on-the-free-tier) / [Add Features](https://github.com/Nagi-ovo/voyager) / [r/OpenAI](https://www.reddit.com/r/OpenAI/) / [r/ChatGPT](https://www.reddit.com/r/ChatGPT/) / [Discord](https://discord.com/invite/openai)",
-          "source": "ai",
-          "type": "updated",
-          "relatedLink": "* [ChatGPT](https://chatgpt.com/) - GPT-6 Luna / Unlimited / [Add Features](https://github.com/Nagi-ovo/voyager) / [Limits](https://help.openai.com/en/articles/9275245-chatgpt-free-tier-faq#how-do-rate-limits-work-on-the-free-tier) / [r/OpenAI](https://www.reddit.com/r/OpenAI/) / [r/ChatGPT](https://www.reddit.com/r/ChatGPT/) / [Discord](https://discord.com/invite/openai)"
-        },
-        {
-          "link": "* [⁠Booster Tracker](https://boostertracker.com/) - SpaceX Booster & Launch Statistics",
-          "source": "educational",
-          "type": "new"
-        },
-        {
-          "link": "* 🌐 **[ESOL](https://www.esolcourses.com/)** or **[Awesome English](https://github.com/yvoronoy/awesome-english)** - English Learning Resources",
-          "source": "educational",
-          "type": "updated",
-          "relatedLink": "* 🌐 **[ESOL](https://www.esolcourses.com/)** - English Learning Resources"
-        },
-        {
-          "link": "* [⁠FilesMD](https://www.filesmd.com/) or [Metadata2Go](https://www.metadata2go.com/) - Metadata Viewers / Editors",
-          "source": "file-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [Low Level Format](https://www.lowlevelformat.info/), [nwipe](https://github.com/martijnvanbrummelen/nwipe) or [ShredOS](https://shredos.com/) / [GitHub-(https://github.com/PartialVolume/shredos.x86_64) Complete Hard Drive Erasers",
-          "source": "file-tools",
-          "type": "updated",
-          "relatedLink": "* [Low Level Format](https://www.lowlevelformat.info/), [nwipe](https://github.com/martijnvanbrummelen/nwipe) or [ShredOS](https://github.com/PartialVolume/shredos.x86_64) - Complete Hard Drive Erasers"
-        },
-        {
-          "link": "* [RED](https://www.jonasjohn.de/red.htm) / [GitHub](https://github.com/hxseven/Remove-Empty-Directories/) or [RED+](https://github.com/BookOfBeasts/Remove-Empty-Directories-Plus) - Remove Empty Directories",
-          "source": "file-tools",
-          "type": "updated",
-          "relatedLink": "* [RED](https://www.jonasjohn.de/red.htm) - Remove Empty Directories"
-        },
-        {
-          "link": "* [⁠FixMyPDFs](https://fixmypdfs.cc/) - Client-Side",
-          "source": "file-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [KudosPrime](https://www.kudosprime.com/) - Racing Game Vehicle Database",
-          "source": "gaming-tools",
-          "type": "updated",
-          "relatedLink": "* [KudosPrime](https://www.kudosprime.com/) - Racing Game Maps"
-        },
-        {
-          "link": "* [⁠Lapwerks](https://lapwerks.com/) - Custom Track Sketch + Import for Assetto Corsa & BeamNG.drive",
-          "source": "gaming-tools",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠OpenPsychometrics](https://openpsychometrics.org/) - Interactive Personality Tests",
-          "source": "misc",
-          "type": "new"
-        },
-        {
-          "link": "* ⭐ **[⁠WM Keyboard](https://wmkeyboard.app/)** - Customizable Privacy-Focused Keyboard / [Telegram](https://t.me/wmkeyboard) / [GitHub](https://github.com/wasi-master/wmkeyboard)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[⁠WM Keyboard](https://wmkeyboard.app/)** - Customizable Privacy-Focused Keyboard / [GitHub](https://github.com/wasi-master/wmkeyboard)"
-        },
-        {
-          "link": "* [DAVx⁵](https://www.davx5.com/) - Calendar, Contact & File Sync / [GitHub](https://github.com/bitfireAT/davx5-ose)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [DAVx⁵](https://www.davx5.com/) - Calendar Syncing / [GitHub](https://github.com/bitfireAT/davx5-ose)"
-        },
-        {
-          "link": "* [DAVx⁵](https://www.davx5.com/) - Calendar, Contact & File Sync / [GitHub](https://github.com/bitfireAT/davx5-ose)",
-          "source": "mobile",
-          "type": "updated",
-          "relatedLink": "* [DAVx⁵](https://www.davx5.com/) - Calendar Syncing / [GitHub](https://github.com/bitfireAT/davx5-ose)"
-        },
-        {
-          "link": "* [⁠XemTV](https://hd1.xemtv.net/) - Live TV",
-          "source": "non-english",
-          "type": "new"
-        },
-        {
-          "link": "* [⁠TwitchUnblock](https://twitchunblock-web.pages.dev/) - Twitch Frontend / Web / [GitHub](https://github.com/MXFia19/TwitchUnblock-Web)",
-          "source": "social-media-tools",
-          "type": "updated",
-          "relatedLink": "* [⁠TwitchUnblock](https://test2-fawn-eta.vercel.app/) - Twitch Frontend / Web / [GitHub](https://github.com/MXFia19/TwitchUnblock-Web)"
-        },
-        {
-          "link": "* ⭐ **[P-Stream Forks](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/video#wiki_.25B7_p-stream_forks)** - 4K / Dual Audio / External Subs",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[P-Stream Forks](https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/video#wiki_.25B7_p-stream_forks)** - 1080p / Dual Audio / External Subs"
-        },
-        {
-          "link": "* [4Movie](https://4movie.in/) - 1080p / Dual Audio / Ad-Toggle / External Subs / [Discord](https://discord.gg/vS8uWRhHn)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [4Movie](https://4movie.in/) - 1080p / Dual Audio / Ad-Toggle"
-        },
-        {
-          "link": "* [Reeflix](https://reeflix.st/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/29H2dUCS8)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [Reeflix](https://reeflix.st/) - 4K / Dual Audio / External Subs / Ad-Toggle"
-        },
-        {
-          "link": "* ⭐ **[Basement](https://basementx.rest/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Status](https://rentry.co/basementx) / [Discord](https://discord.com/invite/bWYUqEg7Xq)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Basement](https://basementx.lol/)** - 4K / Dual Audio / External Subs / Ad-Toggle / [Status](https://rentry.co/basementx) / [Discord](https://discord.com/invite/bWYUqEg7Xq)"
-        },
-        {
-          "link": "* [Aloso](https://aloso.vercel.app/) - 46 Sources / Pop up + Redirect Free",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [Aloso](https://aloso.vercel.app/) - 46 Sources / Pop up + Redirect Free"
-        },
-        {
-          "link": "* [⁠Matchora](https://matchora.st/channels) - TV / Sports",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [⁠Matchora](https://matchora.to/)"
-        },
-        {
-          "link": "* [⁠Matchora](https://matchora.st/)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* [⁠Matchora](https://matchora.to/)"
-        }
-      ],
-      "removed": [
-        {
-          "link": "* [Gitstar Ranking](https://gitstar-ranking.com/) - Git Repo Star Rankings",
-          "source": "developer-tools",
-          "type": "removed"
-        },
-        {
-          "link": "* [Marspedia](https://marspedia.org/) - Mars Wiki",
-          "source": "educational",
-          "type": "removed"
-        },
-        {
-          "link": "* [ExtractMetadata](https://www.extractmetadata.com/), [⁠FilesMD](https://www.filesmd.com/) or [Metadata2Go](https://www.metadata2go.com/) - Metadata Viewers / Editors",
-          "source": "file-tools",
-          "type": "removed"
-        },
-        {
-          "link": "* [FLIKER](https://fliker.freebuff.app/) - 17 Sources / Popup + Redirect Free",
-          "source": "video",
-          "type": "removed"
-        },
-        {
-          "link": "* [xyzstreams](https://xyzstreams.st/) - TV / Sports",
-          "source": "video",
-          "type": "removed"
-        },
-        {
-          "link": "* [xyzstreams](https://xyzstreams.st/)",
-          "source": "video",
-          "type": "removed"
-        }
-      ],
-      "isHistorical": true
-    },
-    {
-      "sha": "5d5e9c9f2d45db499c457c9601cca956de23bb42",
-      "date": "2026-11-26T00:11:13Z",
-      "message": "chore: rotate streaming aggregators (FIFO)",
-      "added": [
-        {
-          "link": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* 🌟 **[ArrowTV](https://arrowtv.net/)**, [2](https://arrowtv.st/) or [Cinezo](https://www.cinezo.st/), [2](https://www.flikhub.net/) - 4K / Dual Audio / External Subs / Ad-Toggle"
-        },
-        {
-          "link": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)",
-          "source": "video",
-          "type": "updated",
-          "relatedLink": "* ⭐ **[Chillflix](https://chillflix.lol/)**, [Toflix](https://toflix.co/) or [Vuflix](https://vuflix.co/) - 4K / Dual Audio / External Subs / Ad-Toggle / [Discord](https://discord.gg/6r5KTZgqXV)"
-        }
-      ],
-      "removed": [],
-      "isHistorical": true
     }
   ],
   "zeroChangeStreak": 0,
-  "zeroChangeStreakThroughSha": "739c35d7c9d1cc6b89480d6768fbb89b00596991"
+  "zeroChangeStreakThroughSha": "3ba45b759e0ee94b182a5e74377ebfd2bf3b4504"
 }
